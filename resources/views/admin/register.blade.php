@@ -1,7 +1,10 @@
-@include('template.head')
+@include('components.head')
 
 <div id="section-register" class="container py-5">
     <div class="card">
+        <div class="card-header">
+            Register
+        </div>
         <div class="card-body">
             <form>
                 <div class="mb-3">
@@ -26,4 +29,4 @@
     </div>
 </div>
 
-@include('template.footer')
+@include('components.footer')
