@@ -17,7 +17,7 @@
 
 ### How To Run
 
-Jalankan perintah ini
+Jalankan perintah
 ```
 composer install
 ```
