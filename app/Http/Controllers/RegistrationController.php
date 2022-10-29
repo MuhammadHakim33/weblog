@@ -16,12 +16,12 @@ class RegistrationController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'admin_name' => 'required',
-            'admin_email' => 'required|email:dns|unique:admins',
-            'admin_password' => 'required',
+            'name' => 'required',
+            'email' => 'required|email:dns|unique:admins',
+            'password' => 'required',
         ]);
         
-        $validated['admin_password'] = Hash::make($validated['admin_password']);
+        $validated['password'] = Hash::make($validated['password']);
 
         Admin::create($validated);
 
