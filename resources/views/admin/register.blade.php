@@ -3,10 +3,11 @@
 <div id="section-register" class="container py-5">
     <div class="card">
         <div class="card-header">
-            Register
+            <strong>Register</strong>
         </div>
         <div class="card-body">
-            <form>
+            <form action="/admin/register" method="POST">
+                @csrf
                 <div class="mb-3">
                     <label for="input-name" class="form-label">Name</label>
                     <input type="text" class="form-control" name="admin_name" id="input-name" aria-describedby="name">
@@ -16,14 +17,10 @@
                     <input type="email" class="form-control" name="admin_email" id="input-email">
                 </div>
                 <div class="mb-3">
-                    <label for="input-username" class="form-label">Username</label>
-                    <input type="text" class="form-control" name="admin_username" id="input-username">
-                </div>
-                <div class="mb-3">
                     <label for="input-password" class="form-label">Password</label>
                     <input type="password" class="form-control" name="admin_password" id="input-password">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Register</button>
             </form>
         </div>
     </div>
