@@ -10,11 +10,11 @@
                 @csrf
                 <div class="mb-3">
                     <label for="input-email" class="form-label">Email</label>
-                    <input type="email" class="form-control" name="admin_email" id="input-email" required>
+                    <input type="email" class="form-control" name="email" id="input-email" required>
                 </div>
                 <div class="mb-3">
                     <label for="input-password" class="form-label">Password</label>
-                    <input type="password" class="form-control" name="admin_password" id="input-password" required>
+                    <input type="password" class="form-control" name="password" id="input-password" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>
