@@ -25,6 +25,6 @@ class RegistrationController extends Controller
 
         Admin::create($validated);
 
-        return redirect('/admin/register')->with('sucess', 'Registration Sucessfull!! Please Login');
+        return redirect('/admin/login')->with('sucess', 'Registration Sucessfull!! Please Login');
     }
 }
