@@ -28,9 +28,6 @@ class LoginController extends Controller
             ]);
         }
 
-        return response()->json([
-            'message' => 'Gagal Login',
-            'code' => 400
-        ]);
+        return redirect('/admin/login')->with('login-failed', 'Email or Password Wrong!!');
     }
 }
