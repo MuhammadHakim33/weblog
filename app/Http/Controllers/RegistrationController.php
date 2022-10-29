@@ -25,9 +25,6 @@ class RegistrationController extends Controller
 
         Admin::create($validated);
 
-        return response()->json([
-            'message' => "Register Sukses",
-            'status' => 201
-        ]);
+        return redirect('/admin/register')->with('sucess', 'Registration Sucessfull!! Please Login');
     }
 }
