@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,6 @@ Route::get('/', function () {
 
 Route::get('/admin/register', [RegistrationController::class, 'index']);
 Route::post('/admin/register', [RegistrationController::class, 'store']);
+
+Route::get('/admin/login', [LoginController::class, 'index']);
+Route::post('/admin/login', [LoginController::class, 'authenticate']);
