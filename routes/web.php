@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/admin', function () {
-    return view('admin.dashboard', ['title' => 'Home']);
+    return view('admin.dashboard', ['title' => 'Dashboard']);
 });
 
 Route::get('/admin/register', [RegistrationController::class, 'index']);
