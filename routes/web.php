@@ -19,8 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/admin', function () {
+    return view('admin.dashboard', ['title' => 'Home']);
+});
+
 Route::get('/admin/register', [RegistrationController::class, 'index']);
 Route::post('/admin/register', [RegistrationController::class, 'store']);
 
 Route::get('/admin/login', [LoginController::class, 'index']);
 Route::post('/admin/login', [LoginController::class, 'authenticate']);
+
