@@ -22,12 +22,17 @@ class LoginController extends Controller
         if(Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return response()->json([
-                'message' => 'Berhasil Login',
-                'code' => 200
-            ]);
+            return redirect('/admin');
         }
 
         return redirect('/admin/login')->with('login-failed', 'Email or Password Wrong!!');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/admin/login');
     }
 }
