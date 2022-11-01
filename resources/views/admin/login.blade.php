@@ -1,6 +1,6 @@
 @include('components.head')
 
-<div id="section-register" class="container py-5">
+<div id="section-login" class="container py-5">
     <div class="card">
         <div class="card-header">
             <strong>Login</strong>
