@@ -20,7 +20,15 @@ Route::get('/', function () {
 });
 
 Route::get('/admin', function () {
-    return view('admin.dashboard', ['title' => 'Dashboard']);
+    return view('admin.dashboard.index', ['title' => 'Dashboard']);
+})->middleware('auth');
+
+Route::get('/admin/posts', function () {
+    return view('admin.posts.index', ['title' => 'Posts']);
+})->middleware('auth');
+
+Route::get('/admin/posts/create', function () {
+    return view('admin.post_create', ['title' => 'Create Post']);
 })->middleware('auth');
 
 Route::get('/admin/register', [RegistrationController::class, 'index'])->middleware('guest');

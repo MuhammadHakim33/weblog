@@ -67,8 +67,7 @@
 /*
  * Form Login & Register
  */
-#section-register,
-#section-login {
+#auth{
     max-width: 500px;
 }
 
