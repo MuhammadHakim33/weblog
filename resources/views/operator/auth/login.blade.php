@@ -1,22 +1,15 @@
 @extends('operator.auth.layout')
 
-@section('header', 'Login')
+@section('title', 'Login to your account')
 
 @section('form')
     <form action="/login" method="POST">
         @csrf
-        <!-- Alert for successful registration -->
-        @if(session('registration-sucess'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('registration-sucess') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
         <!-- Alert for failed login -->
         @if(session('login-failed'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <i class="ri-error-warning-line ri-lg me-2"></i>
                 {{ session('login-failed') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
         <div class="mb-3">
@@ -33,6 +26,12 @@
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <div class="d-grid gap-1">
+            <button type="submit" class="btn btn-dark">Login</button>
+        </div>
     </form>
+@endsection
+
+@section('btn-action')
+    <a href="/password-reset" class="btn btn-link text-danger">Forget password?</a>
 @endsection
