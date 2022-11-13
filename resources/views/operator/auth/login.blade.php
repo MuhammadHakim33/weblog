@@ -1,4 +1,4 @@
-@extends('admin.auth.layout')
+@extends('operator.auth.layout')
 
 @section('header', 'Login')
 

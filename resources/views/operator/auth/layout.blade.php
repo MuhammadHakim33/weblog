@@ -1,4 +1,4 @@
-@include('admin.partials.head')
+@include('operator.partials.head')
 
 <div id="auth" class="container py-5">
     <div class="card">
@@ -13,4 +13,4 @@
     </div>
 </div>
 
-@include('admin.partials.footer')
+@include('operator.partials.footer')
