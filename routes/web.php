@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,22 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', function () {
-    return view('operator.dashboard.index', ['title' => 'Dashboard']);
-})->middleware('auth');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
-Route::get('/admin/posts', function () {
-    return view('operator.posts.index', ['title' => 'Posts']);
-})->middleware('auth');
-
-Route::get('/admin/posts/create', function () {
-    return view('operator.post_create', ['title' => 'Create Post']);
-})->middleware('auth');
-
-Route::get('/admin/register', [RegistrationController::class, 'index'])->middleware('guest');
-Route::post('/admin/register', [RegistrationController::class, 'store']);
-
-Route::get('/admin/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/admin/login', [LoginController::class, 'authenticate']);
-Route::post('/admin/logout', [LoginController::class, 'logout']);
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout']);
 

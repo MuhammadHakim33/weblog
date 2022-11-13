@@ -22,10 +22,10 @@ class LoginController extends Controller
         if(Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect('/admin');
+            return redirect('/dashboard');
         }
 
-        return redirect('/admin/login')->with('login-failed', 'Email or Password Wrong!!');
+        return redirect('/login')->with('login-failed', 'Email or Password Wrong!!');
     }
 
     public function logout(Request $request)
@@ -33,6 +33,6 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/admin/login');
+        return redirect('/login');
     }
 }

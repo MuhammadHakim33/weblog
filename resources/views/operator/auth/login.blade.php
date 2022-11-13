@@ -3,7 +3,7 @@
 @section('header', 'Login')
 
 @section('form')
-    <form action="/admin/login" method="POST">
+    <form action="/login" method="POST">
         @csrf
         <!-- Alert for successful registration -->
         @if(session('registration-sucess'))

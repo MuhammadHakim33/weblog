@@ -4,7 +4,7 @@
     </a>
     <div class="nav">
         <div class="nav-item">
-            <form action="/admin/logout" method="POST">
+            <form action="/logout" method="POST">
                 @csrf
                 <button class="nav-link px-3 text-white-50 bg-dark btn btn-link" href="#">Logout</button>
             </form>
