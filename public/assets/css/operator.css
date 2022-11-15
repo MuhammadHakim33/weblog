@@ -17,6 +17,7 @@
 }
 
 
+
 /*
  * Sidebar
  */
@@ -25,11 +26,10 @@
     top: 0;
     bottom: 0;
     left: 0;
-    z-index: 100; /* Behind the navbar */
-    padding: 48px 0 0; /* Height of navbar */
+    right: 0;
+    z-index: 1; 
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
-
 .sidebar-sticky {
     height: calc(100vh - 48px);
     overflow-x: hidden;
@@ -52,34 +52,12 @@
 .sidebar-heading {
     font-size: .75rem;
 }
-
-
-/*
- * Navbar
- */
-.navbar-brand {
-    padding-top: .75rem;
-    padding-bottom: .75rem;
-    background-color: rgba(0, 0, 0, .25);
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+.sidebar-toggler {
+    padding: .5rem;
+    z-index: 2;
 }
-.navbar .navbar-toggler {
-    top: .25rem;
-    right: 1rem;
-    border-radius: 0.5px;
-}
-.navbar .form-control {
-    padding: .75rem 1rem;
-}
-
-.form-control-dark {
-    color: #fff;
-    background-color: rgba(255, 255, 255, .1);
-    border-color: rgba(255, 255, 255, .1);
-}
-.form-control-dark:focus {
-    border-color: transparent;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+.sidebar-toggler.btn-light:focus {
+    border: none !important;
 }
 
 

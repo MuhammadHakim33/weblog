@@ -1,21 +1,35 @@
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+<aside id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse bg-white">
     <div class="position-sticky pt-3 sidebar-sticky">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link {{($title == 'Dashboard') ? 'active' : '' }}" aria-current="page" href="/admin">
-                    <i class="ri-home-line"></i>
-                    <P>Dashboard</P>
-                </a>
-            </li>
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-muted text-uppercase">
+        <!-- Brand -->
+        <div class="container-fluid">
+            <img src="{{ asset('assets/img/logo-black.png') }}" alt="Weblog" height="40">
+        </div>
+        <!-- Profile Card -->
+        <div class="container-fluid py-4">
+            @include('operator.partials.profile-card')
+        </div>
+        <!-- Navigation -->
+        <nav class="nav flex-column">
+            <a class="nav-link" aria-current="page" href="/dashboard">
+                <i class="ri-home-line"></i>
+                <P>Dashboard</P>
+            </a>
+            <!-- Heading -->
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
                 <span>Posts</span>
             </h6>
-            <li class="nav-item">
-                <a class="nav-link {{($title == 'Posts') ? 'active' : '' }}" aria-current="page" href="/admin/posts">
-                    <i class="ri-article-line"></i>
-                    <P>All Posts</P>
-                </a>
-            </li>
-        </ul>
+            <a class="nav-link" aria-current="page" href="/posts">
+                <i class="ri-article-line"></i>
+                <P>My Posts</P>
+            </a>
+            <!-- Heading -->
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+                <span>Account</span>
+            </h6>
+            <a class="nav-link" aria-current="page" href="/logout">
+                <i class="ri-logout-box-r-line"></i>
+                <P>Logout</P>
+            </a>
+        </nav>
     </div>
-</nav>
+</aside>
