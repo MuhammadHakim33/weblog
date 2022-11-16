@@ -12,7 +12,7 @@
         <nav class="nav flex-column">
             <a class="nav-link" aria-current="page" href="/dashboard">
                 <i class="ri-home-line"></i>
-                <P>Dashboard</P>
+                Dashboard
             </a>
             <!-- Heading -->
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
@@ -20,7 +20,7 @@
             </h6>
             <a class="nav-link" aria-current="page" href="/posts">
                 <i class="ri-article-line"></i>
-                <P>My Posts</P>
+                My Posts
             </a>
             <!-- Heading -->
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">

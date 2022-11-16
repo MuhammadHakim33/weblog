@@ -16,7 +16,7 @@ btnMenu.addEventListener('click', function() {
 
 // Sidebar menu navigation active state
 sidebarMenu.forEach(element => {
-    if(element.children[1].textContent == document.title) {
+    if(element.textContent.trim() == document.title) {
         element.classList.add("active");
-    }
+    } 
 });
