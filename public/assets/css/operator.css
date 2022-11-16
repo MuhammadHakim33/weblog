@@ -14,10 +14,14 @@
 .btn,
 .form-control,
 .card,
-.alert  {
+.alert,
+.dropdown-menu,
+.form-check-input  {
     border-radius: var(--bs-border-radius);
 }
-
+tbody tr td {
+    padding-top: 1.5rem !important ;
+}
 
 
 /*
