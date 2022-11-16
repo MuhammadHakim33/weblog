@@ -26,10 +26,12 @@
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
                 <span>Account</span>
             </h6>
-            <a class="nav-link" aria-current="page" href="/logout">
-                <i class="ri-logout-box-r-line"></i>
-                <P>Logout</P>
-            </a>
+            <!-- Logout -->
+            <form action="/logout" method="POST">
+                @csrf
+                <button class="nav-link btn btn-link" href="#">
+                <i class="ri-logout-box-r-line"></i>Logout</button>
+            </form>
         </nav>
     </div>
 </aside>

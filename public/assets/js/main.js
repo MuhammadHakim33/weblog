@@ -1,7 +1,7 @@
 const btnMenu = document.getElementById('sidebar-toggler');
 const sidebarMenu = document.querySelectorAll('#sidebarMenu .nav-link');
 
-// Button Menu Sidebar Toggle 
+// Button menu sidebar toggle
 btnMenu.addEventListener('click', function() {
     let btn = this.children[0];
 
@@ -14,10 +14,9 @@ btnMenu.addEventListener('click', function() {
     }
 });
 
+// Sidebar menu navigation active state
 sidebarMenu.forEach(element => {
-    let e = element;
-
-    if(e.children[1].innerHTML == document.title) {
-        e.classList.add("active")
+    if(element.children[1].textContent == document.title) {
+        element.classList.add("active");
     }
 });

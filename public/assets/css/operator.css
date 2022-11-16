@@ -5,8 +5,10 @@
     --bs-border-radius: .1rem;
 }
 
+
+
 /*
- * Component
+ * Overide Style of Components
  */
 .badge,
 .btn,
@@ -39,9 +41,10 @@
     font-weight: 500;
     color: #333;
     display: flex;
+    opacity: .6;
 }
 .sidebar .nav-link.active {
-    color: #2470dc;
+    opacity: 1;
 }
 .sidebar .nav-link i {
     margin-right: .25rem;
@@ -59,6 +62,7 @@
 .sidebar-toggler.btn-light:focus {
     border: none !important;
 }
+
 
 
 /*
