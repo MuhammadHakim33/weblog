@@ -16,7 +16,8 @@
 .card,
 .alert,
 .dropdown-menu,
-.form-check-input  {
+.form-check-input,
+.form-select  {
     border-radius: var(--bs-border-radius);
 }
 tbody tr td {
@@ -91,3 +92,15 @@ tbody tr td {
 #error-body .action {
     max-width: 150px;
 }
+
+
+
+/*
+ * Editor Page
+ */
+ #create-post #thumbnail {
+    display: none;
+ }
+ #create-post .label-thumbnail{
+    height: 6rem;
+ }
