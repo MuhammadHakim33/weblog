@@ -1,32 +1,13 @@
-const btnMenu = document.getElementById('sidebar-toggler');
-const sidebarMenu = document.querySelectorAll('#sidebarMenu .nav-link');
-const inputThumb = document.getElementById('thumbnail');
-const labelThumb = document.querySelector('.label-thumbnail small');
-
-// Button menu sidebar toggle
-if(typeof(sidebarMenu) == 'undefined') {
-    btnMenu.addEventListener('click', function() {
-        let btn = this.children[0];
-    
-        if(btn.classList.contains('ri-menu-line')) {
-            btn.classList.remove('ri-menu-line');
-            btn.classList.add('ri-close-line');
-        } else {
-            btn.classList.remove('ri-close-line');
-            btn.classList.add('ri-menu-line');
-        }
-    });
-}
-
-// Sidebar menu navigation active state
-sidebarMenu.forEach(element => {
-    if(element.textContent.trim() == document.title) {
-        element.classList.add("active");
-    } 
-});
-
-// Summernote setting
 $(document).ready(function() {
+    // Sidebar menu navigation active state
+    $('#sidebarMenu .nav-link').each(function() {
+        if($(this).text().trim() == document.title) {
+            $(this).addClass("active");
+        } 
+    })
+
+    
+    // Summernote setting
     $('#summernote').summernote({
         placeholder: 'Write here ....',
         theme: 'monokai',
@@ -43,12 +24,12 @@ $(document).ready(function() {
         codeviewFilter: false,
         codeviewIframeFilter: true
     });
+
+
+    // Sign that thumblnail has been selected for post
+    $('#thumbnail').change(function(e) {
+        const fileList = e.target.files;
+        $('.label-thumbnail small').text(fileList[0].name);
+        console.log(fileList[0].name);
+    });
 });
-
-// Sign that thumblnail has been selected for post
-inputThumb.addEventListener('change', function(e) {
-    const fileList = e.target.files;
-    labelThumb.textContent = fileList[0].name;
-}, false)
-
-
