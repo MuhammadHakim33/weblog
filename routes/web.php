@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,14 +20,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', function () {
-    return view('admin.dashboard', ['title' => 'Dashboard']);
-})->middleware('auth');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
-Route::get('/admin/register', [RegistrationController::class, 'index'])->middleware('guest');
-Route::post('/admin/register', [RegistrationController::class, 'store']);
+Route::get('/posts', [PostController::class, 'index'])->middleware('auth');
 
-Route::get('/admin/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/admin/login', [LoginController::class, 'authenticate']);
-Route::post('/admin/logout', [LoginController::class, 'logout']);
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout']);
 
