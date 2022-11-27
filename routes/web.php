@@ -23,8 +23,8 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
 Route::get('/posts', [PostController::class, 'index'])->middleware('auth');
-Route::get('/create-post', [PostController::class, 'create'])->middleware('auth');
-Route::post('/create-post', [PostController::class, 'store'])->middleware('auth');
+Route::get('/posts/create', [PostController::class, 'create'])->middleware('auth');
+Route::post('/posts/create', [PostController::class, 'store'])->middleware('auth');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);

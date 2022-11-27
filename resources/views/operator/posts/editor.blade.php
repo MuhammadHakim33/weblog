@@ -1,6 +1,6 @@
 @include('operator.partials.head')
 
-    <form class="container py-5" id="create-post" action="/create-post" method="POST"  enctype="multipart/form-data">
+    <form class="container py-5" id="create-post" action="/posts/create" method="POST"  enctype="multipart/form-data">
         @csrf
         <!-- Header -->
         <header class="d-flex justify-content-between align-items-center">

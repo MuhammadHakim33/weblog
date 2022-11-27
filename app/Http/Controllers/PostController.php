@@ -24,7 +24,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('operator.posts.create', ['title' => 'Create Post']);
+        return view('operator.posts.editor', ['title' => 'Create Post']);
     }
 
     /**

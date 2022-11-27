@@ -7,7 +7,7 @@
         <h2 class="mb-0">Posts</h2>
         <div class="d-flex">
             <button type="button" class="btn btn-outline-dark me-2">Draf</button>
-            <a type="button" href="/create-post" class="btn btn-dark d-flex">
+            <a type="button" href="/posts/create" class="btn btn-dark d-flex">
                 <i class="ri-add-line ri-lg align-self-center me-1"></i>Create Post
             </a>
         </div>
