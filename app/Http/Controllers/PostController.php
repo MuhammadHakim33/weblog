@@ -14,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('operator.posts.index', ['title' => 'My Posts']);
+        return view('operator.posts.index', ['title' => 'All Posts']);
     }
 
     /**
