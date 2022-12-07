@@ -21,7 +21,12 @@ return new class extends Migration
             $table->string('thumbnail');
             $table->text('body');
             $table->foreignId('category_id')->constrained('tbl_categories');
-            $table->enum('status', ['reviewed', 'published', 'rejected', 'draf']);
+            $table->enum('status', [
+                'reviewed',
+                'published',
+                'rejected',
+                'draf'
+            ])->default('draf');
             $table->timestamps();
         });
     }

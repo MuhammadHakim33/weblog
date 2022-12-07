@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -14,7 +16,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('operator.posts.index', ['title' => 'All Posts']);
+        return view('operator.posts.index', [
+            'title' => 'All Posts'
+        ]);
     }
 
     /**
@@ -24,7 +28,14 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('operator.posts.editor', ['title' => 'Create Post']);
+        $categories = DB::table('tbl_categories')
+                        ->select(['id', 'name'])
+                        ->get();
+
+        return view('operator.posts.editor', [
+            'title' => 'Create Post',
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -35,14 +46,40 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        // validate input
+        $request->validate([
             'thumbnail' => 'required|image|max:2048',
             'title' => 'required|max:100',
-            'categotry' => 'required',
+            'category' => 'required',
             'body' => 'required'
         ]);
 
-        dd($validatedData);
+        // Upload thumbnail
+        $thumbnail = $request->file('thumbnail')->store('images/thumbnails');
+
+        // Set status for post base on role creator
+        if(auth()->user()->role == 'administrator') {
+            $status = "published";
+        } else {
+            $status = "reviewed";
+        }
+
+        // Set status for post base on which button clicked
+        if($request->input('action') == 'draf') {
+            $status = 'draf';
+        }
+
+        // Insert data
+        Post::create([
+            'creator_id' => auth()->user()->id,
+            'title' => $request->title,
+            'thumbnail' => $thumbnail,
+            'body' => $request->body,
+            'category_id' => $request->category,
+            'status' => $status,
+        ]);
+
+        return redirect('posts')->with('insert', 'Create New Post Success!');
     }
 
     /**

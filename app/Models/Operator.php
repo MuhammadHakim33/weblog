@@ -11,6 +11,8 @@ class Operator extends Authenticatable
 
     protected $table = 'tbl_operators';
 
+    public $incrementing = false;
+
     protected $fillable = [
         'id',
         'name',

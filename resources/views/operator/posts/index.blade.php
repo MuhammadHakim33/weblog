@@ -10,6 +10,14 @@
         </a>
     </header>
 
+    <!-- Alert when new posts created -->
+    @if(session('insert'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{session('insert')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <!-- Card Table -->
     <div class="card">
         <div class="card-body">

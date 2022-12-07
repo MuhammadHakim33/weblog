@@ -10,8 +10,8 @@
                 </a>
             </div>
             <div id="right-side" class="d-flex">
-                <button type="button" class="btn btn-outline-dark me-2">Draf</button>
-                <button type="submit" class="btn btn-dark d-flex">Submit for review</button>
+                <button type="submit" name="action" value="draf" class="btn btn-outline-dark me-2">Draf</button>
+                <button type="submit" name="action" value="insert" class="btn btn-dark d-flex">Publish</button>
             </div>
         </header>
 
@@ -39,10 +39,11 @@
             </div>
             <!-- Category -->
             <div class="mb-4">
-                <select id="categotry" class="form-select" name="categotry" value="{{ old('categotry') }}">
-                    <option selected value="">Categotry</option>
-                    <option value="Sport">Sport</option>
-                    <option value="Technology">Technology</option>
+                <select id="category" class="form-select" name="category" value="{{ old('categotry') }}">
+                    <option selected value="">Category</option>
+                    @foreach($categories as $category)
+                        <option value="{{$category->id}}">{{$category->name}}</option>
+                    @endforeach
                 </select>
                 @error('categotry')
                     <div class="form-text text-danger">{{ $message }}</div>
