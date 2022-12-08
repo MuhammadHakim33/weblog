@@ -11,9 +11,9 @@
     </header>
 
     <!-- Alert when new posts created -->
-    @if(session('insert'))
+    @if(session('alert'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{session('insert')}}
+        {{session('alert')}}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
@@ -79,7 +79,13 @@
                                             @endif
                                         </li>
                                         <li><a class="dropdown-item" href="#">Edit</a></li>
-                                        <li><a class="dropdown-item" href="#">Delete</a></li>
+                                        <li>
+                                            <form action="/posts/{{$post->id}}" method="post">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="dropdown-item" onclick="return confirm('Are you sure?')">Delete</button>
+                                            </form>    
+                                        </li>
                                     </ul>
                                 </div>
                             </td>

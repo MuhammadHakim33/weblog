@@ -17,7 +17,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = DB::table('tbl_posts')
-                        ->select(['id', 'title', 'status', 'created_at'])
+                        ->select(['id', 'title', 'slug', 'status', 'created_at'])
                         ->where('status', '!=', 'draf')
                         ->get();
 
@@ -85,7 +85,7 @@ class PostController extends Controller
             'status' => $status,
         ]);
 
-        return redirect('posts')->with('insert', 'Create New Post Success!');
+        return redirect('posts')->with('alert', 'Create New Post Success!');
     }
 
     /**
@@ -130,6 +130,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        Post::destroy($post->id);
+        return redirect('posts')->with('alert', 'Post Has Been Deleted!');
     }
 }
