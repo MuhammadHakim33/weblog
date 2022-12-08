@@ -96,6 +96,15 @@ tbody tr td {
 
 
 /*
+ * Table Post
+ */
+#post .table-responsive {
+    min-height: 50vh;
+}
+ 
+
+
+/*
  * Editor Page
  */
  #create-post #thumbnail {

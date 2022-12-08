@@ -16,8 +16,14 @@ class PostController extends Controller
      */
     public function index()
     {
+        $posts = DB::table('tbl_posts')
+                        ->select(['id', 'title', 'status', 'created_at'])
+                        ->where('status', '!=', 'draf')
+                        ->get();
+
         return view('operator.posts.index', [
-            'title' => 'All Posts'
+            'title' => 'All Posts',
+            'posts' => $posts
         ]);
     }
 
@@ -49,7 +55,7 @@ class PostController extends Controller
         // validate input
         $request->validate([
             'thumbnail' => 'required|image|max:2048',
-            'title' => 'required|max:100',
+            'title' => 'required',
             'category' => 'required',
             'body' => 'required'
         ]);

@@ -1,7 +1,7 @@
 @extends('operator.layout')
 
 @section('content')
-<div class="container-fluid mt-4 px-4">
+<div id="post" class="container-fluid mt-4 px-4">
     <!-- Header -->
     <header class="d-flex justify-content-between align-items-center mb-5">
         <h2 class="mb-0">Posts</h2>
@@ -12,14 +12,14 @@
 
     <!-- Alert when new posts created -->
     @if(session('insert'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{session('insert')}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{session('insert')}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     @endif
 
     <!-- Card Table -->
-    <div class="card">
+    <div class="card" >
         <div class="card-body">
             <!-- Filter & Search -->
             <div class="preference mb-4 d-flex justify-content-between align-items-center">
@@ -42,31 +42,49 @@
                             <th scope="col">Title</th>
                             <th scope="col">Date</th>
                             <th scope="col" style="width: 15%;">Status</th>
-                            <th scope="col" style="width: 15%;"></th> <!-- Action Heading -->
+                            <th scope="col" style="width: 10%;"></th> <!-- Action Heading -->
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($posts as $post)
                         <tr>
                             <td>
                                 <input class="form-check-input" type="checkbox" value="" id="id">
                             </td>
                             <td>
-                                <h6 class="mb-0 fw-semibold">Bus Listrik Inka Siap Jadi Kendaraan Operasional KTT G20.</h6>
+                                <h6 class="mb-0 fw-semibold">{{$post->title}}</h6>
                             </td>
                             <td>
-                                <p class="mb-0 fw-semibold">2 November 2022</p>
+                                <p class="mb-0 fw-semibold">{{$post->created_at}}</p>
                                 <p><small>Added</small></p>
                             </td>
                             <td>
-                                <span class="badge text-bg-success">Published</span>
+                                @if($post->status == 'rejected')
+                                    <span class="badge text-bg-danger text-capitalize">{{$post->status}}</span>
+                                @else
+                                    <span class="badge text-bg-success text-capitalize">{{$post->status}}</span>
+                                @endif
                             </td>
                             <td>
-                                <div class="btn-group btn-group-sm" role="group" aria-label="Button">
-                                    <a type="button" class="btn btn-outline-dark" href="">Edit</a>
-                                    <button type="button" class="btn btn-outline-dark">Delete</button>
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Action
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            @if($post->status == 'rejected')
+                                                <a class="dropdown-item" href="#">Publish</a>
+                                            @elseif($post->status == 'published')
+                                                <a class="dropdown-item" href="#">Takedown</a>
+                                            @endif
+                                        </li>
+                                        <li><a class="dropdown-item" href="#">Edit</a></li>
+                                        <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    </ul>
                                 </div>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
