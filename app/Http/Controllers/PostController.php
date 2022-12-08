@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostController extends Controller
 {
@@ -38,7 +38,7 @@ class PostController extends Controller
                         ->select(['id', 'name'])
                         ->get();
 
-        return view('operator.posts.editor', [
+        return view('operator.posts.create', [
             'title' => 'Create Post',
             'categories' => $categories
         ]);
@@ -79,6 +79,7 @@ class PostController extends Controller
         Post::create([
             'creator_id' => auth()->user()->id,
             'title' => $request->title,
+            'slug' => $this->slug($request->title),
             'thumbnail' => $thumbnail,
             'body' => $request->body,
             'category_id' => $request->category,
@@ -107,7 +108,15 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $categories = DB::table('tbl_categories')
+                        ->select(['id', 'name'])
+                        ->get();
+
+        return view('operator.posts.edit', [
+            'title' => 'Edit Post',
+            'categories' => $categories,
+            'post' => $post
+        ]);
     }
 
     /**
@@ -119,7 +128,44 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        // validate input
+        $request->validate([
+            'thumbnail' => 'image|max:2048',
+            'title' => 'required',
+            'category' => 'required',
+            'body' => 'required'
+        ]);
+
+        // Set status for post base on role creator
+        if(auth()->user()->role == 'administrator') {
+            $status = "published";
+        } else {
+            $status = "reviewed";
+        }
+
+        // Set status for post base on which button clicked
+        if($request->input('action') == 'draf') {
+            $status = 'draf';
+        }
+
+        // Data 
+        $data = [
+            'creator_id' => auth()->user()->id,
+            'title' => $request->title,
+            'body' => $request->body,
+            'category_id' => $request->category,
+            'status' => $status,
+        ];
+
+        // Check if title change, then the slug will change too
+        if($request->title != $post->title) {
+            $data['slug'] = $this->slug($request->title);
+        }
+
+        // update data
+        Post::where('id', $post->id)->update($data);
+
+        return redirect('posts')->with('alert', 'Update Post Success!');
     }
 
     /**
@@ -132,5 +178,13 @@ class PostController extends Controller
     {
         Post::destroy($post->id);
         return redirect('posts')->with('alert', 'Post Has Been Deleted!');
+    }
+
+    /**
+     * Create Slug
+     */
+    public function slug($title)
+    {
+        return SlugService::createSlug(Post::class, 'slug', $title);
     }
 }

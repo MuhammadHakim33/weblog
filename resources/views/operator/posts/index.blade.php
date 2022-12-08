@@ -78,7 +78,11 @@
                                                 <a class="dropdown-item" href="#">Takedown</a>
                                             @endif
                                         </li>
-                                        <li><a class="dropdown-item" href="#">Edit</a></li>
+                                        <!-- Edit -->
+                                        <li>
+                                            <a class="dropdown-item" href="/posts/{{$post->id}}/edit">Edit</a>
+                                        </li>
+                                        <!-- Delete -->
                                         <li>
                                             <form action="/posts/{{$post->id}}" method="post">
                                                 @method('delete')
