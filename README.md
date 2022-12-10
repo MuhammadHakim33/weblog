@@ -17,7 +17,7 @@ Weblog is a news website or blog. The owner can manage the website. Viewers can 
 - **[Database Scheme By Hakim](https://dbdiagram.io/d/634426e7f0018a1c5fd04bdf)**
 
 
-### How To Use
+### How To Run
 
 #### 1. Install Composer
 ```
