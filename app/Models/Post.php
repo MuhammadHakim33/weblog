@@ -26,6 +26,17 @@ class Post extends Model
         'status',
     ];
 
+    /**
+     * Relationships 
+     */
+    public function creator()
+    {
+        return $this->belongsTo(Operator::class, 'creator_id', 'id');
+    }
+
+    /**
+     * Slug Model
+     */
     public function sluggable(): array
     {
         return [

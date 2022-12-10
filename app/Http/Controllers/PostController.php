@@ -14,12 +14,12 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Post $post)
     {
-        $posts = DB::table('tbl_posts')
-                        ->select(['id', 'title', 'slug', 'status', 'created_at'])
-                        ->where('status', '!=', 'draf')
-                        ->get();
+        $posts = Post::with('creator')
+                    ->where('status', '!=', 'draf')
+                    ->latest()
+                    ->get();
 
         return view('operator.posts.index', [
             'title' => 'All Posts',

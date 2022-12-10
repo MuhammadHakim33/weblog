@@ -40,8 +40,9 @@
                         <tr class="table-dark">
                             <th scope="col" style="width: 2%;"><input class="form-check-input" type="checkbox" value="" id="id"></th>
                             <th scope="col">Title</th>
+                            <th scope="col" style="width: 20%;">Creator</th>
                             <th scope="col">Date</th>
-                            <th scope="col" style="width: 15%;">Status</th>
+                            <th scope="col" style="width: 10%;">Status</th>
                             <th scope="col" style="width: 10%;"></th> <!-- Action Heading -->
                         </tr>
                     </thead>
@@ -53,6 +54,9 @@
                             </td>
                             <td>
                                 <h6 class="mb-0 fw-semibold">{{$post->title}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="mb-0">{{$post->creator->name}}</h6>
                             </td>
                             <td>
                                 <p class="mb-0 fw-semibold">{{$post->created_at}}</p>
