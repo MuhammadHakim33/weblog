@@ -77,9 +77,19 @@
                                     <ul class="dropdown-menu">
                                         <li>
                                             @if($post->status == 'rejected')
-                                                <a class="dropdown-item" href="#">Publish</a>
+                                                <!-- Publish -->
+                                                <form action="/posts/{{$post->id}}/publish" method="post">
+                                                    @method('put')
+                                                    @csrf
+                                                    <button class="dropdown-item" onclick="return confirm('Are you sure?')">Publish</button>
+                                                </form> 
                                             @elseif($post->status == 'published')
-                                                <a class="dropdown-item" href="#">Takedown</a>
+                                                <!-- Reject -->
+                                                <form action="/posts/{{$post->id}}/reject" method="post">
+                                                    @method('put')
+                                                    @csrf
+                                                    <button class="dropdown-item" onclick="return confirm('Are you sure?')">Rejected</button>
+                                                </form> 
                                             @endif
                                         </li>
                                         <!-- Edit -->

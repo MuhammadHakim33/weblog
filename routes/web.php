@@ -23,6 +23,8 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
 Route::resource('/posts', PostController::class)->middleware('auth');
+Route::put('/posts/{id}/reject', [PostController::class, 'reject'])->middleware('auth');
+Route::put('/posts/{id}/publish', [PostController::class, 'publish'])->middleware('auth');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);

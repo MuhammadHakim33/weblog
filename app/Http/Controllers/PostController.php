@@ -181,10 +181,49 @@ class PostController extends Controller
     }
 
     /**
+     * Publish Post
+     * 
+     * @param  Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function publish(Request $request)
+    {
+        // Data 
+        $data = [
+            'status' => 'published',
+        ];
+
+        // update data
+        Post::where('id', $request->id)->update($data);
+
+        return redirect('posts')->with('alert', 'Post Has Been Published!');
+    }
+
+    /**
+     * Reject Post
+     * 
+     * @param  Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function reject(Request $request)
+    {
+        // Data 
+        $data = [
+            'status' => 'rejected',
+        ];
+
+        // update data
+        Post::where('id', $request->id)->update($data);
+
+        return redirect('posts')->with('alert', 'Post Has Been Rejected!');
+    }
+
+    /**
      * Create Slug
      */
     public function slug($title)
     {
         return SlugService::createSlug(Post::class, 'slug', $title);
     }
+    
 }
