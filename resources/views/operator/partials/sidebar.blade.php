@@ -20,12 +20,40 @@
             </h6>
             <a class="nav-link" aria-current="page" href="/posts">
                 <i class="ri-article-line"></i>
-                My Posts
+                All Posts
+            </a>
+            <a class="nav-link" aria-current="page" href="/posts">
+                <i class="ri-draft-line"></i>
+                Drafts
+            </a>
+            <a class="nav-link" aria-current="page" href="/categories">
+                <i class="ri-file-list-line"></i>
+                Categories
+            </a>
+            <a class="nav-link" aria-current="page" href="/comments">
+                <i class="ri-discuss-line"></i>
+                Comments
+            </a>
+            <!-- Heading -->
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+                <span>Users</span>
+            </h6>
+            <a class="nav-link" aria-current="page" href="/authors">
+                <i class="ri-pencil-line"></i>
+                Autors
+            </a>
+            <a class="nav-link" aria-current="page" href="/subscribers">
+                <i class="ri-team-line"></i>
+                Subscribers
             </a>
             <!-- Heading -->
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
                 <span>Account</span>
             </h6>
+            <a class="nav-link" aria-current="page" href="/profile">
+                <i class="ri-user-line"></i>
+                Profile
+            </a>
             <!-- Logout -->
             <form action="/logout" method="POST">
                 @csrf

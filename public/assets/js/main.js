@@ -1,22 +1,35 @@
-const btnMenu = document.getElementById('sidebar-toggler');
-const sidebarMenu = document.querySelectorAll('#sidebarMenu .nav-link');
+$(document).ready(function() {
+    // Sidebar menu navigation active state
+    $('#sidebarMenu .nav-link').each(function() {
+        if($(this).text().trim() == document.title) {
+            $(this).addClass("active");
+        } 
+    })
 
-// Button menu sidebar toggle
-btnMenu.addEventListener('click', function() {
-    let btn = this.children[0];
+    
+    // Summernote setting
+    $('#summernote').summernote({
+        placeholder: 'Write here ....',
+        theme: 'monokai',
+        tabsize: 2,
+        minHeight: 700,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'fontsize']],
+            ['para', ['ul', 'ol', 'paragraph', 'height']],
+            ['insert', ['link', 'picture']],
+            ['misc', ['undo', 'redo']],
+            ['view', ['help', 'codeview']]
+        ],
+        codeviewFilter: false,
+        codeviewIframeFilter: true
+    });
 
-    if(btn.classList.contains('ri-menu-line')) {
-        btn.classList.remove('ri-menu-line');
-        btn.classList.add('ri-close-line');
-    } else {
-        btn.classList.remove('ri-close-line');
-        btn.classList.add('ri-menu-line');
-    }
-});
 
-// Sidebar menu navigation active state
-sidebarMenu.forEach(element => {
-    if(element.textContent.trim() == document.title) {
-        element.classList.add("active");
-    } 
+    // Sign that thumblnail has been selected for post
+    $('#thumbnail').change(function(e) {
+        const fileList = e.target.files;
+        $('.label-thumbnail small').text(fileList[0].name);
+        console.log(fileList[0].name);
+    });
 });

@@ -1,20 +1,25 @@
 @extends('operator.layout')
 
 @section('content')
-<div class="container-fluid mt-4 px-4">
-        <!-- Header -->
+<div id="post" class="container-fluid mt-4 px-4">
+    <!-- Header -->
     <header class="d-flex justify-content-between align-items-center mb-5">
         <h2 class="mb-0">Posts</h2>
-        <div class="d-flex">
-            <button type="button" class="btn btn-outline-dark me-2">Draf</button>
-            <button type="button" class="btn btn-dark d-flex">
-                <i class="ri-add-line ri-lg align-self-center me-1"></i>Create Post
-            </button>
-        </div>
+        <a type="button" href="/posts/create" class="btn btn-dark d-flex">
+            <i class="ri-add-line ri-lg align-self-center me-1"></i>Create Post
+        </a>
     </header>
 
+    <!-- Alert when new posts created -->
+    @if(session('alert'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{session('alert')}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
     <!-- Card Table -->
-    <div class="card">
+    <div class="card" >
         <div class="card-body">
             <!-- Filter & Search -->
             <div class="preference mb-4 d-flex justify-content-between align-items-center">
@@ -35,33 +40,75 @@
                         <tr class="table-dark">
                             <th scope="col" style="width: 2%;"><input class="form-check-input" type="checkbox" value="" id="id"></th>
                             <th scope="col">Title</th>
+                            <th scope="col" style="width: 20%;">Creator</th>
                             <th scope="col">Date</th>
-                            <th scope="col" style="width: 15%;">Status</th>
-                            <th scope="col" style="width: 15%;"></th> <!-- Action Heading -->
+                            <th scope="col" style="width: 10%;">Status</th>
+                            <th scope="col" style="width: 10%;"></th> <!-- Action Heading -->
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($posts as $post)
                         <tr>
                             <td>
                                 <input class="form-check-input" type="checkbox" value="" id="id">
                             </td>
                             <td>
-                                <h6 class="mb-0 fw-semibold">Bus Listrik Inka Siap Jadi Kendaraan Operasional KTT G20.</h6>
+                                <h6 class="mb-0 fw-semibold">{{$post->title}}</h6>
                             </td>
                             <td>
-                                <p class="mb-0 fw-semibold">2 November 2022</p>
+                                <h6 class="mb-0">{{$post->creator->name}}</h6>
+                            </td>
+                            <td>
+                                <p class="mb-0 fw-semibold">{{$post->created_at}}</p>
                                 <p><small>Added</small></p>
                             </td>
                             <td>
-                                <span class="badge text-bg-success">Published</span>
+                                @if($post->status == 'rejected')
+                                    <span class="badge text-bg-danger text-capitalize">{{$post->status}}</span>
+                                @else
+                                    <span class="badge text-bg-success text-capitalize">{{$post->status}}</span>
+                                @endif
                             </td>
                             <td>
-                                <div class="btn-group btn-group-sm" role="group" aria-label="Button">
-                                    <a type="button" class="btn btn-outline-dark" href="">Edit</a>
-                                    <button type="button" class="btn btn-outline-dark">Delete</button>
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Action
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            @if($post->status == 'rejected')
+                                                <!-- Publish -->
+                                                <form action="/posts/{{$post->id}}/publish" method="post">
+                                                    @method('put')
+                                                    @csrf
+                                                    <button class="dropdown-item" onclick="return confirm('Are you sure?')">Publish</button>
+                                                </form> 
+                                            @elseif($post->status == 'published')
+                                                <!-- Reject -->
+                                                <form action="/posts/{{$post->id}}/reject" method="post">
+                                                    @method('put')
+                                                    @csrf
+                                                    <button class="dropdown-item" onclick="return confirm('Are you sure?')">Rejected</button>
+                                                </form> 
+                                            @endif
+                                        </li>
+                                        <!-- Edit -->
+                                        <li>
+                                            <a class="dropdown-item" href="/posts/{{$post->id}}/edit">Edit</a>
+                                        </li>
+                                        <!-- Delete -->
+                                        <li>
+                                            <form action="/posts/{{$post->id}}" method="post">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="dropdown-item" onclick="return confirm('Are you sure?')">Delete</button>
+                                            </form>    
+                                        </li>
+                                    </ul>
                                 </div>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
