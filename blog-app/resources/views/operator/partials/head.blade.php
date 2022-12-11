@@ -13,5 +13,6 @@
     <!-- custom -->
     <link rel="stylesheet" href="{{ asset('assets/css/operator.css') }}">
     <title>{{ $title }}</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-light">

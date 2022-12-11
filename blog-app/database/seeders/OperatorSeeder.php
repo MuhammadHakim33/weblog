@@ -28,5 +28,17 @@ class OperatorSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
+
+        DB::table('tbl_operators')->insert([
+            'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+            'image' => 'profile-default.jpg',
+            'name' => 'Morgan Le Fae',
+            'slug' => 'morgan-le-fae',
+            'email' => 'morgan@gmail.com',
+            'password' => Hash::make('12345'),
+            'role' => 'administrator',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
     }
 }
