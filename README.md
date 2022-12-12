@@ -37,3 +37,11 @@ php artisan db:seed
 ```
 php artisan serve
 ```
+
+
+### Access Web App
+
+#### Administrator account
+
+Email : john@gmail.com
+Password : 12345
