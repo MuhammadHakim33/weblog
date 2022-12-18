@@ -20,12 +20,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
-Route::resource('/posts', PostController::class)->middleware('auth');
+/**
+ * Post Route
+ */
+Route::get('/posts/drafts', [PostController::class, 'draft'])->middleware('auth');
 Route::put('/posts/{id}/reject', [PostController::class, 'reject'])->middleware('auth');
 Route::put('/posts/{id}/publish', [PostController::class, 'publish'])->middleware('auth');
+Route::resource('/posts', PostController::class)->middleware('auth');
 
+/**
+ * Auth Route
+ */
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
