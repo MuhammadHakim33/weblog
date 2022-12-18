@@ -35,7 +35,7 @@
             </div>
             <!-- Table -->
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-hover align-middle">
                     <thead>
                         <tr class="table-dark">
                             <th scope="col" style="width: 2%;"><input class="form-check-input" type="checkbox" value="" id="id"></th>
