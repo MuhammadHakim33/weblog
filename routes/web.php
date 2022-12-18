@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,13 @@ Route::get('/posts/drafts', [PostController::class, 'draft'])->middleware('auth'
 Route::put('/posts/{id}/reject', [PostController::class, 'reject'])->middleware('auth');
 Route::put('/posts/{id}/publish', [PostController::class, 'publish'])->middleware('auth');
 Route::resource('/posts', PostController::class)->middleware('auth');
+
+
+/**
+ * Category Route
+ */
+Route::resource('/categories', CategoryController::class)->middleware('auth');
+
 
 /**
  * Auth Route
