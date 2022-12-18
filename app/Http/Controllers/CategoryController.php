@@ -98,7 +98,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Category::destroy($id);
+        return redirect('categories')->with('alert', ' Category Has Been Deleted!');
     }
 
     /**
