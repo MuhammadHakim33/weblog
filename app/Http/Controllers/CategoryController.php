@@ -43,10 +43,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        // Validation Input
         $request->validate([
             'name' => 'required'
         ]);
 
+        // Insert Data
         Category::create([
             'name' => $request->name,
             'slug' => $this->slug($request->name),
@@ -70,24 +72,46 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return view('operator.categories.edit', [
+            'title' => 'Categories',
+            'category' => $category
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        // Validate input
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        // Data
+        $data = [
+            'name' => $request->name,
+            'description' => $request->description
+        ];
+
+        // Check if name change, then the slug will change too
+        if($request->name != $category->name) {
+            $data['slug'] = $this->slug($request->name);
+        }
+
+        // Update data
+        Category::where('id', $category->id)->update($data);
+
+        return redirect('categories')->with('alert-success', 'Update Category Success!');
     }
 
     /**
@@ -104,6 +128,7 @@ class CategoryController extends Controller
         } catch (\Throwable $th) {
             return redirect('categories')->with('alert-danger', 'Category Cannot Be Deleted! : This Category is Connected with Several Posts');
         }
+
         return redirect('categories')->with('alert-success', ' Category Has Been Deleted!');
     }
 
