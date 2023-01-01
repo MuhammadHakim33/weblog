@@ -10,10 +10,18 @@
         </a>
     </header>
 
-    <!-- Alert when new categories created -->
-    @if(session('alert'))
+    <!-- Alert when new categories created or deleted -->
+    @if(session('alert-success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{session('alert')}}
+        {{session('alert-success')}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
+    <!-- Alert when new categories created or deleted -->
+    @if(session('alert-danger'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{session('alert-danger')}}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif

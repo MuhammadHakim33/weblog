@@ -53,7 +53,7 @@ class CategoryController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect('categories')->with('alert', 'Create New Category Success!');
+        return redirect('categories')->with('alert-success', 'Create New Category Success!');
     }
 
     /**
@@ -98,8 +98,13 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::destroy($id);
-        return redirect('categories')->with('alert', ' Category Has Been Deleted!');
+        // Check if the category is connected with several posts 
+        try {
+            Category::destroy($id);
+        } catch (\Throwable $th) {
+            return redirect('categories')->with('alert-danger', 'Category Cannot Be Deleted! : This Category is Connected with Several Posts');
+        }
+        return redirect('categories')->with('alert-success', ' Category Has Been Deleted!');
     }
 
     /**
