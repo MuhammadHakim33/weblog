@@ -18,39 +18,42 @@
                     </nav>
                 </div>
                 <div class="card-body tab-content" id="nav-tabContent">
+                    <!-- Alert when new posts created -->
+                    @if(session('alert'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{session('alert')}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
+                    
                     <!-- My Details Form -->
                     <div class="tab-pane fade show active" id="nav-my-details" role="tabpanel" aria-labelledby="nav-my-details-tab" tabindex="0">
-                        <form action="" method="post">
+                        <form action="/profile/{{$user->id}}" method="post" enctype="multipart/form-data">
                             @method('put')
                             @csrf
                             <div class="mb-3">
                                 <label for="input-name" class="form-label">Name</label>
-                                <input type="text" class="form-control" name="name" id="input-name" value="">
+                                <input type="text" class="form-control" name="name" id="input-name" value="{{$user->name}}">
                             </div>
                             <div class="mb-3">
                                 <label for="input-email" class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" id="input-email" value="">
+                                <input type="email" class="form-control" name="email" id="input-email" value="{{$user->email}}">
                             </div>
                             <div class="mb-3">
-                                <label for="input-telp" class="form-label">Telp</label>
-                                <input type="text" class="form-control" name="telp" id="input-telp" value="">
+                                <label for="input-role" class="form-label">Role</label>
+                                <input type="text" class="form-control text-capitalize" name="role" id="input-role" value="{{$user->role}}" readonly>
+                                <div id="role-help" class="form-text">You can't change role here, please contact other admin</div>
                             </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">Photo</label>
                                 <div class="wrapper d-flex justify-content-between g-2">
-                                    <img src="" alt="" srcset="" class="w-25 ratio ratio-1x1 img-thumbnail ">
+                                    <img src="{{ asset('storage/'. $user->image )}}" alt="" srcset="" class="w-25 ratio ratio-1x1 img-thumbnail ">
                                     <label for="thumbnail" class="label-thumbnail d-flex flex-column justify-content-center align-items-center btn bg-white border border-dark border-opacity-25 w-100 ms-3">
                                         <h6 class="d-flex align-items-center"><i class="ri-upload-2-line me-2"></i>Upload Image</h6>
                                         <small class="mb-0">png jpg jpeg max 2MB</small>
                                     </label>
                                     <input class="form-control" name="thumbnail" type="file" id="thumbnail" accept=".jpg, .jpeg, .png">
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="input-contact" class="form-label">Contact</label>
-                                <input type="text" class="form-control mb-2" name="contact-facebook" id="input-contact" placeholder="Facebook" value="">
-                                <input type="text" class="form-control mb-2" name="contact-twitter" id="input-contact" placeholder="Twitter" value="">
-                                <input type="text" class="form-control" name="contact-linkedin" id="input-contact" placeholder="Linkedin" value="">
                             </div>
                             <div class="d-grid d-md-flex justify-content-md-end">
                                 <button class="btn btn-dark">Save Changes</button>

@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OperatorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,11 +44,8 @@ Route::resource('/categories', CategoryController::class)->middleware('auth');
 /**
  * Profile Route
  */
-Route::get('/profile', function() {
-    return view('operator.profile.index', [
-        'title' => "Profile"
-    ]);
-})->middleware('auth');
+Route::get('/profile', [OperatorController::class, 'index'])->middleware('auth');
+Route::put('/profile/{id}', [OperatorController::class, 'update'])->middleware('auth');
 
 
 /**
