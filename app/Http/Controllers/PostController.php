@@ -158,6 +158,11 @@ class PostController extends Controller
             'status' => $status,
         ];
 
+        // Update photo
+        if($request->hasFile('thumbnail')) {
+            $data['thumbnail'] = $request->file('thumbnail')->store('images/thumbnails');
+        }
+
         // Check if title change, then the slug will change too
         if($request->title != $post->title) {
             $data['slug'] = $this->slug($request->title);

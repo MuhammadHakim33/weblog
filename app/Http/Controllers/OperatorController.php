@@ -27,7 +27,7 @@ class OperatorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Operator  $Operator
+     * @param  Illuminate\Support\Facades\Auth  $auth
      * @return \Illuminate\Http\Response
      */
 
