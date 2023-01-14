@@ -22,8 +22,8 @@ Route::get('/', function () {
 });
 
 
-
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+
 
 /**
  * Post Route
@@ -38,6 +38,16 @@ Route::resource('/posts', PostController::class)->middleware('auth');
  * Category Route
  */
 Route::resource('/categories', CategoryController::class)->middleware('auth');
+
+
+/**
+ * Profile Route
+ */
+Route::get('/profile', function() {
+    return view('operator.profile.index', [
+        'title' => "Profile"
+    ]);
+})->middleware('auth');
 
 
 /**

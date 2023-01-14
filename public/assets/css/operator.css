@@ -105,9 +105,9 @@ tbody tr td {
 
 
 /*
- * Editor Page
+ * Form
  */
- #create-post #thumbnail {
+ form #thumbnail {
     display: none;
  }
  #create-post .label-thumbnail{
