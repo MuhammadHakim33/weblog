@@ -19,7 +19,7 @@ class OperatorSeeder extends Seeder
     {
         DB::table('tbl_operators')->insert([
             'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-            'image' => 'profile-default.jpg',
+            'image' => 'images\profiles\profile-default.jpg',
             'name' => 'John Doe',
             'slug' => 'john-doe',
             'email' => 'john@gmail.com',
