@@ -18,14 +18,20 @@
                     </nav>
                 </div>
                 <div class="card-body tab-content" id="nav-tabContent">
-                    <!-- Alert when new posts created -->
+                    <!-- Alert -->
                     @if(session('alert'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{session('alert')}}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     @endif
-                    
+                    @if(session('danger'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{session('danger')}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
+
                     <!-- My Details Form -->
                     <div class="tab-pane fade show active" id="nav-my-details" role="tabpanel" aria-labelledby="nav-my-details-tab" tabindex="0">
                         <form action="/profile/{{$user->id}}" method="post" enctype="multipart/form-data">
@@ -60,18 +66,31 @@
                             </div>
                         </form>
                     </div>
-                    <!-- Password Form -->
+                    <!-- Change Password Form -->
                     <div class="tab-pane fade" id="nav-password" role="tabpanel" aria-labelledby="nav-password-tab" tabindex="0">
-                        <form action="" method="post">
+                        <form action="/change-password" method="post">
                             @method('put')
                             @csrf
                             <div class="mb-3">
-                                <label for="input-old-password" class="form-label">Old Password</label>
-                                <input type="password" class="form-control" name="old-password" id="input-name" value="">
+                                <label for="input-oldPassword" class="form-label">Old Password</label>
+                                <input type="password" class="form-control" name="oldPassword" id="input-oldPassword" value="">
+                                @error('oldPassword')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="input-new-password" class="form-label">New Password</label>
-                                <input type="password" class="form-control" name="new-password" id="input-name" value="">
+                                <label for="input-newPassword" class="form-label">New Password</label>
+                                <input type="password" class="form-control" name="newPassword" id="input-newPassword" value="">
+                                @error('newPassword')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-retypePassword" class="form-label">Retype New Password</label>
+                                <input type="password" class="form-control" name="retypePassword" id="input-retypePassword" value="">
+                                @error('retypePassword')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="d-grid d-md-flex justify-content-md-end">
                                 <button class="btn btn-dark">Save Changes</button>
