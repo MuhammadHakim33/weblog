@@ -4,6 +4,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\PasswordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,8 +24,8 @@ Route::get('/', function () {
 });
 
 
-
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+
 
 /**
  * Post Route
@@ -41,9 +43,21 @@ Route::resource('/categories', CategoryController::class)->middleware('auth');
 
 
 /**
+ * Profile Route
+ */
+Route::get('/profile', [OperatorController::class, 'index'])->middleware('auth');
+Route::put('/profile/{id}', [OperatorController::class, 'update'])->middleware('auth');
+
+
+/**
  * Auth Route
  */
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
+
+/**
+ * Manage Password Route
+ */
+Route::put('/change-password', [PasswordController::class, 'change'])->middleware('auth');

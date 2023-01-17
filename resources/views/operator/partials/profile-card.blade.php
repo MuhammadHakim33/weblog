@@ -2,7 +2,7 @@
     <div class="card-body d-flex px-0">
         <!-- Picture -->
         <div class="profile-picture me-2">
-            <img src="{{ asset('storage/images/profiles/' . auth()->user()->image) }}" alt="Profile Picture" height="40">
+            <img src="{{ asset('storage/' . auth()->user()->image) }}" alt="Profile Picture" height="40">
         </div>
         <!-- info -->
         <div class="profile-info">
