@@ -22,7 +22,7 @@
                 <i class="ri-article-line"></i>
                 All Posts
             </a>
-            <a class="nav-link" aria-current="page" href="/posts">
+            <a class="nav-link" aria-current="page" href="/posts/drafts">
                 <i class="ri-draft-line"></i>
                 Drafts
             </a>

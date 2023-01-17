@@ -144,7 +144,8 @@ class PostController extends Controller
         }
 
         // Set status for post base on which button clicked
-        if($request->input('action') == 'draf') {
+        // or if initial status is draft, when update is still draft
+        if($request->input('action') == 'draf' || $post->status == 'draf') {
             $status = 'draf';
         }
 
@@ -216,6 +217,24 @@ class PostController extends Controller
         Post::where('id', $request->id)->update($data);
 
         return redirect('posts')->with('alert', 'Post Has Been Rejected!');
+    }
+
+    /**
+     * Display a listing of the draft post.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function draft(Post $post)
+    {
+        $posts = Post::with('creator')
+                    ->where('status', 'draf')
+                    ->latest()
+                    ->get();
+
+        return view('operator.drafts.index', [
+            'title' => 'Drafts',
+            'posts' => $posts
+        ]);
     }
 
     /**

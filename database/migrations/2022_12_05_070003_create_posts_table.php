@@ -15,12 +15,16 @@ return new class extends Migration
     {
         Schema::create('tbl_posts', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignUuid('creator_id')->constrained('tbl_operators');
+            $table->foreignUuid('creator_id')
+                  ->constrained('tbl_operators');
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('thumbnail');
             $table->text('body');
-            $table->foreignId('category_id')->constrained('tbl_categories');
+            $table->foreignId('category_id')
+                  ->constrained('tbl_categories')
+                  ->onUpdate('cascade')
+                  ->onDelete('restrict');
             $table->enum('status', [
                 'reviewed',
                 'published',
