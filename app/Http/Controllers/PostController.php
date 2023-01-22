@@ -246,6 +246,14 @@ class PostController extends Controller
                     ->latest()
                     ->get();
 
+        if(!Gate::allows('admin')) {
+            $posts = Post::with('creator')
+                    ->where('status', 'draf')
+                    ->where('creator_id', Auth::user()->id)
+                    ->latest()
+                    ->get();
+        }
+
         return view('operator.drafts.index', [
             'title' => 'Drafts',
             'posts' => $posts
