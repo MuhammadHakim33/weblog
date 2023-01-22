@@ -20,11 +20,11 @@ class OperatorSeeder extends Seeder
         DB::table('tbl_operators')->insert([
             'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
             'image' => 'images\profiles\profile-default.jpg',
-            'name' => 'John Doe',
-            'slug' => 'john-doe',
-            'email' => 'john@gmail.com',
+            'name' => 'Mamat',
+            'slug' => 'mamat',
+            'email' => 'mamat@gmail.com',
             'password' => Hash::make('12345'),
-            'role' => 'administrator',
+            'role' => 'author',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);

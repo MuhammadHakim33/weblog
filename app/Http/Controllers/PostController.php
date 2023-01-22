@@ -6,6 +6,8 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -14,12 +16,20 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Post $post)
+    public function index()
     {
         $posts = Post::with('creator')
                     ->where('status', '!=', 'draf')
                     ->latest()
                     ->get();
+
+        if(!Gate::allows('admin')) {
+            $posts = Post::with('creator')
+                    ->where('status', '!=', 'draf')
+                    ->where('creator_id', Auth::user()->id)
+                    ->latest()
+                    ->get();
+        }
 
         return view('operator.posts.index', [
             'title' => 'All Posts',

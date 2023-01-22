@@ -26,26 +26,28 @@
                 <i class="ri-draft-line"></i>
                 Drafts
             </a>
-            <a class="nav-link" aria-current="page" href="/categories">
-                <i class="ri-file-list-line"></i>
-                Categories
-            </a>
-            <a class="nav-link" aria-current="page" href="/comments">
-                <i class="ri-discuss-line"></i>
-                Comments
-            </a>
-            <!-- Heading -->
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-                <span>Users</span>
-            </h6>
-            <a class="nav-link" aria-current="page" href="/authors">
-                <i class="ri-pencil-line"></i>
-                Autors
-            </a>
-            <a class="nav-link" aria-current="page" href="/subscribers">
-                <i class="ri-team-line"></i>
-                Subscribers
-            </a>
+            @can('admin')
+                <a class="nav-link" aria-current="page" href="/categories">
+                    <i class="ri-file-list-line"></i>
+                    Categories
+                </a>
+                <a class="nav-link" aria-current="page" href="/comments">
+                    <i class="ri-discuss-line"></i>
+                    Comments
+                </a>
+                <!-- Heading -->
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+                    <span>Users</span>
+                </h6>
+                <a class="nav-link" aria-current="page" href="/authors">
+                    <i class="ri-pencil-line"></i>
+                    Autors
+                </a>
+                <a class="nav-link" aria-current="page" href="/subscribers">
+                    <i class="ri-team-line"></i>
+                    Subscribers
+                </a>
+            @endcan
             <!-- Heading -->
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
                 <span>Account</span>

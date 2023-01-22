@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -15,6 +16,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        if(!Gate::allows('admin')) {
+            abort(403);
+        };
+
         $categories = Category::all();
 
         return view('operator.categories.index', [
@@ -30,6 +35,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        if(!Gate::allows('admin')) {
+            abort(403);
+        };
+
         return view('operator.categories.create', [
             'title' => 'Categories'
         ]);
@@ -43,6 +52,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Gate::allows('admin')) {
+            abort(403);
+        };
+
         // Validation Input
         $request->validate([
             'name' => 'required'
@@ -77,6 +90,10 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        if(!Gate::allows('admin')) {
+            abort(403);
+        };
+
         return view('operator.categories.edit', [
             'title' => 'Categories',
             'category' => $category
@@ -92,6 +109,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        if(!Gate::allows('admin')) {
+            abort(403);
+        };
+
         // Validate input
         $request->validate([
             'name' => 'required'
@@ -122,6 +143,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        if(!Gate::allows('admin')) {
+            abort(403);
+        };
+        
         // Check if the category is connected with several posts 
         try {
             Category::destroy($id);
