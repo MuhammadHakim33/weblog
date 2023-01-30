@@ -49,7 +49,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($posts as $post)
+                    @forelse($posts as $post)
                     <tr>
                         <td class="border-y p-4 align-top"><a href="" class="hover:underline hover:text-primary">{{ $post->title }}</a></td>
                         <td class="border-y p-4 align-top capitalize">{{ $post->creator->name }}</td>
@@ -112,7 +112,11 @@
                             </div>
                         </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="5" class="p-4"><p class="w-fit mx-auto italic text-black/60">empty</p></td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

@@ -14,10 +14,6 @@
             <h2>Drafts</h2>
         </div>
     </header>
-    <!-- Alert -->
-    @if(session('alert'))
-    <p>{{session('alert')}}</p>
-    @endif
     <!-- Table -->
     <div class="bg-white mx-4 my-8 border rounded-sm">
         <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -43,7 +39,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($posts as $post)
+                    @forelse($posts as $post)
                     <tr>
                         <td class="border-y p-4 align-top"><a href="" class="hover:underline hover:text-primary">{{ $post->title }}</a></td>
                         <td class="border-y p-4 align-top">{{ $post->creator->name }}</td>
@@ -85,7 +81,11 @@
                             </div>
                         </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="5" class="p-4"><p class="w-fit mx-auto italic text-black/60">empty</p></td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

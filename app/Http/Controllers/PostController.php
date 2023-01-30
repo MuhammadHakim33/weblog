@@ -37,6 +37,8 @@ class PostController extends Controller
                      ->count();
         }
 
+        // dd($posts);
+
         return view('operator.posts.index', [
             'title' => 'Posts',
             'posts' => $posts,
@@ -54,22 +56,15 @@ class PostController extends Controller
     {
         $posts = Post::with('creator')
                     ->where('status', 'draf')
-                    ->latest()
-                    ->get();
-
-        $count = Post::where('status', 'draf')->count();
-
-        if(!Gate::allows('admin')) {
-            $posts = Post::with('creator')
-                    ->where('status', 'draf')
                     ->where('creator_id', Auth::user()->id)
                     ->latest()
                     ->get();
 
-            $count = Post::where('status', 'draf')
-                     ->where('creator_id', Auth::user()->id)
-                     ->count();
-        }
+        $count = Post::where('status', 'draf')
+                    ->where('creator_id', Auth::user()->id)
+                    ->count();
+
+        // dd($posts);
 
         return view('operator.drafts.index', [
             'title' => 'Drafts',
