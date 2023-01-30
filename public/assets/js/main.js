@@ -37,7 +37,7 @@ function imagePreview (inputThumb, preview) {
 
 // Menu navigation active state
 document.querySelectorAll('nav .nav-link').forEach(function(e) {
-    if(e.href == window.location.href) {
+    if(e.pathname == window.location.pathname) {
         e.classList.add("active");
     }
 });
