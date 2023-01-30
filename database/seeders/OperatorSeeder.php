@@ -18,15 +18,28 @@ class OperatorSeeder extends Seeder
     public function run()
     {
         DB::table('tbl_operators')->insert([
-            'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-            'image' => 'images\profiles\profile-default.jpg',
-            'name' => 'John Doe',
-            'slug' => 'john-doe',
-            'email' => 'john@gmail.com',
-            'password' => Hash::make('12345'),
-            'role' => 'administrator',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
+            [
+                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                'image' => 'images\profiles\profile-default.jpg',
+                'name' => 'Mamat Admin',
+                'slug' => 'mamat-admin',
+                'email' => 'administrator@gmail.com',
+                'password' => Hash::make('1234567'),
+                'role' => 'administrator',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                'image' => 'images\profiles\profile-default.jpg',
+                'name' => 'Wahyu Author',
+                'slug' => 'wahyu-author',
+                'email' => 'author@gmail.com',
+                'password' => Hash::make('1234567'),
+                'role' => 'author',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
         ]);
     }
 }

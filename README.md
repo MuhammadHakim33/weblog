@@ -7,7 +7,9 @@ Weblog is a news website or blog. The owner can manage the website. Viewers can 
 
 - Mysql
 - Laravel 9
-- Bootstrap 5
+- Tailwind
+- Alpine Js
+- Quilljs
 
 #### Source
 
@@ -16,6 +18,8 @@ Weblog is a news website or blog. The owner can manage the website. Viewers can 
 - **[Design Interface](https://www.figma.com/file/TapCx8O6ySaMkqchFUZH7E/Design?node-id=15%3A2078&t=3UYPvyvouZzkusW8-1)**
 - **[Database Scheme By Hakim](https://dbdiagram.io/d/634426e7f0018a1c5fd04bdf)**
 
+<br>
+<br>
 
 ### How To Run
 
@@ -35,12 +39,20 @@ php artisan db:seed
 
 #### 4. Run app
 ```
+npm run dev
+
 php artisan serve
 ```
 
+<br>
+<br>
 
 ### Access Web App
 
 #### Administrator account
-Email : john@gmail.com \
-Password : 12345
+Email : administrator@gmail.com \
+Password : 1234567
+
+#### Author account
+Email : author@gmail.com \
+Password : 1234567

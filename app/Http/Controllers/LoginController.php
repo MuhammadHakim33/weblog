@@ -25,7 +25,7 @@ class LoginController extends Controller
             return redirect('/dashboard');
         }
 
-        return redirect('/login')->with('login-failed', 'Incorrect email or password.');
+        return redirect('/login')->with('status-danger', 'Incorrect email or password.');
     }
 
     public function logout(Request $request)

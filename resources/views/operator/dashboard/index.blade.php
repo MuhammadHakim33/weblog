@@ -1,10 +1,17 @@
 @extends('operator.layout')
 
+@section('sidebar')
+    @include('operator.partials.sidebar')
+@endsection
+
 @section('content')
-<div class="container-fluid mt-4 px-4">
+<main class="md:ml-60">
     <!-- Header -->
-    <header class="container-fluid d-flex justify-content-between align-items-center">
-        <h1 class="h2 mb-0">Dashboard</h1>
+    <header class="px-4 py-4 bg-white border-b">
+        <div class="flex items-center gap-1">
+            <button x-on:click="sidebar = true" class="md:hidden btn flex items-center"><i class="ri-menu-line ri-xl"></i></button>
+            <h2>Dashboard</h2>
+        </div>
     </header>
-</div>
+</main>
 @endsection

@@ -6,6 +6,8 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -14,16 +16,60 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Post $post)
+    public function index()
     {
         $posts = Post::with('creator')
+                 ->where('status', '!=', 'draf')
+                 ->latest()
+                 ->simplePaginate(10);
+                    
+        $count = Post::where('status', '!=', 'draf')->count();
+
+        if(!Gate::allows('admin')) {
+            $posts = Post::with('creator')
                     ->where('status', '!=', 'draf')
+                    ->where('creator_id', Auth::user()->id)
                     ->latest()
-                    ->get();
+                    ->simplePaginate(10);
+
+            $count = Post::where('status', '!=', 'draf')
+                     ->where('creator_id', Auth::user()->id)
+                     ->count();
+        }
+
+        // dd($posts);
 
         return view('operator.posts.index', [
-            'title' => 'All Posts',
-            'posts' => $posts
+            'title' => 'Posts',
+            'posts' => $posts,
+            'count' => $count
+        ]);
+    }
+
+    /**
+     * Display a listing of the draft post.
+     *
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function draft(Post $post)
+    {
+        $posts = Post::with('creator')
+                    ->where('status', 'draf')
+                    ->where('creator_id', Auth::user()->id)
+                    ->latest()
+                    ->simplePaginate(10);
+
+        $count = Post::where('status', 'draf')
+                    ->where('creator_id', Auth::user()->id)
+                    ->count();
+
+        // dd($posts);
+
+        return view('operator.drafts.index', [
+            'title' => 'Drafts',
+            'posts' => $posts,
+            'count' => $count
         ]);
     }
 
@@ -60,6 +106,8 @@ class PostController extends Controller
             'body' => 'required'
         ]);
 
+        // dd($request);
+
         // Upload thumbnail
         $thumbnail = $request->file('thumbnail')->store('images/thumbnails');
 
@@ -86,7 +134,7 @@ class PostController extends Controller
             'status' => $status,
         ]);
 
-        return redirect('posts')->with('alert', 'Create New Post Success!');
+        return redirect('posts')->with('status-success', 'Create New Post Success!');
     }
 
     /**
@@ -145,7 +193,7 @@ class PostController extends Controller
 
         // Set status for post base on which button clicked
         // or if initial status is draft, when update is still draft
-        if($request->input('action') == 'draf' || $post->status == 'draf') {
+        if($request->input('action') == 'draf') {
             $status = 'draf';
         }
 
@@ -171,7 +219,7 @@ class PostController extends Controller
         // update data
         Post::where('id', $post->id)->update($data);
 
-        return redirect('posts')->with('alert', 'Update Post Success!');
+        return redirect('posts')->with('status-success', 'Update Post Success!');
     }
 
     /**
@@ -183,7 +231,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         Post::destroy($post->id);
-        return redirect('posts')->with('alert', 'Post Has Been Deleted!');
+        return redirect('posts')->with('status-danger', 'Post Has Been Deleted!');
     }
 
     /**
@@ -194,6 +242,10 @@ class PostController extends Controller
      */
     public function publish(Request $request)
     {
+        if(!Gate::allows('admin')) {
+            abort(403);
+        };
+
         // Data 
         $data = [
             'status' => 'published',
@@ -202,7 +254,7 @@ class PostController extends Controller
         // update data
         Post::where('id', $request->id)->update($data);
 
-        return redirect('posts')->with('alert', 'Post Has Been Published!');
+        return redirect('posts')->with('status-success', 'Post Has Been Published!');
     }
 
     /**
@@ -213,6 +265,10 @@ class PostController extends Controller
      */
     public function reject(Request $request)
     {
+        if(!Gate::allows('admin')) {
+            abort(403);
+        };
+
         // Data 
         $data = [
             'status' => 'rejected',
@@ -221,25 +277,30 @@ class PostController extends Controller
         // update data
         Post::where('id', $request->id)->update($data);
 
-        return redirect('posts')->with('alert', 'Post Has Been Rejected!');
+        return redirect('posts')->with('status-danger', 'Post Has Been Rejected!');
     }
 
     /**
-     * Display a listing of the draft post.
-     *
+     * Submit For Reviewed Post
+     * 
+     * @param  Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function draft(Post $post)
+    public function review(Request $request)
     {
-        $posts = Post::with('creator')
-                    ->where('status', 'draf')
-                    ->latest()
-                    ->get();
+        if(Gate::allows('admin')) {
+            abort(403);
+        };
 
-        return view('operator.drafts.index', [
-            'title' => 'Drafts',
-            'posts' => $posts
-        ]);
+        // Data 
+        $data = [
+            'status' => 'reviewed',
+        ];
+
+        // update data
+        Post::where('id', $request->id)->update($data);
+
+        return redirect('posts')->with('status-success', 'Post Submit For Reviewed!');
     }
 
     /**
