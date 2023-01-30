@@ -122,6 +122,7 @@
                 </tbody>
             </table>
         </div>
+        <div class="p-4">{{$posts->links()}}</div>
     </div>
 </main>
 @endsection

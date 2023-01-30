@@ -21,7 +21,7 @@ class PostController extends Controller
         $posts = Post::with('creator')
                  ->where('status', '!=', 'draf')
                  ->latest()
-                 ->get();
+                 ->simplePaginate(10);
                     
         $count = Post::where('status', '!=', 'draf')->count();
 
@@ -30,7 +30,7 @@ class PostController extends Controller
                     ->where('status', '!=', 'draf')
                     ->where('creator_id', Auth::user()->id)
                     ->latest()
-                    ->get();
+                    ->simplePaginate(10);
 
             $count = Post::where('status', '!=', 'draf')
                      ->where('creator_id', Auth::user()->id)
@@ -58,7 +58,7 @@ class PostController extends Controller
                     ->where('status', 'draf')
                     ->where('creator_id', Auth::user()->id)
                     ->latest()
-                    ->get();
+                    ->simplePaginate(10);
 
         $count = Post::where('status', 'draf')
                     ->where('creator_id', Auth::user()->id)
