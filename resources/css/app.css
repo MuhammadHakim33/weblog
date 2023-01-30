@@ -50,19 +50,15 @@
     .btn-sm {
         @apply px-3 py-2 font-normal text-sm rounded;
     }
-    
     .btn-primary {
         @apply bg-primary hover:bg-primary/95 text-white;
     }
-    
     .btn-outline-primary {
         @apply border border-primary/40 text-primary bg-primary/10 hover:bg-primary/20;
     }
-
     .btn-outline-danger {
         @apply border border-danger/40 text-danger bg-danger/10 hover:bg-danger/20;
     }
-
     .btn-outline-light {
         @apply border border-black/20 text-black/80 bg-white hover:bg-black/5;
     }
@@ -78,17 +74,22 @@
     .nav-link {
         @apply py-2 font-normal opacity-60 flex content-center hover:opacity-100;
     }
+    /* nav-link in all section */
     .nav-link.active {
         @apply opacity-100;
     }
+    /* just for nav-link that parent are header tag */
+    header .nav-link.active {
+        @apply border-b border-black; 
+    }
 
+    /* Badge */
     .badge {
         @apply px-2 py-1 rounded text-xs;
     }
     .badge-primary {
         @apply bg-primary text-white;
     }
-
     .badge-success,
     .alert-success {
         @apply bg-success/10 border border-success/40 text-success;

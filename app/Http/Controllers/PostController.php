@@ -32,7 +32,7 @@ class PostController extends Controller
         }
 
         return view('operator.posts.index', [
-            'title' => 'All Posts',
+            'title' => 'Posts',
             'posts' => $posts
         ]);
     }
