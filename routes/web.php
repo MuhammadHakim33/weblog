@@ -45,7 +45,8 @@ Route::resource('/categories', CategoryController::class)->middleware('auth');
 /**
  * Profile Route
  */
-Route::get('/profile', [OperatorController::class, 'index'])->middleware('auth');
+Route::get('/profile', [OperatorController::class, 'formGeneral'])->middleware('auth');
+Route::get('/profile/change-password', [OperatorController::class, 'formPassword'])->middleware('auth');
 Route::put('/profile/{id}', [OperatorController::class, 'update'])->middleware('auth');
 
 

@@ -1,62 +1,115 @@
-@include('operator.partials.head')
+@extends('operator.layout')
 
-    <form class="container py-5" id="create-post" action="/posts" method="post"  enctype="multipart/form-data">
-        @csrf
-        <!-- Header -->
-        <header class="d-flex justify-content-between align-items-center">
-            <div id="left-side" class="d-flex">
-                <a type="button" href="/posts" class="btn btn-outline-dark d-flex">
-                    <i class="ri-arrow-left-line ri-lg align-self-center me-1"></i>Back
-                </a>
-            </div>
-            <div id="right-side" class="d-flex">
-                <button type="submit" name="action" value="draf" class="btn btn-outline-dark me-2">Draf</button>
-                <button type="submit" name="action" value="insert" class="btn btn-dark d-flex">Publish</button>
-            </div>
-        </header>
+@section('content')
+<header class="bg-white p-4 flex gap-4 border-y">
+    <a href="/posts" class="btn-sm btn-outline-danger flex items-center gap-2">
+        <i class="ri-close-line ri-lg"></i>
+        Close
+    </a>
+</header>
 
-        <hr class="my-5">
-
-        <!-- Form editor -->
-        <main>
-            <!-- Thumbnail -->
-            <div class="mb-4">
-                <label for="thumbnail" class="label-thumbnail d-flex flex-column justify-content-center align-items-center btn bg-white border border-dark border-opacity-25">
-                    <h6 class="d-flex align-items-center"><i class="ri-upload-2-line me-2"></i>Thumbnail</h6>
-                    <small class="mb-0">png jpg jpeg max 2MB</small>
-                </label>
-                <input class="form-control" name="thumbnail" type="file" id="thumbnail" accept=".jpg, .jpeg, .png">
-                @error('thumbnail')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
+<form action="/posts" method="post" enctype="multipart/form-data" x-on:submit="postSubmit($refs.body)" class="post-form my-4 p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+    @csrf
+    <!-- Left side -->
+    <main class="md:col-span-2 space-y-4">
+        <div class="bg-white p-4 rounded border">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" value="{{ old('title') }}" class="form-input w-full">
+            @error('title')
+            <small class="block mt-2 text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+        <div class="bg-white p-4 rounded border">
+            @error('body')
+            <small class="block mt-2 text-danger">{{ $message }}</small>
+            @enderror
+            <div id="toolbar" class="bg-white shadow-md rounded">
+                <div class="ql-formats">
+                    <select class="ql-size">
+                        <option value="normal"></option>
+                        <option value="small"></option>
+                        <option value="large"></option>
+                        <option value="huge"></option>
+                    </select>
+                    <button class="ql-bold"></button>
+                    <button class="ql-italic"></button>
+                    <button class="ql-underline"></button>
+                </div>
+                <div class="ql-formats">
+                    <button class="ql-header" value="1"></button>
+                    <button class="ql-header" value="2"></button>
+                    <button class="ql-blockquote"></button>
+                    <button class="ql-code-block"></button>
+                </div>
+                <div class="ql-formats">
+                    <select class="ql-color">
+                        <option selected></option>
+                        <option value="red"></option>
+                        <option value="orange"></option>
+                        <option value="yellow"></option>
+                        <option value="green"></option>
+                        <option value="blue"></option>
+                        <option value="purple"></option>
+                    </select>
+                    <select class="ql-background">
+                        <option selected></option>
+                        <option value="red"></option>
+                        <option value="orange"></option>
+                        <option value="yellow"></option>
+                        <option value="green"></option>
+                        <option value="blue"></option>
+                        <option value="purple"></option>
+                    </select>
+                </div>
+                <div class="ql-formats">
+                    <button class="ql-list" value="ordered"></button>
+                    <button class="ql-list" value="bullet"></button>
+                    <select class="ql-align">
+                        <option selected></option>
+                        <option value="center"></option>
+                        <option value="right"></option>
+                        <option value="justify"></option>
+                    </select>
+                    <button class="ql-direction" value="rtl"></button>
+                </div>
+                <div class="ql-formats">
+                    <button class="ql-image"></button>
+                </div>
             </div>
-            <!-- Title -->
-            <div class="mb-4">
-                <textarea id="title" class="form-control" name="title" placeholder="Title">{{ old('title') }}</textarea>
-                @error('title')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
+            <div id="editor" class="min-h-screen pt-4 mb-5 text-base !border-none"></div>
+            <input name="body" x-ref="body" type="hidden" value="{{old('body')}}">
+        </div>
+    </main>
+    <!-- Right side -->
+    <div class="bg-white p-4 rounded border h-fit sticky top-4 space-y-4">
+        <div class="">
+            <div class="flex items-center justify-between">
+                <label for="thumbnail">Thumbnail</label>
+                <small class="text-warning">png jpg jpeg - max 2MB</small>
             </div>
-            <!-- Category -->
-            <div class="mb-4">
-                <select id="category" class="form-select" name="category" value="{{ old('categotry') }}">
-                    <option selected value="">Category</option>
-                    @foreach($categories as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
-                    @endforeach
-                </select>
-                @error('categotry')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <!-- Body -->
-            <div class="mb-4 bg-white">
-                <textarea id="summernote" name="body">{{ old('body') }}</textarea>
-                @error('body')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-        </main>
-    </form>
-
-@include('operator.partials.footer')
+            <img x-ref="previewContainer" src="{{ old('thumbnail') }}" id="preview" class="aspect-auto bg-black/5 border-2 border-black/20 border-dashed text-black/60 my-2 min-h-[150px] relative after:content-['preview'] after:inline-block after:absolute after:bottom-1/2 after:right-1/2 after:translate-x-1/2 after:translate-y-1/2">
+            <input type="file" name="thumbnail" class="form-input w-full file:bg-primary/10 file:border-primary/10 file:text-primary file:rounded file:py-1 file:px-2 file:mr-4 hover:file:bg-primary/20" x-on:change="imagePreview($event.target, $refs.previewContainer)" accept=".jpg, .jpeg, .png">
+            @error('thumbnail')
+            <small class="block mt-2 text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+        <div>
+            <label for="category">Category</label>
+            <select name="category" id="category" class="form-select btn w-full">
+                <option value="" selected>Select</option>
+                @foreach($categories as $category)
+                <option value="{{$category->id}}" @selected(old('category')==$category->id)>{{$category->name}}</option>
+                @endforeach
+            </select>
+            @error('category')
+            <small class="block mt-2 text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+        <hr>
+        <div class="flex flex-wrap gap-3">
+            <button type="submit" name="action" value="insert" class="btn-sm btn-primary flex-none">Publish</button>
+            <button type="submit" name="action" value="draf" class="btn-sm btn-outline-light flex-none">Draft & Close</button>
+        </div>
+    </div>
+</form>
+@endsection

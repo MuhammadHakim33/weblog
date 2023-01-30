@@ -19,26 +19,26 @@ class PasswordController extends Controller
     {
         // validate input
         $request->validate([
-            'oldPassword' => 'required',
-            'newPassword' => 'required|min:7',
-            'retypePassword' => 'required|min:7',
+            'old_password' => 'required',
+            'new_password' => 'required|min:7',
+            'retype_password' => 'required|min:7',
         ]);
 
         // match old password input with current password
-        if(!Hash::check($request->oldPassword, Auth::user()->password)) {
-            return redirect('/profile')->with('danger', 'Old password doesn\'t match');
+        if(!Hash::check($request->old_password, Auth::user()->password)) {
+            return redirect('/profile/change-password')->with('status-danger', 'Old password wrong !');
         }
 
         // match ne password input with retype password input
-        if($request->newPassword != $request->retypePassword) {
-            return redirect('/profile')->with('danger', 'Password doesn\'t match');
+        if($request->new_password != $request->retype_password) {
+            return redirect('/profile/change-password')->with('status-danger', 'Retype Password doesn\'t match to new password');
         }
 
         // update data
         Operator::where('id', Auth::user()->id)->update([
-            'password' => Hash::make($request->retypePassword)
+            'password' => Hash::make($request->retype_password)
         ]);
 
-        return redirect('/profile')->with('alert', 'Password changed!');
+        return redirect('/profile/change-password')->with('status-success', 'Password changed!');
     }
 }

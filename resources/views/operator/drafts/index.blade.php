@@ -1,92 +1,87 @@
 @extends('operator.layout')
 
-@section('content')
-<div id="post" class="container-fluid mt-4 px-4">
-    <!-- Header -->
-    <header class="d-flex justify-content-between align-items-center mb-5">
-        <h2 class="mb-0">Drafts</h2>
-    </header>
+@section('sidebar')
+    @include('operator.partials.sidebar')
+@endsection
 
-    <!-- Card Table -->
-    <div class="card" >
-        <div class="card-body">
-            <!-- Filter & Search -->
-            <div class="preference mb-4 d-flex justify-content-between align-items-center">
-                <div class="dropdown me-2">
-                    <a class="btn btn-sm btn-outline-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Filter</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Newest</a></li>
-                    </ul>
-                </div>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                </form>
+@section('content')
+    <!-- Main -->
+    <main class="md:ml-60 pb-20">
+        <!-- Header -->
+        <header class="flex px-4 py-4 justify-between items-center bg-white border-b">
+            <div class="flex items-center gap-1">
+                <button x-on:click="sidebar = true" class="md:hidden btn flex items-center"><i class="ri-menu-line ri-xl"></i></button>
+                <h2>Drafts</h2>
             </div>
-            <!-- Table -->
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr class="table-dark">
-                            <th scope="col" style="width: 2%;"><input class="form-check-input" type="checkbox" value="" id="id"></th>
-                            <th scope="col">Title</th>
-                            <th scope="col" style="width: 20%;">Creator</th>
-                            <th scope="col">Date</th>
-                            <th scope="col" style="width: 10%;">Status</th>
-                            <th scope="col" style="width: 10%;"></th> <!-- Action Heading -->
+        </header>
+        <!-- Alert -->
+        @if(session('alert'))
+            <p>{{session('alert')}}</p>
+        @endif
+        <!-- Table -->
+        <div class="bg-white mx-4 my-8 border rounded-sm">
+            <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <h4>All Post <span class="opacity-60">(xx)</span></h4>
+                <div class="flex gap-3 items-center">
+                    <input type="text" name="" class="form-input w-full sm:w-52 mt-0" placeholder="Search">
+                    <select class="form-select btn-sm w-20 h-9 flex-none">
+                        <option selected>Sort</option>
+                        <option value="">One</option>
+                        <option value="">Two</option>
+                    </select>
+                </div>
+            </div>
+            <div class="overflow-auto md:overflow-visible">
+                <table class="w-full table-auto text-left ">
+                    <thead class="uppercase border-y bg-black/5 text-black/60">
+                        <tr>
+                            <th scope="col" class="py-3 px-4 border-y w-2/5">Title</th>
+                            <th scope="col" class="py-3 px-4 border-y">Creator</th>
+                            <th scope="col" class="py-3 px-4 border-y">Date</th>
+                            <th scope="col" class="py-3 px-4 border-y w-28">Status</th>
+                            <th scope="col" class="py-3 px-4 border-y w-12"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($posts as $post)
                         <tr>
-                            <td>
-                                <input class="form-check-input" type="checkbox" value="" id="id">
+                            <td class="border-y p-4 align-top"><a href="" class="hover:underline hover:text-primary">{{ $post->title }}</a></td>
+                            <td class="border-y p-4 align-top">{{ $post->creator->name }}</td>
+                            <td class="border-y p-4 align-top">
+                                <p>{{ $post->created_at }}</p>
+                                <small class="text-black/60">Added</small>
                             </td>
-                            <td>
-                                <h6 class="mb-0 fw-semibold">{{$post->title}}</h6>
+                            <td class="border-y p-4 align-top">
+                                <span class="badge badge-warning capitalize">{{ $post->status }}</span>
                             </td>
-                            <td>
-                                <h6 class="mb-0">{{$post->creator->name}}</h6>
-                            </td>
-                            <td>
-                                <p class="mb-0 fw-semibold">{{$post->created_at}}</p>
-                                <p><small>Added</small></p>
-                            </td>
-                            <td>
-                                <span class="badge text-bg-dark text-capitalize">{{$post->status}}</span>
-                            </td>
-                            <td>
-                                <div class="dropdown">
-                                    <button class="btn btn-outline-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Action
+                            <td class="border-y p-4 align-top ">
+                                <div class="md:relative" x-data="{dropdown: false}">
+                                    <button x-on:click="dropdown = !dropdown" class="btn-sm flex items-center hover:bg-black/5">
+                                        <i class="ri-more-2-line ri-xl"></i>
                                     </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <!-- Publish -->
-                                            <form action="/posts/{{$post->id}}/publish" method="post">
-                                                @method('put')
-                                                @csrf
-                                                <button class="dropdown-item" onclick="return confirm('Are you sure?')">Publish</button>
-                                            </form> 
-                                            <!-- Reject -->
-                                            <form action="/posts/{{$post->id}}/reject" method="post">
-                                                @method('put')
-                                                @csrf
-                                                <button class="dropdown-item" onclick="return confirm('Are you sure?')">Rejected</button>
-                                            </form> 
-                                        </li>
+                                    <div x-show="dropdown" x-on:click.outside="dropdown = false" class="z-10 absolute right-4 md:right-0 flex flex-col rounded border bg-white shadow-lg w-32">
+                                        <!-- Publish -->
+                                        <form action="/posts/{{$post->id}}/publish" method="post">
+                                            @method('put')
+                                            @csrf
+                                            <button class="w-full text-left py-2 px-4 text-sm hover:bg-primary/10" onclick="return confirm('Are you sure?')">Publish</button>
+                                        </form>
+                                        <!-- Reject -->
+                                        <form action="/posts/{{$post->id}}/reject" method="post">
+                                            @method('put')
+                                            @csrf
+                                            <button class="w-full text-left py-2 px-4 text-sm hover:bg-primary/10" onclick="return confirm('Are you sure?')">Reject</button>
+                                        </form>
+                                        <hr>
                                         <!-- Edit -->
-                                        <li>
-                                            <a class="dropdown-item" href="/posts/{{$post->id}}/edit">Edit</a>
-                                        </li>
+                                        <a href="/posts/{{$post->id}}/edit" class="py-2 px-4 text-sm hover:bg-primary/10">Edit</a>
                                         <!-- Delete -->
-                                        <li>
-                                            <form action="/posts/{{$post->id}}" method="post">
-                                                @method('delete')
-                                                @csrf
-                                                <button class="dropdown-item" onclick="return confirm('Are you sure?')">Delete</button>
-                                            </form>    
-                                        </li>
-                                    </ul>
+                                        <form action="/posts/{{$post->id}}" method="post">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="w-full text-left py-2 px-4 text-sm hover:bg-red-700/10 text-red-700" onclick="return confirm('Are you sure?')">Delete</button>
+                                        </form> 
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -95,6 +90,5 @@
                 </table>
             </div>
         </div>
-    </div>
-</div>
+    </main>
 @endsection

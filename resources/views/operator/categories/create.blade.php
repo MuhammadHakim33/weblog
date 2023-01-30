@@ -1,33 +1,36 @@
 @extends('operator.layout')
 
+@section('sidebar')
+    @include('operator.partials.sidebar')
+@endsection
+
 @section('content')
-<div id="post" class="container-fluid mt-4 px-4">
+<main class="md:ml-60 pb-20">
     <!-- Header -->
-    <header class="d-flex justify-content-between align-items-center mb-5">
-        <h2 class="mb-0">Create Categories</h2>
+    <header class="flex px-4 py-4 justify-between items-center bg-white border-b">
+        <div class="flex items-center gap-1">
+            <button x-on:click="sidebar = true" class="md:hidden btn flex items-center"><i class="ri-menu-line ri-xl"></i></button>
+            <h2>Create Category</h2>
+        </div>
     </header>
 
     <!-- Card Form -->
-    <div class="card">
-        <div class="card-body">
-            <form action="/categories" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Category Name">
-                    @error('name')
-                        <div class="form-text text-danger">{{$message}}</div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description (optional)</label>
-                    <textarea class="form-control" id="description" name="description" rows="3">{{ old('description') }}</textarea>
-                </div>
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-dark">Add</button>
-                </div>
-            </form>
+    <form action="/categories" method="post" class="bg-white mx-4 my-8 p-4 max-w-[400px] border rounded-sm space-y-4">
+        @csrf
+        <div>
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" class="form-input w-full">
+            @error('name')
+            <small class="block mt-2 text-danger">{{$message}}</small>
+            @enderror
         </div>
-    </div>
-</div>
+        <div>
+            <label for="description">Description <small class="text-warning">(optional)</small></label>
+            <textarea id="description" name="description" class="form-input w-full" rows="4">{{ old('description') }}</textarea>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </form>
+</main>
 @endsection

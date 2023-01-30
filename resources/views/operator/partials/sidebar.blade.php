@@ -1,67 +1,67 @@
-<aside id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse bg-white">
-    <div class="position-sticky pt-3 sidebar-sticky">
+<aside :class="sidebar ? 'flex' : 'hidden'" class="w-full h-screen md:w-[15rem] px-4 py-4 z-10 bg-primary fixed border-r space-y-5 text-white box-border md:flex flex-col justify-between">
+    <div>
         <!-- Brand -->
-        <div class="container-fluid">
-            <img src="{{ asset('assets/img/logo-black.png') }}" alt="Weblog" height="40">
-        </div>
-        <!-- Profile Card -->
-        <div class="container-fluid py-4">
-            @include('operator.partials.profile-card')
+        <div class="flex justify-between items-center">
+            <img src="{{ asset('assets/img/logo-white.png') }}" alt="" class="inline h-12">
+            <button x-on:click="sidebar = false" class="btn md:hidden flex items-center"><i class="ri-close-line ri-xl"></i></button>
         </div>
         <!-- Navigation -->
-        <nav class="nav flex-column">
-            <a class="nav-link" aria-current="page" href="/dashboard">
-                <i class="ri-home-line"></i>
+        <nav class="flex flex-col min-h-0 mt-4">
+            <a href="/dashboard" class="nav-link">
+                <i class="ri-dashboard-line mr-2"></i>
                 Dashboard
             </a>
-            <!-- Heading -->
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-                <span>Posts</span>
-            </h6>
-            <a class="nav-link" aria-current="page" href="/posts">
-                <i class="ri-article-line"></i>
-                All Posts
+            <h5 class="nav-heading">POSTS</h5>
+            <a href="/posts" class="nav-link">
+                <i class="ri-article-line mr-2"></i>
+                Posts
             </a>
-            <a class="nav-link" aria-current="page" href="/posts/drafts">
-                <i class="ri-draft-line"></i>
+            <a href="/posts/drafts" class="nav-link">
+                <i class="ri-draft-line mr-2"></i>
                 Drafts
             </a>
-            @can('admin')
-                <a class="nav-link" aria-current="page" href="/categories">
-                    <i class="ri-file-list-line"></i>
-                    Categories
-                </a>
-                <a class="nav-link" aria-current="page" href="/comments">
-                    <i class="ri-discuss-line"></i>
-                    Comments
-                </a>
-                <!-- Heading -->
-                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-                    <span>Users</span>
-                </h6>
-                <a class="nav-link" aria-current="page" href="/authors">
-                    <i class="ri-pencil-line"></i>
-                    Autors
-                </a>
-                <a class="nav-link" aria-current="page" href="/subscribers">
-                    <i class="ri-team-line"></i>
-                    Subscribers
-                </a>
-            @endcan
-            <!-- Heading -->
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-                <span>Account</span>
-            </h6>
-            <a class="nav-link" aria-current="page" href="/profile">
-                <i class="ri-user-line"></i>
-                Profile
+            <a href="/categories" class="nav-link">
+                <i class="ri-file-list-line mr-2"></i>
+                Categories
             </a>
+            <a href="/comments" class="nav-link">
+                <i class="ri-discuss-line mr-2"></i>
+                Comments
+            </a>
+            <h5 class="nav-heading">USERS</h5>
+            <a href="/authors" class="nav-link">
+                <i class="ri-pencil-line mr-2"></i>
+                Authors
+            </a>
+            <a href="/subscribers" class="nav-link">
+                <i class="ri-team-line mr-2"></i>
+                Subscribers
+            </a>
+        </nav>
+    </div>
+    <!-- Profile Card -->
+    <div class="relative" x-data="{dropdown: false}">
+        <button x-on:click="dropdown = !dropdown" class="flex items-center bg-primary w-full">
+            <img src="{{ asset('storage/' . auth()->user()->image) }}" alt="" class="inline h-10 rounded-sm">
+            <div class="text ml-2 text-left">
+                <h5 class="capitalize">{{auth()->user()->name}}</h5>
+                <p class="opacity-80 text-sm mt-1 capitalize">{{auth()->user()->role}}</p>
+            </div>
+        </button>
+        <div x-show="dropdown" x-on:click.outside="dropdown = false" class="absolute bottom-20 left-0 right-0 flex flex-col rounded border bg-white shadow-lg text-black">
+            <a href="/profile" class="py-2 px-4 text-sm hover:bg-primary/10 flex gap-2 items-center justify-between">
+                Profile
+                <i class="ri-user-line"></i>
+            </a>
+            <hr>
             <!-- Logout -->
             <form action="/logout" method="POST">
                 @csrf
-                <button class="nav-link btn btn-link" href="#">
-                <i class="ri-logout-box-r-line"></i>Logout</button>
+                <button class="w-full py-2 px-4 text-sm hover:bg-red-700/10 text-red-700 flex gap-2 items-center justify-between">
+                    Logout
+                    <i class="ri-logout-box-r-line"></i>
+                </button>
             </form>
-        </nav>
+        </div>
     </div>
 </aside>

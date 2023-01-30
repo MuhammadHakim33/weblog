@@ -70,6 +70,8 @@ class PostController extends Controller
             'body' => 'required'
         ]);
 
+        // dd($request);
+
         // Upload thumbnail
         $thumbnail = $request->file('thumbnail')->store('images/thumbnails');
 
@@ -96,7 +98,7 @@ class PostController extends Controller
             'status' => $status,
         ]);
 
-        return redirect('posts')->with('alert', 'Create New Post Success!');
+        return redirect('posts')->with('status-success', 'Create New Post Success!');
     }
 
     /**
@@ -181,7 +183,7 @@ class PostController extends Controller
         // update data
         Post::where('id', $post->id)->update($data);
 
-        return redirect('posts')->with('alert', 'Update Post Success!');
+        return redirect('posts')->with('status-success', 'Update Post Success!');
     }
 
     /**
@@ -193,7 +195,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         Post::destroy($post->id);
-        return redirect('posts')->with('alert', 'Post Has Been Deleted!');
+        return redirect('posts')->with('status-danger', 'Post Has Been Deleted!');
     }
 
     /**
@@ -212,7 +214,7 @@ class PostController extends Controller
         // update data
         Post::where('id', $request->id)->update($data);
 
-        return redirect('posts')->with('alert', 'Post Has Been Published!');
+        return redirect('posts')->with('status-success', 'Post Has Been Published!');
     }
 
     /**
@@ -231,7 +233,7 @@ class PostController extends Controller
         // update data
         Post::where('id', $request->id)->update($data);
 
-        return redirect('posts')->with('alert', 'Post Has Been Rejected!');
+        return redirect('posts')->with('status-danger', 'Post Has Been Rejected!');
     }
 
     /**

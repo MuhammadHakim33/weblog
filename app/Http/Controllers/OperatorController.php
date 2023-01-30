@@ -10,15 +10,29 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
 class OperatorController extends Controller
 {
      /**
-     * Display a listing of the resource.
+     * Display a form for update general data.
      *
      * @param  Illuminate\Support\Facades\Auth  $auth
      * @return \Illuminate\Http\Response
      */
-    public function index(Auth $auth)
+    public function formGeneral(Auth $auth)
     {
-        return view('operator.profile.index', [
-            'title' => "Profile",
+        return view('operator.profile.form_general', [
+            'title' => "Profile - General",
+            'user' => $auth::user()
+        ]);
+    }
+
+     /**
+     * Display a form for update password in profile page.
+     *
+     * @param  Illuminate\Support\Facades\Auth  $auth
+     * @return \Illuminate\Http\Response
+     */
+    public function formPassword(Auth $auth)
+    {
+        return view('operator.profile.form_password', [
+            'title' => "Profile - Password",
             'user' => $auth::user()
         ]);
     }
@@ -35,7 +49,7 @@ class OperatorController extends Controller
     {
         // validate input
         $request->validate([
-            'thumbnail' => 'image|max:2048',
+            'image' => 'image|max:2048',
             'name' => 'required',
             'email' => 'required|email:dns',
         ]);
@@ -47,8 +61,8 @@ class OperatorController extends Controller
         ];
         
         // Update photo
-        if($request->hasFile('thumbnail')) {
-            $data['image'] = $request->file('thumbnail')->store('images/profiles');
+        if($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images/profiles');
         }
 
         // Check if name change, then the slug will change too
@@ -59,7 +73,7 @@ class OperatorController extends Controller
         // update data
         Operator::where('id', $auth::user()->id)->update($data);
 
-        return redirect('/profile')->with('alert', 'Profile updated!');
+        return redirect('/profile')->with('status-success', 'Profile updated!');
     }
 
     /**

@@ -6,7 +6,19 @@ module.exports = {
     "./resources/**/*.vue",
   ],
   theme: {
-    extend: {},
+    fontFamily: {
+      'sans': ['Inter'],
+    },
+    extend: {
+      colors: {
+        primary: '#164e63',
+        danger: '#b91c1c',
+        success: '#166534',
+        warning: '#D97706'
+      },
+    },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 }

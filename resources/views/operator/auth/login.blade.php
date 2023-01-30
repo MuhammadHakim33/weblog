@@ -1,37 +1,44 @@
-@extends('operator.auth.layout')
+@extends('operator.layout')
 
-@section('title', 'Login to your account')
+@section('content')
+    <header class="container mx-auto py-2 border-b border-black/10">
+        <img src="{{asset('assets/img/logo-black.png')}}" alt="" class="inline h-14">
+        <small class="badge badge-primary">Operator only</small>
+    </header>
 
-@section('form')
-    <form action="/login" method="POST">
+    <form action="/login" method="POST" class="max-w-xs mx-auto mt-14">
         @csrf
         <!-- Alert for failed login -->
-        @if(session('login-failed'))
-            <div class="alert alert-danger d-flex align-items-center" role="alert">
-                <i class="ri-error-warning-line ri-lg me-2"></i>
-                {{ session('login-failed') }}
-            </div>
+        @if(session('status-danger'))
+        <div class="w-full mb-4 p-4 rounded alert-danger">{{session('status-danger')}}</div>
         @endif
-        <div class="mb-3">
-            <label for="input-email" class="form-label">Email</label>
-            <input type="email" class="form-control" name="email" id="input-email" value="{{ old('email') }}">
-            @error('email')
-                <div class="form-text text-danger">{{ $message }}</div>
-            @enderror
+
+        <div class="mb-5 space-y-2">
+            <h3 class="text-2xl font-semibold">Login to your account</h3>
+            <p>Enter your email address and password to access operator panel.</p>
         </div>
-        <div class="mb-3">
-            <label for="input-password" class="form-label">Password</label>
-            <input type="password" class="form-control" name="password" id="input-password">
-            @error('password')
-                <div class="form-text text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="d-grid gap-1">
-            <button type="submit" class="btn btn-dark">Login</button>
+        <div class="space-y-4">
+            <div>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="text" class="form-input w-full" value="{{ old('email') }}">
+                @error('email')
+                    <small class="block mt-2 text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" class="form-input w-full">
+                @error('password')
+                    <small class="block mt-2 text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary w-full">Login</button>
+            </div>
+            <hr class="border-black/10">
+            <div class="flex justify-center">
+                <a href="/password-reset" class="btn btn-link-danger">forget password?</a>
+            </div>
         </div>
     </form>
-@endsection
-
-@section('btn-action')
-    <a href="/password-reset" class="btn btn-link text-danger">Forget password?</a>
 @endsection
