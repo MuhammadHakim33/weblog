@@ -20,14 +20,17 @@
                 <i class="ri-draft-line mr-2"></i>
                 Drafts
             </a>
+            @can('admin')
             <a href="/categories" class="nav-link">
                 <i class="ri-file-list-line mr-2"></i>
                 Categories
             </a>
+            @endcan
             <a href="/comments" class="nav-link">
                 <i class="ri-discuss-line mr-2"></i>
                 Comments
             </a>
+            @can('admin')
             <h5 class="nav-heading">USERS</h5>
             <a href="/authors" class="nav-link">
                 <i class="ri-pencil-line mr-2"></i>
@@ -37,6 +40,7 @@
                 <i class="ri-team-line mr-2"></i>
                 Subscribers
             </a>
+            @endcan
         </nav>
     </div>
     <!-- Profile Card -->
