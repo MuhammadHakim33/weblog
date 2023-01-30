@@ -14,7 +14,7 @@
         </div>
         <a href="/categories/create" class="btn btn-outline-primary flex items-center">
             <i class="ri-add-line ri-xl md:mr-2"></i>
-            <p class="hidden md:block">Create Category</p>
+            <p class="hidden md:block">New category</p>
         </a>
     </header>
     <!-- Alert -->

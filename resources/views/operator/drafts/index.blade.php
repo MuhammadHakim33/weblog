@@ -57,6 +57,7 @@
                                 </button>
                                 <div x-show="dropdown" x-on:click.outside="dropdown = false" class="z-10 absolute right-4 md:right-0 flex flex-col rounded border bg-white shadow-lg w-32">
                                     <!-- Publish -->
+                                    @can('admin')
                                     <form action="/posts/{{$post->id}}/publish" method="post">
                                         @method('put')
                                         @csrf
@@ -68,6 +69,14 @@
                                         @csrf
                                         <button class="w-full text-left py-2 px-4 text-sm hover:bg-primary/10" onclick="return confirm('Are you sure?')">Reject</button>
                                     </form>
+                                    @else
+                                    <!-- Submit -->
+                                    <form action="/posts/{{$post->id}}/review" method="post">
+                                        @method('put')
+                                        @csrf
+                                        <button value="submit" class="w-full text-left py-2 px-4 text-sm hover:bg-primary/10" onclick="return confirm('Are you sure?')">Submit</button>
+                                    </form>
+                                    @endcan
                                     <hr>
                                     <!-- Edit -->
                                     <a href="/posts/{{$post->id}}/edit" class="py-2 px-4 text-sm hover:bg-primary/10">Edit</a>

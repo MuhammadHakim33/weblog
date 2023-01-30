@@ -27,7 +27,7 @@
         @enderror
     </div>
     <div>
-        <button class="btn btn-primary">Change Password</button>
+        <button class="btn btn-primary">Change password</button>
     </div>
 </form>
 @endsection

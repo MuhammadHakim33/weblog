@@ -107,8 +107,12 @@
         </div>
         <hr>
         <div class="flex flex-wrap gap-3">
+            @can('admin')
             <button type="submit" name="action" value="insert" class="btn-sm btn-primary flex-none">Publish</button>
-            <button type="submit" name="action" value="draf" class="btn-sm btn-outline-light flex-none">Draft & Close</button>
+            @else
+            <button type="submit" name="action" value="insert" class="btn-sm btn-primary flex-none">Submit for review</button>
+            @endcan
+            <button type="submit" name="action" value="draf" class="btn-sm btn-outline-light flex-none">Draft & close</button>
         </div>
     </div>
 </form>

@@ -25,7 +25,13 @@
     <div>
         <label for="role">Role</label>
         <input type="text" id="role" name="role" class="form-input w-full" value="{{$user->role}}" readonly>
-        <small class="block mt-2 text-warning">You can't change role here, please contact other admin</small>
+        <small class="block mt-2 text-warning">
+        @can('admin')
+        You can't change role here, please contact other admin
+        @else
+        You can't change role yourself, please contact admin
+        @endcan
+        </small>
     </div>
     <div>
         <label for="email">Email</label>
@@ -35,7 +41,7 @@
         @enderror
     </div>
     <div>
-        <button class="btn btn-primary">Update Profile</button>
+        <button class="btn btn-primary">Update profile</button>
     </div>
 </form>
 @endsection

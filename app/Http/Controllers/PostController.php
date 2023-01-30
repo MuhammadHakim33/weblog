@@ -193,7 +193,7 @@ class PostController extends Controller
 
         // Set status for post base on which button clicked
         // or if initial status is draft, when update is still draft
-        if($request->input('action') == 'draf' || $post->status == 'draf') {
+        if($request->input('action') == 'draf') {
             $status = 'draf';
         }
 
@@ -242,6 +242,10 @@ class PostController extends Controller
      */
     public function publish(Request $request)
     {
+        if(!Gate::allows('admin')) {
+            abort(403);
+        };
+
         // Data 
         $data = [
             'status' => 'published',
@@ -261,6 +265,10 @@ class PostController extends Controller
      */
     public function reject(Request $request)
     {
+        if(!Gate::allows('admin')) {
+            abort(403);
+        };
+
         // Data 
         $data = [
             'status' => 'rejected',
@@ -270,6 +278,29 @@ class PostController extends Controller
         Post::where('id', $request->id)->update($data);
 
         return redirect('posts')->with('status-danger', 'Post Has Been Rejected!');
+    }
+
+    /**
+     * Submit For Reviewed Post
+     * 
+     * @param  Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function review(Request $request)
+    {
+        if(Gate::allows('admin')) {
+            abort(403);
+        };
+
+        // Data 
+        $data = [
+            'status' => 'reviewed',
+        ];
+
+        // update data
+        Post::where('id', $request->id)->update($data);
+
+        return redirect('posts')->with('status-success', 'Post Submit For Reviewed!');
     }
 
     /**

@@ -15,7 +15,7 @@
         </div>
         <a href="/posts/create" class="btn btn-outline-primary flex items-center">
             <i class="ri-add-line ri-xl md:mr-2"></i>
-            <p class="hidden md:block">Create Post</p>
+            <p class="hidden md:block">New post</p>
         </a>
     </header>
     <!-- Alert -->
@@ -72,6 +72,7 @@
                                     <i class="ri-more-2-line ri-xl"></i>
                                 </button>
                                 <div x-show="dropdown" x-on:click.outside="dropdown = false" class="z-10 absolute right-4 md:right-0 flex flex-col rounded border bg-white shadow-lg w-32">
+                                    @can('admin')
                                     <!-- Publish -->
                                     @if($post->status == 'rejected')
                                     <form action="/posts/{{$post->id}}/publish" method="post">
@@ -100,6 +101,7 @@
                                     </form>
                                     @endif
                                     <hr>
+                                    @endcan
                                     <!-- Edit -->
                                     <a href="/posts/{{$post->id}}/edit" class="py-2 px-4 text-sm hover:bg-primary/10">Edit</a>
                                     <!-- Delete -->

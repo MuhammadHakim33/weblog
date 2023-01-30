@@ -112,8 +112,8 @@
         </div>
         <hr>
         <div class="flex flex-wrap gap-3">
-            <button type="submit" name="action" value="insert" class="btn-sm btn-primary flex-none">Update</button>
-            <button type="submit" name="action" value="draf" class="btn-sm btn-outline-light flex-none">Draft & Close</button>
+            <button type="submit" name="action" value="update" class="btn-sm btn-primary flex-none">Update & submit</button>
+            <button type="submit" name="action" value="draf" class="btn-sm btn-outline-light flex-none">Draft & close</button>
         </div>
     </div>
 </form>
