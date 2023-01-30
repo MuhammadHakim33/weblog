@@ -26,7 +26,7 @@
     <!-- Table -->
     <div class="bg-white mx-4 my-8 border rounded-sm">
         <div class="p-4">
-            <h4>All Category <span class="opacity-60">(xx)</span></h4>
+            <h4>All Category <span class="opacity-60">({{$count}})</span></h4>
         </div>
         <div class="overflow-auto md:overflow-visible">
             <table class="w-full table-auto text-left ">

@@ -22,9 +22,12 @@ class CategoryController extends Controller
 
         $categories = Category::all();
 
+        $count = Category::all()->count();
+
         return view('operator.categories.index', [
             'title' => 'Categories',
-            'categories' => $categories
+            'categories' => $categories,
+            'count' => $count
         ]);
     }
 

@@ -21,7 +21,7 @@
     <!-- Table -->
     <div class="bg-white mx-4 my-8 border rounded-sm">
         <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <h4>All Post <span class="opacity-60">(xx)</span></h4>
+            <h4>All Post <span class="opacity-60">({{$count}})</span></h4>
             <div class="flex gap-3 items-center">
                 <input type="text" name="" class="form-input w-full sm:w-52 mt-0" placeholder="Search">
                 <select class="form-select btn-sm w-20 h-9 flex-none">

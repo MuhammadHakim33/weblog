@@ -19,9 +19,11 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with('creator')
-                    ->where('status', '!=', 'draf')
-                    ->latest()
-                    ->get();
+                 ->where('status', '!=', 'draf')
+                 ->latest()
+                 ->get();
+                    
+        $count = Post::where('status', '!=', 'draf')->count();
 
         if(!Gate::allows('admin')) {
             $posts = Post::with('creator')
@@ -29,11 +31,50 @@ class PostController extends Controller
                     ->where('creator_id', Auth::user()->id)
                     ->latest()
                     ->get();
+
+            $count = Post::where('status', '!=', 'draf')
+                     ->where('creator_id', Auth::user()->id)
+                     ->count();
         }
 
         return view('operator.posts.index', [
             'title' => 'Posts',
-            'posts' => $posts
+            'posts' => $posts,
+            'count' => $count
+        ]);
+    }
+
+    /**
+     * Display a listing of the draft post.
+     *
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function draft(Post $post)
+    {
+        $posts = Post::with('creator')
+                    ->where('status', 'draf')
+                    ->latest()
+                    ->get();
+
+        $count = Post::where('status', 'draf')->count();
+
+        if(!Gate::allows('admin')) {
+            $posts = Post::with('creator')
+                    ->where('status', 'draf')
+                    ->where('creator_id', Auth::user()->id)
+                    ->latest()
+                    ->get();
+
+            $count = Post::where('status', 'draf')
+                     ->where('creator_id', Auth::user()->id)
+                     ->count();
+        }
+
+        return view('operator.drafts.index', [
+            'title' => 'Drafts',
+            'posts' => $posts,
+            'count' => $count
         ]);
     }
 
@@ -234,32 +275,6 @@ class PostController extends Controller
         Post::where('id', $request->id)->update($data);
 
         return redirect('posts')->with('status-danger', 'Post Has Been Rejected!');
-    }
-
-    /**
-     * Display a listing of the draft post.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function draft(Post $post)
-    {
-        $posts = Post::with('creator')
-                    ->where('status', 'draf')
-                    ->latest()
-                    ->get();
-
-        if(!Gate::allows('admin')) {
-            $posts = Post::with('creator')
-                    ->where('status', 'draf')
-                    ->where('creator_id', Auth::user()->id)
-                    ->latest()
-                    ->get();
-        }
-
-        return view('operator.drafts.index', [
-            'title' => 'Drafts',
-            'posts' => $posts
-        ]);
     }
 
     /**
