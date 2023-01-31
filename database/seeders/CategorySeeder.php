@@ -20,12 +20,14 @@ class CategorySeeder extends Seeder
             [
                 'name' => "Sports",
                 'slug' => "sports",
+                'description' => '',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
                 'name' => "Business",
                 'slug' => "business",
+                'description' => '',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
