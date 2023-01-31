@@ -9,19 +9,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use HasFactory;
-    use Sluggable;
-    use HasUlids;
+    use HasFactory, Sluggable, HasUlids;
 
-    protected $table = 'tbl_posts';
+    protected $table = 'posts';
 
     protected $fillable = [
         'id',
-        'creator_id',
         'title',
         'slug',
         'thumbnail',
         'body',
+        'user_id',
         'category_id',
         'status',
     ];
@@ -29,9 +27,14 @@ class Post extends Model
     /**
      * Relationships 
      */
-    public function creator()
+    public function user()
     {
-        return $this->belongsTo(Operator::class, 'creator_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
     /**

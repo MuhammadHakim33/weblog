@@ -8,10 +8,9 @@ use Cviebrock\EloquentSluggable\Sluggable;
 
 class Category extends Model
 {
-    use HasFactory;
-    use Sluggable;
+    use HasFactory, Sluggable;
 
-    protected $table = 'tbl_categories';
+    protected $table = 'categories';
 
     protected $fillable = [
         'name',
