@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 
-class OperatorSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,10 +17,10 @@ class OperatorSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('tbl_operators')->insert([
+        DB::table('users')->insert([
             [
                 'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                'image' => 'images\profiles\profile-default.jpg',
+                'avatar' => 'images\profiles\profile-default.jpg',
                 'name' => 'Mamat Admin',
                 'slug' => 'mamat-admin',
                 'email' => 'administrator@gmail.com',

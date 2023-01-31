@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_operators', function (Blueprint $table) {
+        Schema::create('posts_comment', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('image');
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->enum('role', ['administrator', 'author']);
-            $table->string('contact')->nullable();
+            $table->foreignUuid('user_id')->constrained('users');
+            $table->foreignUlid('post_id')->constrained('posts');
+            $table->text('comment');
+            $table->string('tag')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('operators');
+        Schema::dropIfExists('posts_comment');
     }
 };

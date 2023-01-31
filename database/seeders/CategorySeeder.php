@@ -16,7 +16,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('tbl_categories')->insert([
+        DB::table('categories')->insert([
             [
                 'name' => "Sports",
                 'slug' => "sports",
@@ -26,6 +26,13 @@ class CategorySeeder extends Seeder
             [
                 'name' => "Business",
                 'slug' => "business",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => "Technology",
+                'slug' => "technology",
+                'description' => "the application of knowledge for achieving practical goals in a reproducible way",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
