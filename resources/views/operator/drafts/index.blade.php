@@ -42,7 +42,7 @@
                     @forelse($posts as $post)
                     <tr>
                         <td class="border-y p-4 align-top"><a href="" class="hover:underline hover:text-primary">{{ $post->title }}</a></td>
-                        <td class="border-y p-4 align-top">{{ $post->creator->name }}</td>
+                        <td class="border-y p-4 align-top">{{ $post->user->name }}</td>
                         <td class="border-y p-4 align-top">
                             <p>{{ $post->created_at }}</p>
                             <small class="text-black/60">Added</small>

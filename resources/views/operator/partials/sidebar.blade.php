@@ -46,10 +46,10 @@
     <!-- Profile Card -->
     <div class="relative" x-data="{dropdown: false}">
         <button x-on:click="dropdown = !dropdown" class="flex items-center bg-primary w-full">
-            <img src="{{ asset('storage/' . auth()->user()->image) }}" alt="" class="inline h-10 rounded-sm">
+            <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="" class="inline h-10 rounded-sm">
             <div class="text ml-2 text-left">
                 <h5 class="capitalize">{{auth()->user()->name}}</h5>
-                <p class="opacity-80 text-sm mt-1 capitalize">{{auth()->user()->role}}</p>
+                <p class="opacity-80 text-sm mt-1 capitalize">{{auth()->user()->userRole->level}}</p>
             </div>
         </button>
         <div x-show="dropdown" x-on:click.outside="dropdown = false" class="absolute bottom-20 left-0 right-0 flex flex-col rounded border bg-white shadow-lg text-black">

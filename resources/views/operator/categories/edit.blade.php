@@ -30,7 +30,7 @@
             <textarea id="description" name="description" class="form-input w-full" rows="4">{{old('description', $category->description)}}</textarea>
         </div>
         <div>
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">Update</button>
         </div>
     </form>
 </main>

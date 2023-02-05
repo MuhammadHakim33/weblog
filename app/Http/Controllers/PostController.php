@@ -18,7 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('creator')
+        $posts = Post::with('user')
                  ->where('status', '!=', 'draf')
                  ->latest()
                  ->simplePaginate(10);
@@ -26,14 +26,14 @@ class PostController extends Controller
         $count = Post::where('status', '!=', 'draf')->count();
 
         if(!Gate::allows('admin')) {
-            $posts = Post::with('creator')
+            $posts = Post::with('user')
                     ->where('status', '!=', 'draf')
-                    ->where('creator_id', Auth::user()->id)
+                    ->where('user_id', Auth::user()->id)
                     ->latest()
                     ->simplePaginate(10);
 
             $count = Post::where('status', '!=', 'draf')
-                     ->where('creator_id', Auth::user()->id)
+                     ->where('user_id', Auth::user()->id)
                      ->count();
         }
 
@@ -54,14 +54,14 @@ class PostController extends Controller
      */
     public function draft(Post $post)
     {
-        $posts = Post::with('creator')
+        $posts = Post::with('user')
                     ->where('status', 'draf')
-                    ->where('creator_id', Auth::user()->id)
+                    ->where('user_id', Auth::user()->id)
                     ->latest()
                     ->simplePaginate(10);
 
         $count = Post::where('status', 'draf')
-                    ->where('creator_id', Auth::user()->id)
+                    ->where('user_id', Auth::user()->id)
                     ->count();
 
         // dd($posts);
@@ -80,7 +80,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = DB::table('tbl_categories')
+        $categories = DB::table('categories')
                         ->select(['id', 'name'])
                         ->get();
 
@@ -112,7 +112,7 @@ class PostController extends Controller
         $thumbnail = $request->file('thumbnail')->store('images/thumbnails');
 
         // Set status for post base on role creator
-        if(auth()->user()->role == 'administrator') {
+        if(auth()->user()->userRole->level == 'administrator') {
             $status = "published";
         } else {
             $status = "reviewed";
@@ -125,7 +125,7 @@ class PostController extends Controller
 
         // Insert data
         Post::create([
-            'creator_id' => auth()->user()->id,
+            'user_id' => auth()->user()->id,
             'title' => $request->title,
             'slug' => $this->slug($request->title),
             'thumbnail' => $thumbnail,
@@ -156,7 +156,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $categories = DB::table('tbl_categories')
+        $categories = DB::table('categories')
                         ->select(['id', 'name'])
                         ->get();
 
@@ -185,7 +185,7 @@ class PostController extends Controller
         ]);
 
         // Set status for post base on role creator
-        if(auth()->user()->role == 'administrator') {
+        if(auth()->user()->userRole->level == 'administrator') {
             $status = "published";
         } else {
             $status = "reviewed";
@@ -199,7 +199,7 @@ class PostController extends Controller
 
         // Data 
         $data = [
-            'creator_id' => auth()->user()->id,
+            'user_id' => auth()->user()->id,
             'title' => $request->title,
             'body' => $request->body,
             'category_id' => $request->category,

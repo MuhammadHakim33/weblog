@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Operator;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
-class OperatorController extends Controller
+class UserController extends Controller
 {
-     /**
+    /**
      * Display a form for update general data.
      *
      * @param  Illuminate\Support\Facades\Auth  $auth
@@ -23,7 +23,7 @@ class OperatorController extends Controller
         ]);
     }
 
-     /**
+    /**
      * Display a form for update password in profile page.
      *
      * @param  Illuminate\Support\Facades\Auth  $auth
@@ -62,7 +62,7 @@ class OperatorController extends Controller
         
         // Update photo
         if($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('images/profiles');
+            $data['avatar'] = $request->file('image')->store('images/profiles');
         }
 
         // Check if name change, then the slug will change too
@@ -71,7 +71,7 @@ class OperatorController extends Controller
         }
 
         // update data
-        Operator::where('id', $auth::user()->id)->update($data);
+        User::where('id', $auth::user()->id)->update($data);
 
         return redirect('/profile')->with('status-success', 'Profile updated!');
     }
@@ -81,6 +81,6 @@ class OperatorController extends Controller
      */
     public function slug($name)
     {
-        return SlugService::createSlug(Operator::class, 'slug', $name);
+        return SlugService::createSlug(User::class, 'slug', $name);
     }
 }
