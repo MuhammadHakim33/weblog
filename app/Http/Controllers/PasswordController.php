@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Operator;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -29,13 +29,18 @@ class PasswordController extends Controller
             return redirect('/profile/change-password')->with('status-danger', 'Old password wrong !');
         }
 
-        // match ne password input with retype password input
+        // check if new password different from old password
+        if(Hash::check($request->new_password, Auth::user()->password)) {
+            return redirect('/profile/change-password')->with('status-danger', 'New password can\'t be same as old password !');
+        }
+
+        // match new password input with retype password input
         if($request->new_password != $request->retype_password) {
             return redirect('/profile/change-password')->with('status-danger', 'Retype Password doesn\'t match to new password');
         }
 
         // update data
-        Operator::where('id', Auth::user()->id)->update([
+        User::where('id', Auth::user()->id)->update([
             'password' => Hash::make($request->retype_password)
         ]);
 

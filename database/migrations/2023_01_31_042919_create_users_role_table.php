@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('avatar');
+        Schema::create('users_role', function (Blueprint $table) {
+            $table->id();
+            $table->foreignUuid('user_id')->constrained('users');
+            $table->enum('level', ['administrator', 'author', 'subscriber']);
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('users_role');
     }
 };

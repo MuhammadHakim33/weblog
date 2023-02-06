@@ -16,7 +16,7 @@ Weblog is a news website or blog. The owner can manage the website. Viewers can 
 - **[Remix Icon](https://remixicon.com/)**
 - **[Brief Project](https://www.figma.com/file/oXhXA0dZcUnzttIfp2yW77/Weblog-Brief?node-id=0%3A1)**
 - **[Design Interface](https://www.figma.com/file/TapCx8O6ySaMkqchFUZH7E/Design?node-id=15%3A2078&t=3UYPvyvouZzkusW8-1)**
-- **[Database Scheme By Hakim](https://dbdiagram.io/d/634426e7f0018a1c5fd04bdf)**
+- **[Database Scheme](https://dbdiagram.io/d/63d879b4296d97641d7d31dc)**
 
 <br>
 <br>
@@ -55,4 +55,8 @@ Password : 1234567
 
 #### Author account
 Email : author@gmail.com \
+Password : 1234567
+
+#### Subscriber account
+Email : subscriber@gmail.com \
 Password : 1234567

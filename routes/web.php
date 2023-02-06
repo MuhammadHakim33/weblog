@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,17 +46,17 @@ Route::resource('/categories', CategoryController::class)->middleware('auth');
 /**
  * Profile Route
  */
-Route::get('/profile', [OperatorController::class, 'formGeneral'])->middleware('auth');
-Route::get('/profile/change-password', [OperatorController::class, 'formPassword'])->middleware('auth');
-Route::put('/profile/{id}', [OperatorController::class, 'update'])->middleware('auth');
+Route::get('/profile', [UserController::class, 'formGeneral'])->middleware('auth');
+Route::get('/profile/change-password', [UserController::class, 'formPassword'])->middleware('auth');
+Route::put('/profile/{id}', [UserController::class, 'update'])->middleware('auth');
 
 
 /**
  * Auth Route
  */
-Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [LoginController::class, 'authenticate']);
-Route::post('/logout', [LoginController::class, 'logout']);
+Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [AuthController::class, 'authenticate']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
 
 /**
