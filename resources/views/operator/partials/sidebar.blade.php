@@ -1,4 +1,4 @@
-<aside :class="sidebar ? 'flex' : 'hidden'" class="w-full h-screen md:w-[15rem] px-4 py-4 z-10 bg-primary fixed border-r space-y-5 text-white box-border md:flex flex-col justify-between">
+<aside class="w-full h-screen md:w-[15rem] px-4 py-4 z-10 bg-primary fixed border-r space-y-5 text-white box-border md:flex flex-col justify-between" :class="sidebar ? 'flex' : 'hidden'">
     <div>
         <!-- Brand -->
         <div class="flex justify-between items-center">
@@ -52,7 +52,7 @@
                 <p class="opacity-80 text-sm mt-1 capitalize">{{auth()->user()->userRole->level}}</p>
             </div>
         </button>
-        <div x-show="dropdown" x-on:click.outside="dropdown = false" class="absolute bottom-20 left-0 right-0 flex flex-col rounded border bg-white shadow-lg text-black">
+        <div x-show="dropdown" x-on:click.outside="dropdown = false" class="absolute bottom-20 left-0 right-0 flex flex-col rounded border bg-white shadow-lg text-black" style="display:none;">
             <a href="/profile" class="py-2 px-4 text-sm hover:bg-primary/10 flex gap-2 items-center justify-between">
                 Profile
                 <i class="ri-user-line"></i>
