@@ -2,19 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    /**
+     * Display form login.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view('operator.auth.login', ['title' => 'Login']);
     }
 
+    /**
+     * Authenticate user account.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
@@ -35,27 +43,14 @@ class AuthController extends Controller
     
         $request->session()->regenerate();
         return redirect()->intended('/dashboard');
-
-        // $user = User::firstWhere('email', $request->email);
-        
-        // if(!$user) {
-        //     return redirect()->intended('/login');
-        // }
-
-        // if(!Hash::check($request->password, $user->password)) {
-        //     return redirect()->intended('/login');
-        // }
-
-        // if($user->userRole->level == 'subscriber') {
-        //     return redirect()->intended('/login');
-        // }
-
-        // Auth::loginUsingId($user->id);
-        // $request->session()->regenerate();
-        
-        // return redirect()->intended('/dashboard');
     }
 
+    /**
+     * Logout user account.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function logout(Request $request)
     {
         Auth::logout();
