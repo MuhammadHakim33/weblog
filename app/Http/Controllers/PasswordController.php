@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class PasswordController extends Controller
 {
+    public function resetLink () 
+    {
+        return view('operator.auth.form-reset-link', ['title' => 'Forget Password']);
+    }
+
     /**
      * Change password
      *

@@ -57,6 +57,10 @@ Route::put('/profile/{id}', [UserController::class, 'update'])->middleware('auth
 Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'authenticate']);
 Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/forget-password', [PasswordController::class, 'resetLink']);
+Route::get('/new-password', function() {
+    return view('operator.auth.form-new-password', [ 'title' => 'Create Password']);
+});
 
 
 /**

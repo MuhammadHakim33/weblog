@@ -45,7 +45,7 @@
 
     /* Button */
     .btn {
-        @apply px-4 py-2 font-normal rounded;
+        @apply px-4 py-2 font-normal rounded text-center;
     }
     .btn-sm {
         @apply px-3 py-2 font-normal text-sm rounded;
