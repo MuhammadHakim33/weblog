@@ -6,7 +6,7 @@
     <small class="badge badge-primary">Operator only</small>
 </header>
 
-<form action="/" method="POST" class="max-w-xs mx-auto mt-14">
+<form action="/reset-password" method="post" class="max-w-xs mx-auto mt-14">
     @csrf
     <!-- Alert for failed login -->
     @if(session('status-danger'))
@@ -19,16 +19,26 @@
     </div>
     <div class="space-y-4">
         <div>
-            <label for="new_password">New Password</label>
-            <input type="password" id="new_password" name="new_password" class="form-input w-full">
-            @error('new_password')
+            <input id="token" name="token" type="hidden" class="form-input w-full" value="{{$token}}">
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="text" class="form-input w-full" value="{{old('email')}}">
+            @error('email')
             <small class="block mt-2 text-danger">{{$message}}</small>
             @enderror
         </div>
         <div>
-            <label for="retype_password">Retype Password</label>
-            <input type="password" id="retype_password" name="retype_password" class="form-input w-full">
-            @error('retype_password')
+            <label for="password">New Password</label>
+            <input type="password" id="password" name="password" class="form-input w-full">
+            @error('password')
+            <small class="block mt-2 text-danger">{{$message}}</small>
+            @enderror
+        </div>
+        <div>
+            <label for="password_confirmation">Retype Password</label>
+            <input type="password" id="password_confirmation" name="password_confirmation" class="form-input w-full">
+            @error('password_confirmation')
             <small class="block mt-2 text-danger">{{$message}}</small>
             @enderror
         </div>

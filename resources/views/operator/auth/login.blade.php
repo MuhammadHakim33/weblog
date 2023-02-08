@@ -8,7 +8,10 @@
 
     <form action="/login" method="POST" class="max-w-xs mx-auto mt-14">
         @csrf
-        <!-- Alert for failed login -->
+        <!-- Alert -->
+        @if(session('status-success'))
+        <div class="w-full mb-4 p-4 rounded alert-success">{{session('status-success')}}</div>
+        @endif
         @if(session('status-danger'))
         <div class="w-full mb-4 p-4 rounded alert-danger">{{session('status-danger')}}</div>
         @endif

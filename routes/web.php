@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordController;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,12 +56,12 @@ Route::put('/profile/{id}', [UserController::class, 'update'])->middleware('auth
  * Auth Route
  */
 Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [AuthController::class, 'authenticate']);
-Route::post('/logout', [AuthController::class, 'logout']);
-Route::get('/forget-password', [PasswordController::class, 'resetLink']);
-Route::get('/new-password', function() {
-    return view('operator.auth.form-new-password', [ 'title' => 'Create Password']);
-});
+Route::post('/login', [AuthController::class, 'authenticate'])->middleware('guest');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+Route::get('/forget-password', [PasswordController::class, 'request'])->middleware('guest');
+Route::post('/forget-password', [PasswordController::class, 'send'])->middleware('guest');
+Route::get('/reset-password/{token}', [PasswordController::class, 'edit'])->middleware('guest')->name('password.reset');
+Route::post('/reset-password', [PasswordController::class, 'update'])->middleware('guest')->name('password.update');
 
 
 /**

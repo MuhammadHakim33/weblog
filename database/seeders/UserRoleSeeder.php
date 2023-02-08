@@ -38,6 +38,13 @@ class UserRoleSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
+            [
+                'user_id' => '0f727459e9c245dd8f8fc26881baaeab',
+                'level' => 'administrator',
+                'status' => '1',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
         ]);
     }
 }
