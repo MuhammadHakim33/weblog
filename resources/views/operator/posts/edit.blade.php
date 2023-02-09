@@ -96,7 +96,7 @@
         </div>
         <div>
             <label for="category">Category</label>
-            <select name="category" id="category" class="form-select btn w-full">
+            <select name="category" id="category" class="form-select w-full">
                 <option value="" selected>Select</option>
                 @foreach($categories as $category)
                     @if($post->category_id == $category->id) 
