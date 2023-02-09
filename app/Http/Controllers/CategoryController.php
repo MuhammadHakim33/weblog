@@ -11,15 +11,11 @@ class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        if(!Gate::allows('admin')) {
-            abort(403);
-        };
-
+        Gate::authorize('admin');
+        
         $categories = Category::all();
 
         $count = Category::all()->count();
@@ -33,14 +29,10 @@ class CategoryController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        if(!Gate::allows('admin')) {
-            abort(403);
-        };
+        Gate::authorize('admin');
 
         return view('operator.categories.create', [
             'title' => 'Categories'
@@ -49,15 +41,10 @@ class CategoryController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        if(!Gate::allows('admin')) {
-            abort(403);
-        };
+        Gate::authorize('admin');
 
         // Validation Input
         $request->validate([
@@ -75,27 +62,11 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
      */
     public function edit(Category $category)
     {
-        if(!Gate::allows('admin')) {
-            abort(403);
-        };
+        Gate::authorize('admin');
 
         return view('operator.categories.edit', [
             'title' => 'Categories',
@@ -105,16 +76,10 @@ class CategoryController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Category $category)
     {
-        if(!Gate::allows('admin')) {
-            abort(403);
-        };
+        Gate::authorize('admin');
 
         // Validate input
         $request->validate([
@@ -140,16 +105,11 @@ class CategoryController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        if(!Gate::allows('admin')) {
-            abort(403);
-        };
-
+        Gate::authorize('admin');
+        
         // Check if the category is connected with several posts 
         try {
             Category::destroy($id);

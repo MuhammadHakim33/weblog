@@ -7,7 +7,6 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordController;
 use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +28,7 @@ Route::middleware('auth')->group(function() {
     Route::put('/posts/{id}/publish', [PostController::class, 'publish']);
     Route::put('/posts/{id}/review', [PostController::class, 'review']);
     Route::resource('/posts', PostController::class);
-    Route::resource('/categories', CategoryController::class);
+    Route::resource('/categories', CategoryController::class)->except('show');
     Route::get('/profile', [UserController::class, 'formGeneral']);
     Route::get('/profile/change-password', [UserController::class, 'formPassword']);
     Route::put('/profile/{id}', [UserController::class, 'update']);
