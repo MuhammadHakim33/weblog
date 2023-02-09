@@ -14,7 +14,6 @@ class PasswordController extends Controller
 {
     /**
      * Show the form for request reset link.
-     *
      */
     public function request() 
     {
@@ -23,13 +22,10 @@ class PasswordController extends Controller
 
     /**
      * Send reset link to email user.
-     *
      */
     public function send(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email:dns'
-        ]);
+        $request->validate(['email' => 'required|email:dns']);
 
         // validate if the user is 'subscriber'
         $user = User::firstWhere('email', $request->email);
@@ -57,7 +53,6 @@ class PasswordController extends Controller
 
     /**
      * Reset password.
-     *
      */
     public function update(Request $request)
     {
@@ -85,11 +80,9 @@ class PasswordController extends Controller
 
     /**
      * Change password
-     *
      */
     public function change(Request $request)
     {
-        // validate input
         $request->validate([
             'old_password' => 'required',
             'new_password' => 'required|min:7',

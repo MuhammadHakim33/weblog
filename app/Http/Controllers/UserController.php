@@ -11,50 +11,37 @@ class UserController extends Controller
 {
     /**
      * Display a form for update general data.
-     *
-     * @param  Illuminate\Support\Facades\Auth  $auth
-     * @return \Illuminate\Http\Response
      */
-    public function formGeneral(Auth $auth)
+    public function formGeneral()
     {
         return view('operator.profile.form_general', [
             'title' => "Profile - General",
-            'user' => $auth::user()
+            'user' => Auth::user()
         ]);
     }
 
     /**
      * Display a form for update password in profile page.
-     *
-     * @param  Illuminate\Support\Facades\Auth  $auth
-     * @return \Illuminate\Http\Response
      */
-    public function formPassword(Auth $auth)
+    public function formPassword()
     {
         return view('operator.profile.form_password', [
             'title' => "Profile - Password",
-            'user' => $auth::user()
+            'user' => Auth::user()
         ]);
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Illuminate\Support\Facades\Auth  $auth
-     * @return \Illuminate\Http\Response
      */
-
     public function update(Request $request, Auth $auth)
     {
-        // validate input
         $request->validate([
             'image' => 'image|max:2048',
             'name' => 'required',
             'email' => 'required|email:dns',
         ]);
 
-        // Data
         $data = [
             'name' => $request->name,
             'email' => $request->email,
@@ -70,7 +57,6 @@ class UserController extends Controller
             $data['slug'] = $this->slug($request->name);
         }
 
-        // update data
         User::where('id', $auth::user()->id)->update($data);
 
         return redirect('/profile')->with('status-success', 'Profile updated!');

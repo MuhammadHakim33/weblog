@@ -9,8 +9,6 @@ class AuthController extends Controller
 {
     /**
      * Display form login.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -19,9 +17,6 @@ class AuthController extends Controller
 
     /**
      * Authenticate user account.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function authenticate(Request $request)
     {
@@ -47,9 +42,6 @@ class AuthController extends Controller
 
     /**
      * Logout user account.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
     {

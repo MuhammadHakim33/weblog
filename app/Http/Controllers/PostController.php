@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,31 +14,25 @@ class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $posts = Post::with('user')
                  ->where('status', '!=', 'draf')
                  ->latest()
-                 ->simplePaginate(10);
+                 ->paginate(10);
                     
-        $count = Post::where('status', '!=', 'draf')->count();
+        $count = $posts->total();
 
         if(!Gate::allows('admin')) {
             $posts = Post::with('user')
                     ->where('status', '!=', 'draf')
                     ->where('user_id', Auth::user()->id)
                     ->latest()
-                    ->simplePaginate(10);
+                    ->paginate(10);
 
-            $count = Post::where('status', '!=', 'draf')
-                     ->where('user_id', Auth::user()->id)
-                     ->count();
+            $count = $posts->total();
         }
-
-        // dd($posts);
 
         return view('operator.posts.index', [
             'title' => 'Posts',
@@ -48,23 +43,16 @@ class PostController extends Controller
 
     /**
      * Display a listing of the draft post.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
      */
-    public function draft(Post $post)
+    public function draft()
     {
         $posts = Post::with('user')
                     ->where('status', 'draf')
                     ->where('user_id', Auth::user()->id)
                     ->latest()
-                    ->simplePaginate(10);
+                    ->paginate(10);
 
-        $count = Post::where('status', 'draf')
-                    ->where('user_id', Auth::user()->id)
-                    ->count();
-
-        // dd($posts);
+        $count = $posts->total();
 
         return view('operator.drafts.index', [
             'title' => 'Drafts',
@@ -75,14 +63,10 @@ class PostController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $categories = DB::table('categories')
-                        ->select(['id', 'name'])
-                        ->get();
+        $categories = Category::all();
 
         return view('operator.posts.create', [
             'title' => 'Create Post',
@@ -92,21 +76,15 @@ class PostController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        // validate input
         $request->validate([
             'thumbnail' => 'required|image|max:2048',
             'title' => 'required',
             'category' => 'required',
             'body' => 'required'
         ]);
-
-        // dd($request);
 
         // Upload thumbnail
         $thumbnail = $request->file('thumbnail')->store('images/thumbnails');
@@ -123,7 +101,6 @@ class PostController extends Controller
             $status = 'draf';
         }
 
-        // Insert data
         Post::create([
             'user_id' => auth()->user()->id,
             'title' => $request->title,
@@ -139,9 +116,6 @@ class PostController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
      */
     public function show(Post $post)
     {
@@ -150,15 +124,10 @@ class PostController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
     {
-        $categories = DB::table('categories')
-                        ->select(['id', 'name'])
-                        ->get();
+        $categories = $categories = Category::all();
 
         return view('operator.posts.edit', [
             'title' => 'Edit Post',
@@ -169,14 +138,9 @@ class PostController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Post $post)
     {
-        // validate input
         $request->validate([
             'thumbnail' => 'image|max:2048',
             'title' => 'required',
@@ -197,7 +161,6 @@ class PostController extends Controller
             $status = 'draf';
         }
 
-        // Data 
         $data = [
             'user_id' => auth()->user()->id,
             'title' => $request->title,
@@ -216,7 +179,6 @@ class PostController extends Controller
             $data['slug'] = $this->slug($request->title);
         }
 
-        // update data
         Post::where('id', $post->id)->update($data);
 
         return redirect('posts')->with('status-success', 'Update Post Success!');
@@ -224,9 +186,6 @@ class PostController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)
     {
@@ -236,70 +195,34 @@ class PostController extends Controller
 
     /**
      * Publish Post
-     * 
-     * @param  Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function publish(Request $request)
     {
-        if(!Gate::allows('admin')) {
-            abort(403);
-        };
+        Gate::authorize('admin');
 
-        // Data 
-        $data = [
-            'status' => 'published',
-        ];
-
-        // update data
-        Post::where('id', $request->id)->update($data);
-
+        Post::where('id', $request->id)->update(['status' => 'published']);
         return redirect('posts')->with('status-success', 'Post Has Been Published!');
     }
 
     /**
      * Reject Post
-     * 
-     * @param  Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function reject(Request $request)
     {
-        if(!Gate::allows('admin')) {
-            abort(403);
-        };
+        Gate::authorize('admin');
 
-        // Data 
-        $data = [
-            'status' => 'rejected',
-        ];
-
-        // update data
-        Post::where('id', $request->id)->update($data);
-
+        Post::where('id', $request->id)->update(['status' => 'rejected']);
         return redirect('posts')->with('status-danger', 'Post Has Been Rejected!');
     }
 
     /**
      * Submit For Reviewed Post
-     * 
-     * @param  Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function review(Request $request)
     {
-        if(Gate::allows('admin')) {
-            abort(403);
-        };
+        Gate::authorize('admin');
 
-        // Data 
-        $data = [
-            'status' => 'reviewed',
-        ];
-
-        // update data
-        Post::where('id', $request->id)->update($data);
-
+        Post::where('id', $request->id)->update(['status' => 'reviewed']);
         return redirect('posts')->with('status-success', 'Post Submit For Reviewed!');
     }
 

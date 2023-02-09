@@ -17,8 +17,7 @@ class CategoryController extends Controller
         Gate::authorize('admin');
         
         $categories = Category::all();
-
-        $count = Category::all()->count();
+        $count = $categories->count();
 
         return view('operator.categories.index', [
             'title' => 'Categories',
@@ -34,9 +33,7 @@ class CategoryController extends Controller
     {
         Gate::authorize('admin');
 
-        return view('operator.categories.create', [
-            'title' => 'Categories'
-        ]);
+        return view('operator.categories.create', ['title' => 'Categories']);
     }
 
     /**
@@ -47,9 +44,7 @@ class CategoryController extends Controller
         Gate::authorize('admin');
 
         // Validation Input
-        $request->validate([
-            'name' => 'required'
-        ]);
+        $request->validate(['name' => 'required']);
 
         // Insert Data
         Category::create([
@@ -82,9 +77,7 @@ class CategoryController extends Controller
         Gate::authorize('admin');
 
         // Validate input
-        $request->validate([
-            'name' => 'required'
-        ]);
+        $request->validate(['name' => 'required']);
 
         // Data
         $data = [
