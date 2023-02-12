@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -190,7 +189,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         Post::destroy($post->id);
-        return redirect('posts')->with('status-danger', 'Post Has Been Deleted!');
+        return back()->with('status-danger', 'Post Has Been Deleted!');
     }
 
     /**
@@ -200,8 +199,11 @@ class PostController extends Controller
     {
         Gate::authorize('admin');
 
-        Post::where('id', $request->id)->update(['status' => 'published']);
-        return redirect('posts')->with('status-success', 'Post Has Been Published!');
+        $post = Post::find($request->id);
+        $post->status = 'published';
+        $post->save();
+        
+        return back()->with('status-success', 'Post Has Been Published!');
     }
 
     /**
@@ -211,8 +213,11 @@ class PostController extends Controller
     {
         Gate::authorize('admin');
 
-        Post::where('id', $request->id)->update(['status' => 'rejected']);
-        return redirect('posts')->with('status-danger', 'Post Has Been Rejected!');
+        $post = Post::find($request->id);
+        $post->status = 'rejected';
+        $post->save();
+
+        return back()->with('status-danger', 'Post Has Been Rejected!');
     }
 
     /**
@@ -220,9 +225,10 @@ class PostController extends Controller
      */
     public function review(Request $request)
     {
-        Gate::authorize('admin');
+        $post = Post::find($request->id);
+        $post->status = 'reviewed';
+        $post->save();
 
-        Post::where('id', $request->id)->update(['status' => 'reviewed']);
         return redirect('posts')->with('status-success', 'Post Submit For Reviewed!');
     }
 

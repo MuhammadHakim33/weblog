@@ -43,10 +43,8 @@ class CategoryController extends Controller
     {
         Gate::authorize('admin');
 
-        // Validation Input
         $request->validate(['name' => 'required']);
 
-        // Insert Data
         Category::create([
             'name' => $request->name,
             'slug' => $this->slug($request->name),
@@ -76,10 +74,8 @@ class CategoryController extends Controller
     {
         Gate::authorize('admin');
 
-        // Validate input
         $request->validate(['name' => 'required']);
 
-        // Data
         $data = [
             'name' => $request->name,
             'description' => $request->description
@@ -90,7 +86,6 @@ class CategoryController extends Controller
             $data['slug'] = $this->slug($request->name);
         }
 
-        // Update data
         Category::where('id', $category->id)->update($data);
 
         return redirect('categories')->with('status-success', 'Update Category Success!');
@@ -107,10 +102,10 @@ class CategoryController extends Controller
         try {
             Category::destroy($id);
         } catch (\Throwable $th) {
-            return redirect('categories')->with('status-danger', 'Category Cannot Be Deleted! : This Category is Connected with Several Posts');
+            return back()->with('status-danger', 'Category Cannot Be Deleted! : This Category is Connected with Several Posts');
         }
 
-        return redirect('categories')->with('status-success', ' Category Has Been Deleted!');
+        return back()->with('status-success', ' Category Has Been Deleted!');
     }
 
     /**
