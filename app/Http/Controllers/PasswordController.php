@@ -44,7 +44,6 @@ class PasswordController extends Controller
 
     /**
      * Show the form for reset password.
-     *
      */
     public function edit($token)
     {
@@ -54,7 +53,7 @@ class PasswordController extends Controller
     /**
      * Reset password.
      */
-    public function update(Request $request)
+    public function reset(Request $request)
     {
         $request->validate([
             'token' => 'required',
@@ -84,31 +83,19 @@ class PasswordController extends Controller
     public function change(Request $request)
     {
         $request->validate([
-            'old_password' => 'required',
-            'new_password' => 'required|min:7',
-            'retype_password' => 'required|min:7',
+            'old_password' => 'required|current_password',
+            'password' => 'required|min:7|confirmed',
         ]);
-
-        // match old password input with current password
-        if(!Hash::check($request->old_password, Auth::user()->password)) {
-            return redirect('/profile/change-password')->with('status-danger', 'Old password wrong !');
-        }
 
         // check if new password different from old password
-        if(Hash::check($request->new_password, Auth::user()->password)) {
-            return redirect('/profile/change-password')->with('status-danger', 'New password can\'t be same as old password !');
+        if(Hash::check($request->password, Auth::user()->password)) {
+            return back()->withErrors(['password' => 'New password can\'t be same as old password !']);
         }
 
-        // match new password input with retype password input
-        if($request->new_password != $request->retype_password) {
-            return redirect('/profile/change-password')->with('status-danger', 'Retype Password doesn\'t match to new password');
-        }
+        $user = User::find(Auth::user()->id);
+        $user->password = Hash::make($request->password);
+        $user->save();
 
-        // update data
-        User::where('id', Auth::user()->id)->update([
-            'password' => Hash::make($request->retype_password)
-        ]);
-
-        return redirect('/profile/change-password')->with('status-success', 'Password changed!');
+        return back()->with('status-success', 'Password changed!');
     }
 }

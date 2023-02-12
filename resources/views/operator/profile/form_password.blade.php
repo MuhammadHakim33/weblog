@@ -12,17 +12,17 @@
         @enderror
     </div>
     <div>
-        <label for="new_password">New Password</label>
+        <label for="password">New Password</label>
         <small class="block text-warning">Your new password must be different from previous used password</small>
-        <input type="password" id="new_password" name="new_password" class="form-input w-full">
-        @error('new_password')
+        <input type="password" id="password" name="password" class="form-input w-full">
+        @error('password')
         <small class="block mt-2 text-danger">{{$message}}</small>
         @enderror
     </div>
     <div>
-        <label for="retype_password">Retype Password</label>
-        <input type="password" id="retype_password" name="retype_password" class="form-input w-full">
-        @error('retype_password')
+        <label for="password_confirmation">Password Confirmation</label>
+        <input type="password" id="password_confirmation" name="password_confirmation" class="form-input w-full">
+        @error('password_confirmation')
         <small class="block mt-2 text-danger">{{$message}}</small>
         @enderror
     </div>
