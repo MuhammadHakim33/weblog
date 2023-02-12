@@ -48,16 +48,6 @@ class UserSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
-            [
-                'id' => '0f727459e9c245dd8f8fc26881baaeab',
-                'name' => 'Ilham Admin',
-                'slug' => 'ilham-admin',
-                'email' => 'projectweblog2023@gmail.com',
-                'password' => Hash::make('1234567'),
-                'avatar' => 'images\profiles\profile-default.jpg',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
         ]);
     }
 }
