@@ -9,8 +9,6 @@ class AuthController extends Controller
 {
     /**
      * Display form login.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -19,9 +17,6 @@ class AuthController extends Controller
 
     /**
      * Authenticate user account.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function authenticate(Request $request)
     {
@@ -31,14 +26,14 @@ class AuthController extends Controller
         ]);
         
         if(!Auth::attempt($credentials)) {
-            return redirect()->intended('/login')->with('status-danger', 'Incorrect email or password.');
+            return back()->with('status-danger', 'Incorrect email or password.');
         }
         
         if(Auth::user()->UserRole->level == 'subscriber') {
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-            return redirect()->intended('/login')->with('status-danger', 'Your account can\'t login here.');
+            return back()->with('status-danger', 'Your account can\'t login here.');
         }
     
         $request->session()->regenerate();
@@ -47,9 +42,6 @@ class AuthController extends Controller
 
     /**
      * Logout user account.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
     {

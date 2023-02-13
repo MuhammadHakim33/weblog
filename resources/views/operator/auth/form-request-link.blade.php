@@ -6,9 +6,9 @@
         <small class="badge badge-primary">Operator only</small>
     </header>
 
-    <form action="/login" method="POST" class="max-w-xs mx-auto mt-14">
+    <form action="/forget-password" method="POST" class="max-w-xs mx-auto mt-14">
         @csrf
-        <!-- Alert -->
+        <!-- Alert-->
         @if(session('status-success'))
         <div class="w-full mb-4 p-4 rounded alert-success">{{session('status-success')}}</div>
         @endif
@@ -17,8 +17,8 @@
         @endif
 
         <div class="mb-5 space-y-2">
-            <h3 class="text-2xl font-semibold">Login to your account</h3>
-            <p>Enter your email address and password to access operator panel.</p>
+            <h3 class="text-2xl font-semibold">Forget password ?</h3>
+            <p>We will send you a password reset link to your email.</p>
         </div>
         <div class="space-y-4">
             <div>
@@ -29,18 +29,11 @@
                 @enderror
             </div>
             <div>
-                <label for="password">Password</label>
-                <input id="password" name="password" type="password" class="form-input w-full">
-                @error('password')
-                    <small class="block mt-2 text-danger">{{ $message }}</small>
-                @enderror
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary w-full">Login</button>
+                <button type="submit" class="btn btn-primary w-full">Send reset link</button>
             </div>
             <hr class="border-black/10">
-            <div class="flex justify-center">
-                <a href="/forget-password" class="btn btn-link-danger">forget password?</a>
+            <div class="">
+                <a href="/login" class="btn btn-outline-primary w-full block">Login</a>
             </div>
         </div>
     </form>

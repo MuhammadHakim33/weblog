@@ -35,17 +35,14 @@
 /* Component */
 @layer components {
     /* Input Field */
-    .form-input {
-        @apply mt-2;
-    }
     .form-input,
     .form-select {
-        @apply block rounded border-primary/20 focus:border-primary/60 focus:ring-primary/60;
+        @apply block rounded border-primary/20 focus:border-primary/60 focus:ring-primary/60 mt-2;
     }
 
     /* Button */
     .btn {
-        @apply px-4 py-2 font-normal rounded;
+        @apply px-4 py-2 font-normal rounded text-center;
     }
     .btn-sm {
         @apply px-3 py-2 font-normal text-sm rounded;

@@ -11,7 +11,7 @@
     <title>@yield('title')</title>
 </head>
 <body class="bg-primary/5">
-    <div class="container p-4 mx-auto h-screen flex flex-col">
+    <div class="container mx-auto h-screen flex flex-col">
         <!-- Header -->
         <header class="py-2 border-b border-black/10">
             <img src="{{asset('assets/img/logo-black.png')}}" alt="" class="inline h-14">
@@ -19,8 +19,9 @@
         <!-- Main -->
         <main class="grow flex flex-col justify-center mx-auto gap-10">
             <div class="space-y-2">
-                <h1 class="text-[48px]">@yield('code')</h1>
-                <h3 class="text-[28px] leading-snug">@yield('message')</h3>
+                <h2 class="">@yield('code')</h2>
+                <h1 class="text-5xl">@yield('title')</h1>
+                <p class="text-xl leading-snug">@yield('message')</p>
             </div>
             <a href="/" class="w-fit btn-sm btn-outline-light flex items-center gap-2 group">
                 <i class="ri-arrow-left-line me-2 group-hover:-translate-x-2 transition"></i>

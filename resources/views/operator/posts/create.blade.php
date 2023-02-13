@@ -95,10 +95,10 @@
         </div>
         <div>
             <label for="category">Category</label>
-            <select name="category" id="category" class="form-select btn w-full">
+            <select name="category" id="category" class="form-select w-full">
                 <option value="" selected>Select</option>
                 @foreach($categories as $category)
-                <option value="{{$category->id}}" @selected(old('category')==$category->id)>{{$category->name}}</option>
+                <option value="{{$category->id}}" @selected(old('category') == $category->id)>{{$category->name}}</option>
                 @endforeach
             </select>
             @error('category')

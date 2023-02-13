@@ -19,47 +19,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::view('/', 'welcome');
+
+Route::middleware('auth')->group(function() {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/posts/drafts', [PostController::class, 'draft']);
+    Route::put('/posts/{id}/reject', [PostController::class, 'reject']);
+    Route::put('/posts/{id}/publish', [PostController::class, 'publish']);
+    Route::put('/posts/{id}/review', [PostController::class, 'review']);
+    Route::resource('/posts', PostController::class);
+    Route::resource('/categories', CategoryController::class)->except('show');
+    Route::get('/profile', [UserController::class, 'formGeneral']);
+    Route::get('/profile/change-password', [UserController::class, 'formPassword']);
+    Route::put('/profile/{id}', [UserController::class, 'update']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::put('/change-password', [PasswordController::class, 'change']);
 });
 
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
-
-
-/**
- * Post Route
- */
-Route::get('/posts/drafts', [PostController::class, 'draft'])->middleware('auth');
-Route::put('/posts/{id}/reject', [PostController::class, 'reject'])->middleware('auth');
-Route::put('/posts/{id}/publish', [PostController::class, 'publish'])->middleware('auth');
-Route::put('/posts/{id}/review', [PostController::class, 'review'])->middleware('auth');
-Route::resource('/posts', PostController::class)->middleware('auth');
-
-
-/**
- * Category Route
- */
-Route::resource('/categories', CategoryController::class)->middleware('auth');
-
-
-/**
- * Profile Route
- */
-Route::get('/profile', [UserController::class, 'formGeneral'])->middleware('auth');
-Route::get('/profile/change-password', [UserController::class, 'formPassword'])->middleware('auth');
-Route::put('/profile/{id}', [UserController::class, 'update'])->middleware('auth');
-
-
-/**
- * Auth Route
- */
-Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [AuthController::class, 'authenticate']);
-Route::post('/logout', [AuthController::class, 'logout']);
-
-
-/**
- * Manage Password Route
- */
-Route::put('/change-password', [PasswordController::class, 'change'])->middleware('auth');
+Route::middleware('guest')->group(function() {
+    Route::get('/login', [AuthController::class, 'index'])->name('login');
+    Route::post('/login', [AuthController::class, 'authenticate']);
+    Route::get('/forget-password', [PasswordController::class, 'request']);
+    Route::post('/forget-password', [PasswordController::class, 'send']);
+    Route::get('/reset-password/{token}', [PasswordController::class, 'edit'])->name('password.reset');
+    Route::post('/reset-password', [PasswordController::class, 'reset'])->name('password.update');
+});
