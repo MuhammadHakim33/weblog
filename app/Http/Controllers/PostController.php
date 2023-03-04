@@ -118,7 +118,10 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('operator.posts.preview', [
+            'title' => 'Preview Post',
+            'post' => $post
+        ]);
     }
 
     /**
