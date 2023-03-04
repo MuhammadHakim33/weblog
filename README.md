@@ -9,7 +9,7 @@ Weblog is a news website or blog. The owner can manage the website. Viewers can 
 - Laravel 9
 - Tailwind
 - Alpine Js
-- Quilljs
+- CKEditor4
 
 #### Source
 
