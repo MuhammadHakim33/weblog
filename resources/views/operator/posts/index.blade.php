@@ -51,19 +51,19 @@
                 <tbody>
                     @forelse($posts as $post)
                     <tr>
-                        <td class="border-y p-4 align-top"><a href="" class="hover:underline hover:text-primary">{{ $post->title }}</a></td>
-                        <td class="border-y p-4 align-top capitalize">{{ $post->user->name }}</td>
+                        <td class="border-y p-4 align-top"><a href="/posts/{{$post->id}}" class="hover:underline hover:text-primary">{{$post->title}}</a></td>
+                        <td class="border-y p-4 align-top capitalize">{{$post->user->name}}</td>
                         <td class="border-y p-4 align-top">
-                            <p>{{ $post->created_at }}</p>
+                            <p>{{$post->created_at}}</p>
                             <small class="text-black/60">Added</small>
                         </td>
                         <td class="border-y p-4 align-top">
                             @if($post->status === 'rejected')
-                            <span class="badge badge-danger capitalize">{{ $post->status }}</span>
+                            <span class="badge badge-danger capitalize">{{$post->status}}</span>
                             @elseif($post->status === 'reviewed')
-                            <span class="badge badge-warning capitalize">{{ $post->status }}</span>
+                            <span class="badge badge-warning capitalize">{{$post->status}}</span>
                             @else
-                            <span class="badge badge-success capitalize">{{ $post->status }}</span>
+                            <span class="badge badge-success capitalize">{{$post->status}}</span>
                             @endif
                         </td>
                         <td class="border-y p-4 align-top ">

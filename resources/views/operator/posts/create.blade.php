@@ -19,65 +19,11 @@
             <small class="block mt-2 text-danger">{{ $message }}</small>
             @enderror
         </div>
-        <div class="bg-white p-4 rounded border">
+        <div class="bg-white rounded border">
             @error('body')
             <small class="block mt-2 text-danger">{{ $message }}</small>
             @enderror
-            <div id="toolbar" class="bg-white shadow-md rounded">
-                <div class="ql-formats">
-                    <select class="ql-size">
-                        <option value="normal"></option>
-                        <option value="small"></option>
-                        <option value="large"></option>
-                        <option value="huge"></option>
-                    </select>
-                    <button class="ql-bold"></button>
-                    <button class="ql-italic"></button>
-                    <button class="ql-underline"></button>
-                </div>
-                <div class="ql-formats">
-                    <button class="ql-header" value="1"></button>
-                    <button class="ql-header" value="2"></button>
-                    <button class="ql-blockquote"></button>
-                    <button class="ql-code-block"></button>
-                </div>
-                <div class="ql-formats">
-                    <select class="ql-color">
-                        <option selected></option>
-                        <option value="red"></option>
-                        <option value="orange"></option>
-                        <option value="yellow"></option>
-                        <option value="green"></option>
-                        <option value="blue"></option>
-                        <option value="purple"></option>
-                    </select>
-                    <select class="ql-background">
-                        <option selected></option>
-                        <option value="red"></option>
-                        <option value="orange"></option>
-                        <option value="yellow"></option>
-                        <option value="green"></option>
-                        <option value="blue"></option>
-                        <option value="purple"></option>
-                    </select>
-                </div>
-                <div class="ql-formats">
-                    <button class="ql-list" value="ordered"></button>
-                    <button class="ql-list" value="bullet"></button>
-                    <select class="ql-align">
-                        <option selected></option>
-                        <option value="center"></option>
-                        <option value="right"></option>
-                        <option value="justify"></option>
-                    </select>
-                    <button class="ql-direction" value="rtl"></button>
-                </div>
-                <div class="ql-formats">
-                    <button class="ql-image"></button>
-                </div>
-            </div>
-            <div id="editor" class="min-h-screen pt-4 mb-5 text-base !border-none"></div>
-            <input name="body" x-ref="body" type="hidden" value="{{old('body')}}">
+            <textarea name="body" id="editor" class="text-base">{{ old('body') }}</textarea>
         </div>
     </main>
     <!-- Right side -->
