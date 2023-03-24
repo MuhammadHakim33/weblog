@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\ImageController as ImageController;
 
 class PostController extends Controller
 {
@@ -86,7 +87,8 @@ class PostController extends Controller
         ]);
 
         // Upload thumbnail
-        $thumbnail = $request->file('thumbnail')->store('images/thumbnails');
+        $img = new ImageController();
+        $thumbnail = $img->upload($request->file('thumbnail'));
 
         // Set status for post base on role creator
         if(auth()->user()->userRole->level == 'administrator') {
@@ -104,7 +106,7 @@ class PostController extends Controller
             'user_id' => auth()->user()->id,
             'title' => $request->title,
             'slug' => $this->slug($request->title),
-            'thumbnail' => $thumbnail,
+            'thumbnail' => $thumbnail['data']['url'],
             'body' => $request->body,
             'category_id' => $request->category,
             'status' => $status,
@@ -171,9 +173,11 @@ class PostController extends Controller
             'status' => $status,
         ];
 
-        // Update photo
+        // Update thumbnail
         if($request->hasFile('thumbnail')) {
-            $data['thumbnail'] = $request->file('thumbnail')->store('images/thumbnails');
+            $img = new ImageController();
+            $thumbnail = $img->upload($request->file('thumbnail'));
+            $data['thumbnail'] = $thumbnail['data']['url'];
         }
 
         // Check if title change, then the slug will change too
