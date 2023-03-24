@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
                 'slug' => 'mamat-admin',
                 'email' => 'administrator@gmail.com',
                 'password' => Hash::make('1234567'),
-                'avatar' => 'images\profiles\profile-default.jpg',
+                'avatar' => 'https://i.ibb.co/ssm1215/x-Zk2-Ct-BVKXiy6pxijy-IT.jpg',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
                 'slug' => 'wahyu-author',
                 'email' => 'author@gmail.com',
                 'password' => Hash::make('1234567'),
-                'avatar' => 'images\profiles\profile-default.jpg',
+                'avatar' => 'https://i.ibb.co/ssm1215/x-Zk2-Ct-BVKXiy6pxijy-IT.jpg',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
                 'slug' => 'zaki-subs',
                 'email' => 'subscriber@gmail.com',
                 'password' => Hash::make('1234567'),
-                'avatar' => 'images\profiles\profile-default.jpg',
+                'avatar' => 'https://i.ibb.co/ssm1215/x-Zk2-Ct-BVKXiy6pxijy-IT.jpg',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],

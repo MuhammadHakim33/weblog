@@ -49,7 +49,9 @@ class UserController extends Controller
         
         // Update photo
         if($request->hasFile('image')) {
-            $data['avatar'] = $request->file('image')->store('images/profiles');
+            $img = new ImageController();
+            $image = $img->upload($request->file('image'));
+            $data['avatar'] = $image['data']['url'];
         }
 
         // Check if name change, then the slug will change too
