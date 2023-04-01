@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use App\Exceptions\ImageException;
 
 class UserController extends Controller
 {
@@ -49,8 +50,12 @@ class UserController extends Controller
         
         // Update photo
         if($request->hasFile('image')) {
-            $img = new ImageController();
-            $image = $img->upload($request->file('image'));
+            // Upload thumbnail
+            $image = ImageController::upload($request->image);
+            // Error handling for upload image
+            if(!empty($image['status_code']) && $image['status_code'] == 400) {
+                throw ImageException::invalidAPI();
+            }
             $data['avatar'] = $image['data']['url'];
         }
 

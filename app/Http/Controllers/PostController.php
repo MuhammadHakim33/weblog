@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ImageException;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Controllers\ImageController as ImageController;
 
 class PostController extends Controller
 {
@@ -87,8 +87,11 @@ class PostController extends Controller
         ]);
 
         // Upload thumbnail
-        $img = new ImageController();
-        $thumbnail = $img->upload($request->file('thumbnail'));
+        $thumbnail = ImageController::upload($request->thumbnail);
+        // Error handling for upload image
+        if(!empty($thumbnail['status_code']) && $thumbnail['status_code'] == 400) {
+            throw ImageException::invalidAPI();
+        }
 
         // Set status for post base on role creator
         if(auth()->user()->userRole->level == 'administrator') {
@@ -175,8 +178,12 @@ class PostController extends Controller
 
         // Update thumbnail
         if($request->hasFile('thumbnail')) {
-            $img = new ImageController();
-            $thumbnail = $img->upload($request->file('thumbnail'));
+            // Upload thumbnail
+            $thumbnail = ImageController::upload($request->thumbnail);
+            // Error handling for upload image
+            if(!empty($thumbnail['status_code']) && $thumbnail['status_code'] == 400) {
+                throw ImageException::invalidAPI();
+            }
             $data['thumbnail'] = $thumbnail['data']['url'];
         }
 
