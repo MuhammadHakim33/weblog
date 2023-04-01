@@ -7,7 +7,10 @@
         Close
     </a>
 </header>
-
+<!-- Alert -->
+@if(session('status-danger'))
+<div class="m-4 p-4 rounded alert-danger">{{session('status-danger')}}</div>
+@endif
 <form action="/posts" method="post" enctype="multipart/form-data" x-on:submit="postSubmit($refs.body)" class="post-form my-4 p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
     @csrf
     <!-- Left side -->
