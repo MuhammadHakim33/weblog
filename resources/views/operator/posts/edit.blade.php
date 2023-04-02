@@ -34,7 +34,7 @@
                 <label for="thumbnail">Thumbnail</label>
                 <small class="text-warning">png jpg jpeg - max 2MB</small>
             </div>
-            <img x-ref="previewContainer" src="{{ asset('storage/'. $post->thumbnail) }}" id="preview" class="aspect-auto bg-black/5 border-2 border-black/20 border-dashed text-black/60 my-2 min-h-[150px] relative after:content-['preview'] after:inline-block after:absolute after:bottom-1/2 after:right-1/2 after:translate-x-1/2 after:translate-y-1/2">
+            <img x-ref="previewContainer" src="{{ $post->thumbnail }}" id="preview" class="aspect-auto bg-black/5 border-2 border-black/20 border-dashed text-black/60 my-2 min-h-[150px] relative after:content-['preview'] after:inline-block after:absolute after:bottom-1/2 after:right-1/2 after:translate-x-1/2 after:translate-y-1/2" loading="lazy">
             <input type="file" id="thumbnail" name="thumbnail" class="form-input w-full file:bg-primary/10 file:border-primary/10 file:text-primary file:rounded file:py-1 file:px-2 file:mr-4 hover:file:bg-primary/20" value="{{ $post->thumbnail }}" x-on:change="imagePreview($event.target, $refs.previewContainer)" accept=".jpg, .jpeg, .png">
             @error('thumbnail')
             <small class="block mt-2 text-danger">{{$message}}</small>

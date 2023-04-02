@@ -15,7 +15,7 @@
         <p>Created by <span class="underline font-semibold">{{$post->user->name}}</span> at <span class="font-semibold">{{$post->created_at}}</span></p>
     </div>
     <div class="space-y-5">
-        <img src="{{asset('storage/'.$post->thumbnail)}}" alt="{{$post->slug}}" class="w-full">
+        <img src="{{$post->thumbnail}}" alt="{{$post->slug}}" class="w-full" loading="lazy">
         <div>
             <span class="inline-block badge badge-success capitalize mb-2">{{$post->category->name}}</span>
             <h2>{{ $post->title }}</h2>

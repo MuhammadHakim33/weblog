@@ -43,8 +43,10 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function(ImageException $e) {
+            return back()
+                ->with('status-danger', $e->getMessage())
+                ->withInput();
         });
     }
 }

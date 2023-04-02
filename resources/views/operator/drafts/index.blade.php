@@ -41,7 +41,7 @@
                 <tbody>
                     @forelse($posts as $post)
                     <tr>
-                        <td class="border-y p-4 align-top"><a href="" class="hover:underline hover:text-primary">{{ $post->title }}</a></td>
+                        <td class="border-y p-4 align-top"><a href="/posts/{{$post->id}}" class="hover:underline hover:text-primary">{{ $post->title }}</a></td>
                         <td class="border-y p-4 align-top">{{ $post->user->name }}</td>
                         <td class="border-y p-4 align-top">
                             <p>{{ $post->created_at }}</p>
