@@ -28,11 +28,6 @@
             <h4>Authors <span class="opacity-60">({{$count}})</span></h4>
             <div class="flex gap-3 items-center">
                 <input type="text" name="" class="form-input w-full sm:w-52 mt-0" placeholder="Search">
-                <select class="form-select btn-sm w-20 h-9 flex-none">
-                    <option selected>Sort</option>
-                    <option value="">One</option>
-                    <option value="">Two</option>
-                </select>
             </div>
         </div>
         <div class="overflow-auto md:overflow-visible">
