@@ -49,9 +49,7 @@
                                 <img src="{{$author->avatar}}" alt="" class="inline h-14 rounded-sm">
                             </div>
                             <div class="flex flex-col justify-center">
-                                <a href="/authors/{{$author->slug}}" class="hover:underline hover:text-primary">
-                                    {{$author->name}}
-                                </a>
+                                <p>{{$author->name}}</p>
                                 <small class="text-black/60">{{$author->email}}</small>
                             </div>
                         </td>
