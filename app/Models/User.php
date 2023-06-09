@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, Sluggable;
+    use HasApiTokens, HasFactory, Notifiable, Sluggable, HasUuids;
 
     protected $table = 'users';
+
     public $incrementing = false;
 
     protected $fillable = [
@@ -21,6 +23,7 @@ class User extends Authenticatable
         'slug',
         'email',
         'password',
+        'avatar'
     ];
 
     /**
@@ -29,6 +32,20 @@ class User extends Authenticatable
     public function userRole()
     {
         return $this->hasOne(UserRole::class, 'user_id', 'id');
+    }
+
+    public function post()
+    {
+        return $this->hasMany(Post::class, 'user_id', 'id');
+    }
+
+    public static function boot() {
+        parent::boot();
+        self::deleting(function($user) {
+             $user->userRole()->each(function($role) {
+                $role->delete();
+             });
+        });
     }
 
     /**
