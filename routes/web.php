@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
@@ -29,6 +30,9 @@ Route::middleware('auth')->group(function() {
     Route::put('/posts/{id}/review', [PostController::class, 'review']);
     Route::resource('/posts', PostController::class);
     Route::resource('/categories', CategoryController::class)->except('show');
+    Route::resource('/authors', AuthorController::class);
+    Route::put('/authors/{id}/disabled', [AuthorController::class, 'disabled']);
+    Route::put('/authors/{id}/activated', [AuthorController::class, 'activated']);
     Route::get('/profile', [UserController::class, 'formGeneral']);
     Route::get('/profile/change-password', [UserController::class, 'formPassword']);
     Route::put('/profile/{id}', [UserController::class, 'update']);

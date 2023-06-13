@@ -10,5 +10,10 @@ class UserRole extends Model
     use HasFactory;
 
     protected $table = 'users_role';
-    
+
+    protected $fillable = [
+        'user_id',
+        'level',
+        'status',
+    ];
 }
