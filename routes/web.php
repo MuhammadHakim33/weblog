@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,9 @@ Route::middleware('auth')->group(function() {
     Route::resource('/authors', AuthorController::class);
     Route::put('/authors/{id}/disabled', [AuthorController::class, 'disabled']);
     Route::put('/authors/{id}/activated', [AuthorController::class, 'activated']);
+    Route::get('/subscribers', [SubscriberController::class, 'index']);
+    Route::get('/subscribers/email', [SubscriberController::class, 'email']);
+    Route::post('/subscribers', [SubscriberController::class, 'send']);
     Route::get('/profile', [UserController::class, 'formGeneral']);
     Route::get('/profile/change-password', [UserController::class, 'formPassword']);
     Route::put('/profile/{id}', [UserController::class, 'update']);
