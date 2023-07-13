@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
-class ImageController extends Controller
+class imageService 
 {
-     /**
-     * Upload image to imgbb server
-     */
     public static function upload($image)
     {
         $url = "https://api.imgbb.com/1/upload?";

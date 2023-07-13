@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\ImageException;
 use App\Models\User;
+use App\Services\imageService;
+use App\Services\customSlugService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
@@ -50,7 +52,7 @@ class AuthorController extends Controller
      * Store a newly created resource in storage.
      *
      */
-    public function store(Request $request)
+    public function store(Request $request, imageService $imageService, customSlugService $slugService)
     {
         $request->validate([
             'name' => 'required',
@@ -60,7 +62,7 @@ class AuthorController extends Controller
         ]);
 
         // Upload avatar
-        $avatar = ImageController::upload($request->avatar);
+        $avatar = $imageService->upload($request->avatar);
         // Error handling for upload image
         if(!empty($avatar['status_code']) && $avatar['status_code'] == 400) {
             throw ImageException::invalidAPI();
@@ -68,7 +70,7 @@ class AuthorController extends Controller
         
         $user = User::create([
             'name' => $request->name,
-            'slug' => $this->slug($request->name),
+            'slug' => $slugService->slug($request->name, User::class),
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'avatar' => $avatar['data']['url'],
@@ -117,13 +119,5 @@ class AuthorController extends Controller
         $author->userRole->save();
 
         return back()->with('status-success', 'Author activated!');
-    }
-
-    /**
-     * Create Slug
-     */
-    public function slug($name)
-    {
-        return SlugService::createSlug(User::class, 'slug', $name);
     }
 }
