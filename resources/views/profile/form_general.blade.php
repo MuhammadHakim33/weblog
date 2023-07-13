@@ -1,4 +1,4 @@
-@extends('operator.profile.layout')
+@extends('profile.layout')
 
 @section('form')
 <form action="/profile/{{$user->id}}" method="post" enctype="multipart/form-data" class="p-4 space-y-4">

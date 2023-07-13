@@ -1,7 +1,7 @@
-@extends('operator.layout')
+@extends('layout')
 
 @section('sidebar')
-    @include('operator.partials.sidebar')
+    @include('partials.sidebar')
 @endsection
 
 @section('content')

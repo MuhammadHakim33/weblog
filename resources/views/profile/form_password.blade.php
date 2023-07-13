@@ -1,4 +1,4 @@
-@extends('operator.profile.layout')
+@extends('profile.layout')
 
 @section('form')
 <form action="/change-password" method="post" class="p-4 space-y-4">

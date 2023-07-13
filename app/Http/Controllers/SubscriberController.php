@@ -24,7 +24,7 @@ class SubscriberController extends Controller
 
         $count = $authors->count();
 
-        return view('operator.subscribers.index', [
+        return view('subscribers.index', [
             'title' => 'Subscribers',
             'subscribers' => $authors,
             'count' => $count,
@@ -35,7 +35,7 @@ class SubscriberController extends Controller
     {
         Gate::authorize('admin');
 
-        return view('operator.subscribers.send', [
+        return view('subscribers.send', [
             'title' => 'Subscribers'
         ]);
     }

@@ -26,7 +26,7 @@ class AuthorController extends Controller
 
         $count = $authors->count();
 
-        return view('operator.authors.index', [
+        return view('authors.index', [
             'title' => 'Authors',
             'authors' => $authors,
             'count' => $count,
@@ -41,7 +41,7 @@ class AuthorController extends Controller
     {
         Gate::authorize('admin');
 
-        return view('operator.authors.create', [
+        return view('authors.create', [
             'title' => 'Author'
         ]);
     }

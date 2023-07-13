@@ -8,6 +8,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('operator.dashboard.index', ['title' => 'Dashboard']);
+        return view('dashboard.index', ['title' => 'Dashboard']);
     }
 }

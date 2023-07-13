@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function formGeneral()
     {
-        return view('operator.profile.form_general', [
+        return view('profile.form_general', [
             'title' => "Profile - General",
             'user' => Auth::user()
         ]);
@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function formPassword()
     {
-        return view('operator.profile.form_password', [
+        return view('profile.form_password', [
             'title' => "Profile - Password",
             'user' => Auth::user()
         ]);

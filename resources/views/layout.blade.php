@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('operator.partials.head')
+    @include('partials.head')
 </head>
 <body class="bg-primary/5" x-data="{sidebar: false}">
 
@@ -9,6 +9,6 @@
 
     @yield('content')
 
-    @include('operator.partials.script')
+    @include('partials.script')
 </body>
 </html>

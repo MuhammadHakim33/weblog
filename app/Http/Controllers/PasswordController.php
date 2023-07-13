@@ -17,7 +17,7 @@ class PasswordController extends Controller
      */
     public function request() 
     {
-        return view('operator.auth.form-request-link', ['title' => 'Forget Password']);
+        return view('auth.form-request-link', ['title' => 'Forget Password']);
     }
 
     /**
@@ -47,7 +47,7 @@ class PasswordController extends Controller
      */
     public function edit($token)
     {
-        return view('operator.auth.form-new-password', ['token' => $token, 'title' => "Reset"]);
+        return view('auth.form-new-password', ['token' => $token, 'title' => "Reset"]);
     }
 
     /**

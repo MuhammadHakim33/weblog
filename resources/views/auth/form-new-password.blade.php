@@ -1,4 +1,4 @@
-@extends('operator.layout')
+@extends('layout')
 
 @section('content')
 <header class="container mx-auto py-2 border-b border-black/10">

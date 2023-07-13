@@ -34,7 +34,7 @@ class PostController extends Controller
             $count = $posts->total();
         }
 
-        return view('operator.posts.index', [
+        return view('posts.index', [
             'title' => 'Posts',
             'posts' => $posts,
             'count' => $count
@@ -54,7 +54,7 @@ class PostController extends Controller
 
         $count = $posts->total();
 
-        return view('operator.drafts.index', [
+        return view('drafts.index', [
             'title' => 'Drafts',
             'posts' => $posts,
             'count' => $count
@@ -68,7 +68,7 @@ class PostController extends Controller
     {
         $categories = Category::all();
 
-        return view('operator.posts.create', [
+        return view('posts.create', [
             'title' => 'Create Post',
             'categories' => $categories
         ]);
@@ -123,7 +123,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('operator.posts.preview', [
+        return view('posts.preview', [
             'title' => 'Preview Post',
             'post' => $post
         ]);
@@ -136,7 +136,7 @@ class PostController extends Controller
     {
         $categories = $categories = Category::all();
 
-        return view('operator.posts.edit', [
+        return view('posts.edit', [
             'title' => 'Edit Post',
             'categories' => $categories,
             'post' => $post

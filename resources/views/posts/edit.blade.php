@@ -1,4 +1,4 @@
-@extends('operator.layout')
+@extends('layout')
 
 @section('content')
 <header class="bg-white p-4 flex gap-4 border-y">
