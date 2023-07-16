@@ -9,7 +9,7 @@
     <!-- Header -->
     <header class="px-4 pt-4 bg-white border-b space-y-2">
         <div class="flex items-center gap-1">
-            <button x-on:click="sidebar = true" class="md:hidden btn flex items-center"><i class="ri-menu-line ri-xl"></i></button>
+            <button @click="sidebar = true" class="md:hidden btn flex items-center"><i class="ri-menu-line ri-xl"></i></button>
             <h2>Profile</h2>
         </div>
         <nav class="flex gap-5">

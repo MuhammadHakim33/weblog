@@ -44,15 +44,15 @@
         </nav>
     </div>
     <!-- Profile Card -->
-    <div class="relative" x-data="{ dropdown: false }">
-        <button @click="dropdown = !dropdown" class="flex items-center bg-primary w-full">
-            <img src="{{ auth()->user()->avatar }}" alt="" class="inline h-10 rounded-sm">
+    <div x-cloak class="relative" x-data="{ open: false }">
+        <button @click="open = !open" class="flex items-center bg-primary w-full">
+            <img src="{{ auth()->user()->avatar }}" alt="" class="inline h-10 rounded-sm" loading="lazy">
             <div class="text ml-2 text-left">
                 <h5 class="capitalize">{{auth()->user()->name}}</h5>
                 <p class="opacity-80 text-sm mt-1 capitalize">{{auth()->user()->userRole->level}}</p>
             </div>
         </button>
-        <div x-show="dropdown" @click.outside="dropdown = false" class="absolute bottom-20 left-0 right-0 rounded border bg-white shadow-lg text-black" style="display:none;">
+        <div x-show="open" @click.outside="open = false" class="absolute bottom-20 left-0 right-0 rounded border bg-white shadow-lg text-black">
             <a href="/profile" class="py-2 px-4 text-sm hover:bg-primary/10 flex gap-2 items-center justify-between">
                 Profile
                 <i class="ri-user-line"></i>
