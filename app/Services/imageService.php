@@ -2,14 +2,15 @@
 
 namespace App\Services;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class imageService 
 {
-    public static function upload($image)
+    public function store($image)
     {
-        $url = "https://api.imgbb.com/1/upload?";
+        $url = "https://api.imgbb.com/1/upload";
 
         $response = Http::attach(
             'image', 

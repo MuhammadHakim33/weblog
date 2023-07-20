@@ -55,7 +55,7 @@
                                 <button x-on:click="dropdown = !dropdown" class="btn-sm flex items-center hover:bg-black/5">
                                     <i class="ri-more-2-line ri-xl"></i>
                                 </button>
-                                <div x-show="dropdown" x-on:click.outside="dropdown = false" class="z-10 absolute right-4 md:right-0 flex flex-col rounded border bg-white shadow-lg w-32">
+                                <div x-show="dropdown" x-cloak x-on:click.outside="dropdown = false" class="z-10 absolute right-4 md:right-0 flex flex-col rounded border bg-white shadow-lg w-32">
                                     <!-- Publish -->
                                     @can('admin')
                                     <form action="/posts/{{$post->id}}/publish" method="post">

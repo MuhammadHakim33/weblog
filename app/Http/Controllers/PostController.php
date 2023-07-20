@@ -88,7 +88,7 @@ class PostController extends Controller
         ]);
 
         // Upload thumbnail
-        $thumbnail = $imageService->upload($request->thumbnail);
+        $thumbnail = $imageService->store($request->thumbnail);
         // Error handling for upload image
         if(!empty($thumbnail['status_code']) && $thumbnail['status_code'] == 400) {
             throw ImageException::invalidAPI();

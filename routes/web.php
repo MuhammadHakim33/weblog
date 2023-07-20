@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\SubscriberController;
+use App\Services\imageService;
 use Illuminate\Support\Facades\Route;
 
 /*
