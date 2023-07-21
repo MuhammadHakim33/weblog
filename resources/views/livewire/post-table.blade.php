@@ -1,12 +1,12 @@
 <div>
     <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <h4>All Post <span class="opacity-60">({{$count}})</span></h4>
+        <h4>All Post <span class="opacity-60">({{ $count }})</span></h4>
         <div class="flex gap-3 items-center">
             <input type="text" name="search" wire:model="search" class="form-input w-full sm:w-52 mt-0" placeholder="Search">
-            <select class="form-select btn-sm w-20 h-9 flex-none mt-0">
-                <option selected>Sort</option>
-                <option value="">One</option>
-                <option value="">Two</option>
+            <select class="form-select btn-sm w-28 h-9 flex-none mt-0" wire:model="order">
+                <option selected value="created_at">Newest</option>
+                <option value="category_id">Category</option>
+                <option value="status">Status</option>
             </select>
         </div>
     </div>
@@ -24,19 +24,19 @@
             <tbody>
                 @forelse($posts as $post)
                 <tr>
-                    <td class="border-y p-4 align-top"><a href="/posts/{{$post->id}}" class="hover:underline hover:text-primary">{{$post->title}}</a></td>
-                    <td class="border-y p-4 align-top capitalize">{{$post->user->name}}</td>
+                    <td class="border-y p-4 align-top"><a href="/posts/{{ $post->id }}" class="hover:underline hover:text-primary">{{ $post->title }}</a></td>
+                    <td class="border-y p-4 align-top capitalize">{{ $post->user->name }}</td>
                     <td class="border-y p-4 align-top">
-                        <p>{{$post->created_at}}</p>
+                        <p>{{ $post->created_at }}</p>
                         <small class="text-black/60">Added</small>
                     </td>
                     <td class="border-y p-4 align-top">
                         @if($post->status === 'rejected')
-                        <span class="badge badge-danger capitalize">{{$post->status}}</span>
+                        <span class="badge badge-danger capitalize">{{ $post->status }}</span>
                         @elseif($post->status === 'reviewed')
-                        <span class="badge badge-warning capitalize">{{$post->status}}</span>
+                        <span class="badge badge-warning capitalize">{{ $post->status }}</span>
                         @else
-                        <span class="badge badge-success capitalize">{{$post->status}}</span>
+                        <span class="badge badge-success capitalize">{{ $post->status }}</span>
                         @endif
                     </td>
                     <td class="border-y p-4 align-top ">
@@ -48,26 +48,26 @@
                                 @can('admin')
                                 <!-- Publish -->
                                 @if($post->status == 'rejected')
-                                <form action="/posts/{{$post->id}}/publish" method="post">
+                                <form action="/posts/{{ $post->id }}/publish" method="post">
                                     @method('put')
                                     @csrf
                                     <button class="w-full text-left py-2 px-4 text-sm hover:bg-primary/10" onclick="return confirm('Are you sure?')">Publish</button>
                                 </form>
                                 <!-- Reject -->
                                 @elseif($post->status == 'published')
-                                <form action="/posts/{{$post->id}}/reject" method="post">
+                                <form action="/posts/{{ $post->id }}/reject" method="post">
                                     @method('put')
                                     @csrf
                                     <button class="w-full text-left py-2 px-4 text-sm hover:bg-primary/10" onclick="return confirm('Are you sure?')">Reject</button>
                                 </form>
                                 <!-- Publish & Reject-->
                                 @elseif($post->status == 'reviewed')
-                                <form action="/posts/{{$post->id}}/publish" method="post">
+                                <form action="/posts/{{ $post->id }}/publish" method="post">
                                     @method('put')
                                     @csrf
                                     <button class="w-full text-left py-2 px-4 text-sm hover:bg-primary/10" onclick="return confirm('Are you sure?')">Publish</button>
                                 </form>
-                                <form action="/posts/{{$post->id}}/reject" method="post">
+                                <form action="/posts/{{ $post->id }}/reject" method="post">
                                     @method('put')
                                     @csrf
                                     <button class="w-full text-left py-2 px-4 text-sm hover:bg-primary/10" onclick="return confirm('Are you sure?')">Reject</button>
@@ -76,9 +76,9 @@
                                 <hr>
                                 @endcan
                                 <!-- Edit -->
-                                <a href="/posts/{{$post->id}}/edit" class="py-2 px-4 text-sm hover:bg-primary/10">Edit</a>
+                                <a href="/posts/{{ $post->id }}/edit" class="py-2 px-4 text-sm hover:bg-primary/10">Edit</a>
                                 <!-- Delete -->
-                                <form action="/posts/{{$post->id}}" method="post">
+                                <form action="/posts/{{ $post->id }}" method="post">
                                     @method('delete')
                                     @csrf
                                     <button class="w-full text-left py-2 px-4 text-sm hover:bg-red-700/10 text-red-700" onclick="return confirm('Are you sure?')">Delete</button>
@@ -97,5 +97,5 @@
             </tbody>
         </table>
     </div>
-    <div class="p-4">{{$posts->links()}}</div>
+    <div class="p-4">{{ $posts->links() }}</div>
 </div>

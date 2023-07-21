@@ -12,12 +12,14 @@ class PostTable extends Component
     use WithPagination;
 
     public $search;
+    public $order = 'created_at';
 
     public function render()
     {
         $query = Post::with('user')
                 ->where('status', '!=', 'draf')
-                ->where('title', 'like', '%'.$this->search.'%');
+                ->where('title', 'like', '%'.$this->search.'%')
+                ->orderBy($this->order, 'desc');
 
         if (!Gate::allows('admin')) {
             $query->where('user_id', auth()->id());
