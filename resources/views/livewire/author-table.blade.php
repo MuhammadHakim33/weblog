@@ -18,8 +18,8 @@
             </thead>
             <tbody>
                 @forelse($authors as $author)
-                <tr>
-                    <td class="border-y p-4 align-top flex gap-3">
+                <tr class="border-y">
+                    <td class="p-4 align-top flex gap-3">
                         <div>
                             <img src="{{$author->avatar}}" alt="" class="inline h-14 rounded-sm" loading="lazy">
                         </div>
@@ -28,19 +28,19 @@
                             <small class="text-black/60">{{$author->email}}</small>
                         </div>
                     </td>
-                    <td class="border-y p-4 align-top">
+                    <td class="p-4 align-top">
                         <p>{{$author->created_at}}</p>
                         <small class="text-black/60">Added</small>
                     </td>
-                    <td class="border-y p-4 align-top capitalize">{{$author->post_count}}</td>
-                    <td class="border-y p-4 align-top">
+                    <td class="p-4 align-top capitalize">{{$author->post_count}}</td>
+                    <td class="p-4 align-top">
                         @if($author->userRole->status === 1)
                         <span class="badge badge-success capitalize">active</span>
                         @else
                         <span class="badge badge-danger capitalize">inactive</span>
                         @endif
                     </td>
-                    <td class="border-y p-4 align-top ">
+                    <td class="p-4 align-top ">
                         <div class="md:relative" x-data="{dropdown: false}">
                             <button x-on:click="dropdown = !dropdown" class="btn-sm flex items-center hover:bg-black/5">
                                 <i class="ri-more-2-line ri-xl"></i>
