@@ -16,17 +16,16 @@ class PostTable extends Component
 
     public function render()
     {
-        $query = Post::with('user')
+        $posts = Post::with('user')
                 ->where('status', '!=', 'draf')
                 ->where('title', 'like', '%'.$this->search.'%')
-                ->orderBy($this->order, 'desc');
+                ->orderBy($this->order, 'desc')
+                ->paginate(10);
 
         if (!Gate::allows('admin')) {
-            $query->where('user_id', auth()->id());
+            $posts->where('user_id', auth()->id());
         }
     
-        $posts = $query->latest()->paginate(10);
-
         $count = $posts->total();
 
         return view('livewire.post-table', [

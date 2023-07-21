@@ -8,7 +8,6 @@ use App\Services\customSlugService;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
@@ -26,19 +25,7 @@ class PostController extends Controller
      */
     public function draft()
     {
-        $posts = Post::with('user')
-                    ->where('status', 'draf')
-                    ->where('user_id', Auth::user()->id)
-                    ->latest()
-                    ->paginate(10);
-
-        $count = $posts->total();
-
-        return view('drafts.index', [
-            'title' => 'Drafts',
-            'posts' => $posts,
-            'count' => $count
-        ]);
+        return view('drafts.index', ['title' => 'Drafts']);
     }
 
     /**

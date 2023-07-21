@@ -10,7 +10,7 @@ class imageService
 {
     public function store($image)
     {
-        $url = "https://api.imgbb.com/1/upload";
+        $url = "https://api.imgbb.com/1/upload?";
 
         $response = Http::attach(
             'image', 
