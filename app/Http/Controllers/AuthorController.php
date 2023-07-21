@@ -21,18 +21,7 @@ class AuthorController extends Controller
     {
         Gate::authorize('admin');
         
-        $authors = User::with(['userRole', 'post'])
-                    ->whereRelation('userRole', 'level', 'author')
-                    ->withCount('post')
-                    ->get();
-
-        $count = $authors->count();
-
-        return view('authors.index', [
-            'title' => 'Authors',
-            'authors' => $authors,
-            'count' => $count,
-        ]);
+        return view('authors.index', ['title' => 'Authors']);
     }
 
     /**
