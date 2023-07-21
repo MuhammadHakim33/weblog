@@ -18,28 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('user')
-                 ->where('status', '!=', 'draf')
-                 ->latest()
-                 ->paginate(10);
-                    
-        $count = $posts->total();
-
-        if(!Gate::allows('admin')) {
-            $posts = Post::with('user')
-                    ->where('status', '!=', 'draf')
-                    ->where('user_id', Auth::user()->id)
-                    ->latest()
-                    ->paginate(10);
-
-            $count = $posts->total();
-        }
-
-        return view('posts.index', [
-            'title' => 'Posts',
-            'posts' => $posts,
-            'count' => $count
-        ]);
+        return view('posts.index', ['title' => 'Posts',]);
     }
 
     /**
