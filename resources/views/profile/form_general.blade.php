@@ -7,7 +7,7 @@
     <div>
         <label for="image">Photo</label>
         <div class="flex items-center gap-4 ">
-            <img x-ref="previewContainer" src="{{ $user->avatar }}" id="preview" class="bg-black/5 my-2 h-20 w-20 rounded aspect-square">
+            <img x-ref="previewContainer" src="{{ $user->avatar }}" id="preview" class="bg-black/5 my-2 h-20 w-20 rounded aspect-square" loading="lazy">
             <input type="file" name="image" id="image" class=" text-black/60 file:content-['change'] file:bg-primary/10 file:border-primary/10 file:text-primary file:rounded file:mr-4 file:py-1 file:cursor-pointer file:text-sm hover:file:bg-primary/20" x-on:change="imagePreview($event.target, $refs.previewContainer)" accept=".jpg, .jpeg, .png">
         </div>
         @error('image')

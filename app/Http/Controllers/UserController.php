@@ -52,7 +52,7 @@ class UserController extends Controller
         // Update photo
         if($request->hasFile('image')) {
             // Upload thumbnail
-            $image = $imageService->upload($request->image);
+            $image = $imageService->store($request->image);
             // Error handling for upload image
             if(!empty($image['status_code']) && $image['status_code'] == 400) {
                 throw ImageException::invalidAPI();

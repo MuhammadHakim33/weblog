@@ -8,7 +8,6 @@ use App\Services\imageService;
 use App\Services\customSlugService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
-use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\Hash;
 
 class AuthorController extends Controller
@@ -32,9 +31,7 @@ class AuthorController extends Controller
     {
         Gate::authorize('admin');
 
-        return view('authors.create', [
-            'title' => 'Author'
-        ]);
+        return view('authors.create', ['title' => 'Author']);
     }
 
     /**
@@ -51,7 +48,7 @@ class AuthorController extends Controller
         ]);
 
         // Upload avatar
-        $avatar = $imageService->upload($request->avatar);
+        $avatar = $imageService->store($request->avatar);
         // Error handling for upload image
         if(!empty($avatar['status_code']) && $avatar['status_code'] == 400) {
             throw ImageException::invalidAPI();
