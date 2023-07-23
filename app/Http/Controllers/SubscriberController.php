@@ -17,25 +17,15 @@ class SubscriberController extends Controller
     public function index()
     {
         Gate::authorize('admin');
-        
-        $authors = User::with(['userRole', 'post'])
-                    ->whereRelation('userRole', 'level', 'subscriber')
-                    ->get();
 
-        $count = $authors->count();
-
-        return view('operator.subscribers.index', [
-            'title' => 'Subscribers',
-            'subscribers' => $authors,
-            'count' => $count,
-        ]);
+        return view('subscribers.index', ['title' => 'Subscribers']);
     }
 
     public function email()
     {
         Gate::authorize('admin');
 
-        return view('operator.subscribers.send', [
+        return view('subscribers.send', [
             'title' => 'Subscribers'
         ]);
     }

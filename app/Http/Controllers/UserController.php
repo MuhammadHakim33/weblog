@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use \Cviebrock\EloquentSluggable\Services\SlugService;
+use App\Services\imageService;
+use App\Services\customSlugService;
 use App\Exceptions\ImageException;
 
 class UserController extends Controller
@@ -15,7 +16,7 @@ class UserController extends Controller
      */
     public function formGeneral()
     {
-        return view('operator.profile.form_general', [
+        return view('profile.form_general', [
             'title' => "Profile - General",
             'user' => Auth::user()
         ]);
@@ -26,7 +27,7 @@ class UserController extends Controller
      */
     public function formPassword()
     {
-        return view('operator.profile.form_password', [
+        return view('profile.form_password', [
             'title' => "Profile - Password",
             'user' => Auth::user()
         ]);
@@ -35,7 +36,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Auth $auth)
+    public function update(Request $request, Auth $auth, imageService $imageService, customSlugService $slugService)
     {
         $request->validate([
             'image' => 'image|max:2048',
@@ -51,7 +52,7 @@ class UserController extends Controller
         // Update photo
         if($request->hasFile('image')) {
             // Upload thumbnail
-            $image = ImageController::upload($request->image);
+            $image = $imageService->store($request->image);
             // Error handling for upload image
             if(!empty($image['status_code']) && $image['status_code'] == 400) {
                 throw ImageException::invalidAPI();
@@ -61,19 +62,11 @@ class UserController extends Controller
 
         // Check if name change, then the slug will change too
         if($request->name != $auth::user()->name) {
-            $data['slug'] = $this->slug($request->name);
+            $data['slug'] = $slugService->slug($request->name, User::class);
         }
 
         User::where('id', $auth::user()->id)->update($data);
 
         return redirect('/profile')->with('status-success', 'Profile updated!');
-    }
-
-    /**
-     * Update Slug
-     */
-    public function slug($name)
-    {
-        return SlugService::createSlug(User::class, 'slug', $name);
     }
 }

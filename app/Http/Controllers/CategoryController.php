@@ -19,7 +19,7 @@ class CategoryController extends Controller
         $categories = Category::all();
         $count = $categories->count();
 
-        return view('operator.categories.index', [
+        return view('categories.index', [
             'title' => 'Categories',
             'categories' => $categories,
             'count' => $count
@@ -33,7 +33,7 @@ class CategoryController extends Controller
     {
         Gate::authorize('admin');
 
-        return view('operator.categories.create', ['title' => 'Categories']);
+        return view('categories.create', ['title' => 'Categories']);
     }
 
     /**
@@ -61,7 +61,7 @@ class CategoryController extends Controller
     {
         Gate::authorize('admin');
 
-        return view('operator.categories.edit', [
+        return view('categories.edit', [
             'title' => 'Categories',
             'category' => $category
         ]);

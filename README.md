@@ -7,6 +7,7 @@ Weblog is a news website or blog. The owner can manage the website. Viewers can 
 
 - Mysql
 - Laravel 9
+- Livewire
 - Tailwind
 - Alpine Js
 - CKEditor4

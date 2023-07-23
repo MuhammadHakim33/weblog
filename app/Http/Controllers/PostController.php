@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ImageException;
+use App\Services\imageService;
+use App\Services\customSlugService;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use \Cviebrock\EloquentSluggable\Services\SlugService;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
@@ -17,28 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('user')
-                 ->where('status', '!=', 'draf')
-                 ->latest()
-                 ->paginate(10);
-                    
-        $count = $posts->total();
-
-        if(!Gate::allows('admin')) {
-            $posts = Post::with('user')
-                    ->where('status', '!=', 'draf')
-                    ->where('user_id', Auth::user()->id)
-                    ->latest()
-                    ->paginate(10);
-
-            $count = $posts->total();
-        }
-
-        return view('operator.posts.index', [
-            'title' => 'Posts',
-            'posts' => $posts,
-            'count' => $count
-        ]);
+        return view('posts.index', ['title' => 'Posts',]);
     }
 
     /**
@@ -46,19 +25,7 @@ class PostController extends Controller
      */
     public function draft()
     {
-        $posts = Post::with('user')
-                    ->where('status', 'draf')
-                    ->where('user_id', Auth::user()->id)
-                    ->latest()
-                    ->paginate(10);
-
-        $count = $posts->total();
-
-        return view('operator.drafts.index', [
-            'title' => 'Drafts',
-            'posts' => $posts,
-            'count' => $count
-        ]);
+        return view('drafts.index', ['title' => 'Drafts']);
     }
 
     /**
@@ -68,7 +35,7 @@ class PostController extends Controller
     {
         $categories = Category::all();
 
-        return view('operator.posts.create', [
+        return view('posts.create', [
             'title' => 'Create Post',
             'categories' => $categories
         ]);
@@ -77,7 +44,7 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, imageService $imageService, customSlugService $slugService)
     {
         $request->validate([
             'thumbnail' => 'required|image|max:2048',
@@ -87,7 +54,7 @@ class PostController extends Controller
         ]);
 
         // Upload thumbnail
-        $thumbnail = ImageController::upload($request->thumbnail);
+        $thumbnail = $imageService->store($request->thumbnail);
         // Error handling for upload image
         if(!empty($thumbnail['status_code']) && $thumbnail['status_code'] == 400) {
             throw ImageException::invalidAPI();
@@ -108,7 +75,7 @@ class PostController extends Controller
         Post::create([
             'user_id' => auth()->user()->id,
             'title' => $request->title,
-            'slug' => $this->slug($request->title),
+            'slug' => $slugService->slug($request->title, Post::class),
             'thumbnail' => $thumbnail['data']['url'],
             'body' => $request->body,
             'category_id' => $request->category,
@@ -123,7 +90,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('operator.posts.preview', [
+        return view('posts.preview', [
             'title' => 'Preview Post',
             'post' => $post
         ]);
@@ -136,7 +103,7 @@ class PostController extends Controller
     {
         $categories = $categories = Category::all();
 
-        return view('operator.posts.edit', [
+        return view('posts.edit', [
             'title' => 'Edit Post',
             'categories' => $categories,
             'post' => $post
@@ -146,7 +113,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $post, imageService $imageService, customSlugService $slugService)
     {
         $request->validate([
             'thumbnail' => 'image|max:2048',
@@ -179,7 +146,7 @@ class PostController extends Controller
         // Update thumbnail
         if($request->hasFile('thumbnail')) {
             // Upload thumbnail
-            $thumbnail = ImageController::upload($request->thumbnail);
+            $thumbnail = $imageService->upload($request->thumbnail);
             // Error handling for upload image
             if(!empty($thumbnail['status_code']) && $thumbnail['status_code'] == 400) {
                 throw ImageException::invalidAPI();
@@ -189,7 +156,7 @@ class PostController extends Controller
 
         // Check if title change, then the slug will change too
         if($request->title != $post->title) {
-            $data['slug'] = $this->slug($request->title);
+            $data['slug'] = $slugService->slug($request->title, Post::class);
         }
 
         Post::where('id', $post->id)->update($data);
@@ -245,13 +212,4 @@ class PostController extends Controller
 
         return redirect('posts')->with('status-success', 'Post Submit For Reviewed!');
     }
-
-    /**
-     * Create Slug
-     */
-    public function slug($title)
-    {
-        return SlugService::createSlug(Post::class, 'slug', $title);
-    }
-    
 }
