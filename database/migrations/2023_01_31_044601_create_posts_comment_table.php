@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignUuid('user_id')->constrained('users');
             $table->foreignUlid('post_id')->constrained('posts');
             $table->text('comment');
-            $table->string('tag')->nullable();
+            $table->string('parent_comment_id')->nullable();
             $table->timestamps();
         });
     }
