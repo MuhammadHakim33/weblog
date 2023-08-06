@@ -7,20 +7,11 @@ use App\Models\Category;
 use App\Models\UserRole;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\App;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
- */
 class PostFactory extends Factory
 {
-    protected $mode = Post::class;
+    protected $model = Post::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition()
     {
         $title = fake()->unique()->realText(50);

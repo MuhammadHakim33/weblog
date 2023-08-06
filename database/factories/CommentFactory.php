@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CommentFactory extends Factory
 {
-    protected $mode = Comment::class;
+    protected $model = Comment::class;
     
     public function definition()
     {
