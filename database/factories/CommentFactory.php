@@ -13,10 +13,7 @@ class CommentFactory extends Factory
     
     public function definition()
     {
-        $user_id = UserRole::inRandomOrder()
-                    ->where('level', '!=', 'subscriber')
-                    ->first()
-                    ->user_id;
+        $user_id = UserRole::inRandomOrder()->first()->user_id;
         
         $post_id = Post::inRandomOrder()->first()->id;
 
@@ -25,7 +22,6 @@ class CommentFactory extends Factory
             'user_id' => $user_id,
             'post_id' => $post_id,
             'comment' => fake()->realText(100),
-            'parent_comment_id' => ''
         ];
     }
 }

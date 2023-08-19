@@ -10,15 +10,11 @@ class Comment extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $table = 'posts_comment';
+    protected $table = 'post_comments';
+    
+    protected $guards = [];
 
-    protected $fillable = [
-        'id', 
-        'user_id',
-        'post_id',
-        'comment',
-        'parent_comment_id',
-    ];
+    protected $with = ['child', 'post', 'user'];
 
     public function post()
     {
@@ -28,5 +24,10 @@ class Comment extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function child()
+    {
+        return $this->hasMany(Comment::class, 'parent_id');
     }
 }

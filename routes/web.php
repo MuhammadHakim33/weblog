@@ -5,10 +5,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\SubscriberController;
-use App\Services\imageService;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function() {
     Route::put('/posts/{id}/publish', [PostController::class, 'publish']);
     Route::put('/posts/{id}/review', [PostController::class, 'review']);
     Route::resource('/posts', PostController::class);
+    Route::resource('/comments', CommentController::class);
     Route::resource('/categories', CategoryController::class)->except('show');
     Route::resource('/authors', AuthorController::class);
     Route::put('/authors/{id}/disabled', [AuthorController::class, 'disabled']);
