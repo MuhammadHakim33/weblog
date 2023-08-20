@@ -12,16 +12,18 @@ class CommentTable extends Component
 {
     use WithPagination;
 
+    public $order = 'desc';
+
     public function render()
     {
-        $comments = Comment::orderBy('created_at', 'desc')->paginate(10);
+        $comments = Comment::orderBy('created_at', $this->order)->paginate(10);
 
         if (!Gate::allows('admin')) {   
             $comments = Comment::with('user', 'post')
                         ->whereHas('post', function (Builder $query) {
                             $query->where('user_id', auth()->id());
                         })
-                        ->orderBy('created_at', 'desc')
+                        ->orderBy('created_at', $this->order)
                         ->paginate(10);
         }
 

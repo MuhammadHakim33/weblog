@@ -3,9 +3,8 @@
         <h4>All Comment <span class="opacity-60">({{ count($comments) }})</span></h4>
         <div class="flex gap-3 items-center">
             <select class="form-select btn-sm w-28 h-9 flex-none mt-0" wire:model="order">
-                <option selected value="created_at">Newest</option>
-                <option value="category_id">Category</option>
-                <option value="status">Status</option>
+                <option selected value="desc">Newest</option>
+                <option value="asc">Oldest</option>
             </select>
         </div>
     </div>
