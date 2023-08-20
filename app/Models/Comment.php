@@ -14,7 +14,7 @@ class Comment extends Model
     
     protected $guards = [];
 
-    protected $with = ['child', 'post', 'user'];
+    protected $with = ['child'];
 
     public function post()
     {
