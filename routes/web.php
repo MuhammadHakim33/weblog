@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function() {
     Route::put('/posts/{id}/publish', [PostController::class, 'publish']);
     Route::put('/posts/{id}/review', [PostController::class, 'review']);
     Route::resource('/posts', PostController::class);
-    Route::resource('/comments', CommentController::class);
+    Route::resource('/comments', CommentController::class)->only(['index', 'store']);
     Route::resource('/categories', CategoryController::class)->except('show');
     Route::resource('/authors', AuthorController::class);
     Route::put('/authors/{id}/disabled', [AuthorController::class, 'disabled']);

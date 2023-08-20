@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -11,33 +12,25 @@ class CommentController extends Controller
         return view('comments.index', ['title' => 'Comments']);
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'comment' => 'required',
+            'post_id' => 'required'
+        ]);
 
-    public function show($id)
-    {
-        //
-    }
+        $data = [
+            'comment' => $request->comment,
+            'post_id' => $request->post_id,
+            'user_id' => auth()->user()->id,
+        ];
 
-    public function edit($id)
-    {
-        //
-    }
+        if($request->has('parent_id')) {
+            $data['parent_id'] = $request->parent_id;
+        }
+        
+        Comment::create($data);
 
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
+        return redirect()->back();
     }
 }

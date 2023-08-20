@@ -12,7 +12,7 @@ class Comment extends Model
 
     protected $table = 'post_comments';
     
-    protected $guards = [];
+    protected $guarded  = [];
 
     protected $with = ['child'];
 

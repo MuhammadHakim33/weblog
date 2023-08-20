@@ -19,16 +19,19 @@
                         response to
                         <span class="font-semibold">{{ $comment->post->title }}</span>
                     </span>
-                    <p class="opacity-70">comment on {{ $comment->post->created_at->diffForHumans() }}</p>
+                    <p class="opacity-70">comment on {{ $comment->created_at->diffForHumans() }}</p>
                 </div>
                 <div class="mb-4">
                     <p>{{ $comment->comment }}</p>
                 </div>
                 <!-- reply form -->
-                <div class="flex gap-x-4">
-                    <input type="text" name="reply" class="form-input w-full mt-0" placeholder="Reply">
+                <form class="flex gap-x-4" action="/comments" method="post">
+                    @csrf
+                    <input type="text" name="comment" class="form-input w-full mt-0" placeholder="Reply">
+                    <input type="text" name="post_id" value="{{ $comment->post->id }}" hidden>
+                    <input type="text" name="parent_id" value="{{ $comment->id }}" hidden>
                     <button type="submit" class="btn-sm btn-primary">Send</button>
-                </div>
+                </form>
                 <!-- reply list -->
                 <div class="mt-4">
                     @foreach($comment->child as $child)
@@ -37,7 +40,7 @@
                             <span class="font-semibold">{{ $child->user->name }}</span>
                             <p class="overflow-hidden">{{ $child->comment }}</p>
                         </div>
-                        <p class="opacity-70">{{ $child->post->created_at->diffForHumans() }}</p>
+                        <p class="opacity-70">{{ $child->created_at->diffForHumans() }}</p>
                     </div>
                     @endforeach
                 </div>
