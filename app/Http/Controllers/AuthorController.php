@@ -38,7 +38,7 @@ class AuthorController extends Controller
      * Store a newly created resource in storage.
      *
      */
-    public function store(Request $request, imageService $imageService, customSlugService $slugService)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required',
@@ -48,7 +48,7 @@ class AuthorController extends Controller
         ]);
 
         // Upload avatar
-        $avatar = $imageService->store($request->avatar);
+        $avatar = imageService::store($request->avatar);
         // Error handling for upload image
         if(!empty($avatar['status_code']) && $avatar['status_code'] == 400) {
             throw ImageException::invalidAPI();
@@ -56,7 +56,7 @@ class AuthorController extends Controller
         
         $user = User::create([
             'name' => $request->name,
-            'slug' => $slugService->slug($request->name, User::class),
+            'slug' => customSlugService::slug($request->name, User::class),
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'avatar' => $avatar['data']['url'],

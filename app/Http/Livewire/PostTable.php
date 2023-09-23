@@ -23,11 +23,16 @@ class PostTable extends Component
                 ->paginate(10);
 
         if (!Gate::allows('admin')) {
-            $posts->where('user_id', auth()->id());
+            $posts = Post::with('user')
+                    ->where('status', '!=', 'draf')
+                    ->where('user_id', auth()->id())
+                    ->where('title', 'like', '%'.$this->search.'%')
+                    ->orderBy($this->order, 'desc')
+                    ->paginate(10);
         }
-    
-        $count = $posts->total();
 
+        $count = $posts->total();
+        
         return view('livewire.post-table', [
             'posts' => $posts,
             'count' => $count

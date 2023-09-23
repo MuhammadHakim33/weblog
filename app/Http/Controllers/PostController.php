@@ -17,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('posts.index', ['title' => 'Posts',]);
+        return view('posts.index', ['title' => 'Posts']);
     }
 
     /**
@@ -44,7 +44,7 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, imageService $imageService, customSlugService $slugService)
+    public function store(Request $request)
     {
         $request->validate([
             'thumbnail' => 'required|image|max:2048',
@@ -54,7 +54,7 @@ class PostController extends Controller
         ]);
 
         // Upload thumbnail
-        $thumbnail = $imageService->store($request->thumbnail);
+        $thumbnail = imageService::store($request->thumbnail);
         // Error handling for upload image
         if(!empty($thumbnail['status_code']) && $thumbnail['status_code'] == 400) {
             throw ImageException::invalidAPI();
@@ -75,7 +75,7 @@ class PostController extends Controller
         Post::create([
             'user_id' => auth()->user()->id,
             'title' => $request->title,
-            'slug' => $slugService->slug($request->title, Post::class),
+            'slug' => customSlugService::slug($request->title, Post::class),
             'thumbnail' => $thumbnail['data']['url'],
             'body' => $request->body,
             'category_id' => $request->category,
@@ -113,7 +113,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post, imageService $imageService, customSlugService $slugService)
+    public function update(Request $request, Post $post)
     {
         $request->validate([
             'thumbnail' => 'image|max:2048',
@@ -146,7 +146,7 @@ class PostController extends Controller
         // Update thumbnail
         if($request->hasFile('thumbnail')) {
             // Upload thumbnail
-            $thumbnail = $imageService->upload($request->thumbnail);
+            $thumbnail = imageService::store($request->thumbnail);
             // Error handling for upload image
             if(!empty($thumbnail['status_code']) && $thumbnail['status_code'] == 400) {
                 throw ImageException::invalidAPI();
@@ -156,7 +156,7 @@ class PostController extends Controller
 
         // Check if title change, then the slug will change too
         if($request->title != $post->title) {
-            $data['slug'] = $slugService->slug($request->title, Post::class);
+            $data['slug'] = customSlugService::slug($request->title, Post::class);
         }
 
         Post::where('id', $post->id)->update($data);

@@ -2,13 +2,12 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class imageService 
 {
-    public function store($image)
+    public static function store($image)
     {
         $url = "https://api.imgbb.com/1/upload?";
 
